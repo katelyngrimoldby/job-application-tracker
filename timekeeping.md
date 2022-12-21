@@ -1,5 +1,6 @@
 # Timekeeping
 
-| Day     | Time | Task          |
-| ------- | ---- | ------------- |
-| Dec. 21 | 1hr  | Project setup |
+| Day     | Time | Task                |
+| ------- | ---- | ------------------- |
+| Dec. 21 | 1hr  | Frontend setup      |
+| Dec. 21 | 2hr  | Begin backend setup |
