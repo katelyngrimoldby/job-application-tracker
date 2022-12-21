@@ -20,9 +20,16 @@ const getOne = async (id: number) => {
 const addNew = async (username: string, password: string, name: string) => {
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);
-  const user = await User.create({ username, name, passwordHash });
+  try {
+    const user = await User.create({ username, name, passwordHash });
 
-  return user;
+    return user;
+  } catch (err) {
+    if (err instanceof Error) {
+      throw err;
+    }
+    throw new Error('idk what happened');
+  }
 };
 
 export default { getAll, getOne, addNew };
