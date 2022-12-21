@@ -1,4 +1,5 @@
-import { DataTypes } from 'sequelize';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { DataTypes } = require('sequelize');
 
 const up = async ({ context: queryInterface }) => {
   await queryInterface.createTable('jobs', {
@@ -72,7 +73,5 @@ const down = async ({ context: queryInterface }) => {
   await queryInterface.dropTable('jobs');
   await queryInterface.dropTable('users');
 };
-module.exports = {
-  up,
-  down,
-};
+
+module.exports = { up, down };
