@@ -27,7 +27,7 @@ User.init(
     sequelize,
     underscored: true,
     timestamps: false,
-    modelName: 'job',
+    modelName: 'user',
   }
 );
 
