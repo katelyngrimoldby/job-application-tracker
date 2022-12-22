@@ -1,7 +1,7 @@
 export interface Job {
   positionTitle: string;
   company: string;
-  address: string;
+  location: string;
   applied: string;
   compensation: string;
   status: 'applied' | 'interviewing' | 'offered' | 'rejected';
