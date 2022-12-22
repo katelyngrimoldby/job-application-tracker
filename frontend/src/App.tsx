@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { Footer } from './components/Layout';
+import { Header, Footer } from './components/Layout';
 import Jobs from './pages/jobs';
 import Login from './pages/login';
 import Register from './pages/register';
@@ -23,6 +23,7 @@ import Custom404 from './pages/custom404';
 function App() {
   return (
     <>
+      <Header />
       <Routes>
         <Route
           path='/'
