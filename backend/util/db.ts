@@ -1,9 +1,8 @@
 import { Sequelize } from 'sequelize';
 import { Umzug, SequelizeStorage } from 'umzug';
+import { POSTGRES_URL } from './config';
 
-const sequelize = new Sequelize(
-  'postgresql://trackerDev:password@localhost:5432/postgres'
-);
+const sequelize = new Sequelize(POSTGRES_URL ? POSTGRES_URL : 'nodb:');
 
 const migrationConf = {
   migrations: {
