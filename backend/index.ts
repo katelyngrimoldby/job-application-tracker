@@ -9,6 +9,7 @@ import { RequestUserAuth } from './types';
 
 import authService from './services/authService';
 import userRouter from './routes/users';
+import jobRouter from './routes/jobs';
 
 app.use(cors());
 app.use(express.json());
@@ -42,6 +43,7 @@ app.delete(
 );
 
 app.use('/api/users', userRouter);
+app.use('/api/jobs', tokenExtractor, jobRouter);
 
 const start = async () => {
   await connectToDatabase();
