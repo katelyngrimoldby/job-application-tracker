@@ -1,3 +1,4 @@
+import { isAxiosError } from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/userAuth';
@@ -7,6 +8,7 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const [, dispatch] = useStateValue();
 
@@ -18,11 +20,17 @@ const LoginForm = () => {
       password,
     };
 
-    const authResponse = await login(authPayload);
-    dispatch(setCurrentUser(authResponse));
-    window.localStorage.setItem('User', JSON.stringify(authResponse));
+    try {
+      const authResponse = await login(authPayload);
+      dispatch(setCurrentUser(authResponse));
+      window.localStorage.setItem('User', JSON.stringify(authResponse));
 
-    navigate('/');
+      navigate('/');
+    } catch (err) {
+      if (isAxiosError(err)) {
+        setError(err.response?.data);
+      }
+    }
   };
 
   return (
@@ -42,6 +50,7 @@ const LoginForm = () => {
         onChange={(event) => setPassword(event.target.value)}
       />
       <button disabled={!username || !password}>Log In</button>
+      {error && <p>{error}</p>}
     </form>
   );
 };
