@@ -14,7 +14,7 @@ jobRouter.get('/', async (req: RequestUserAuth, res: Response) => {
   res.json(result);
 });
 
-jobRouter.get(':/id', async (req: RequestUserAuth, res: Response) => {
+jobRouter.get('/:id', async (req: RequestUserAuth, res: Response) => {
   if (!req.decodedToken?.id) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
