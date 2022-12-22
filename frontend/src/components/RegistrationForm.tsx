@@ -1,12 +1,15 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { register } from '../services/userAuth';
 
 const RegistrationForm = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const newUser = {
@@ -15,12 +18,9 @@ const RegistrationForm = () => {
       password,
     };
 
-    console.log(newUser);
+    await register(newUser);
 
-    setUsername('');
-    setName('');
-    setPassword('');
-    setConfirmPass('');
+    navigate('/login');
   };
 
   return (
