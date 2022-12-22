@@ -1,7 +1,12 @@
-import { Model, DataTypes } from 'sequelize';
+import {
+  Model,
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+} from 'sequelize';
 import { sequelize } from '../util/db';
 
-class Job extends Model {}
+class Job extends Model<InferAttributes<Job>, InferCreationAttributes<Job>> {}
 Job.init(
   {
     id: {
