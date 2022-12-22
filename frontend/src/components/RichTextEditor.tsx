@@ -9,15 +9,19 @@ import Italic from '../assets/format-italic.svg';
 
 const RichTextEditor = ({
   initialContent,
+  id,
+  setContent,
 }: {
   initialContent?: JSONContent;
+  id: string;
+  setContent?: (content: JSONContent) => void;
 }) => {
   const editor = useEditor({
     extensions: [StarterKit],
     content: initialContent ? initialContent : '',
     onUpdate: ({ editor }) => {
       const json = editor.getJSON();
-      console.log(json);
+      console.log(typeof JSON.stringify(json));
     },
   });
 
@@ -50,7 +54,7 @@ const RichTextEditor = ({
   };
 
   return (
-    <div>
+    <div id={id}>
       <button
         onClick={() => editor?.chain().focus().toggleBold().run()}
         disabled={!editor?.can().chain().focus().toggleBold().run()}
