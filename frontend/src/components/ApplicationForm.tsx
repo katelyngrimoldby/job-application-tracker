@@ -5,9 +5,12 @@ import RichTextEditor from './RichTextEditor';
 type Status = 'applied' | 'interviewing' | 'offered' | 'rejected';
 
 const getFormattedDate = () => {
-  return `${new Date().getFullYear()}-${
-    new Date().getMonth() + 1
-  }-${new Date().getDate()}`;
+  const date = new Date().getDate();
+  const month = new Date().getMonth() + 1;
+
+  return `${new Date().getFullYear()}-${month < 10 ? '0' + month : month}-${
+    date < 10 ? '0' + date : date
+  }`;
 };
 
 const ApplicationForm = ({ content }: { content?: Job }) => {
