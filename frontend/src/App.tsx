@@ -1,6 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useStateValue, setCurrentUser } from './state';
 import { Header, Footer } from './components/Layout';
 import Jobs from './pages/jobs';
+import Landing from './pages/landing';
 import Login from './pages/login';
 import Register from './pages/register';
 import NewApplication from './pages/newApplication';
@@ -21,13 +24,22 @@ import Custom404 from './pages/custom404';
 // };
 
 function App() {
+  const [{ user }, dispatch] = useStateValue();
+
+  useEffect(() => {
+    const userJSON = window.localStorage.getItem('User');
+    if (userJSON) {
+      dispatch(setCurrentUser(JSON.parse(userJSON)));
+    }
+  }, []);
+
   return (
     <>
       <Header />
       <Routes>
         <Route
           path='/'
-          element={<Jobs />}
+          element={user ? <Jobs /> : <Landing />}
         />
         <Route
           path='/login'
