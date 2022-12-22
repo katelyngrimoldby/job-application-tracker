@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useEditor, EditorContent, JSONContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Undo from '../assets/undo.svg';
@@ -24,6 +25,12 @@ const RichTextEditor = ({
       setContent(JSON.stringify(json));
     },
   });
+
+  useEffect(() => {
+    if (initialContent === '') {
+      editor?.commands.clearContent();
+    }
+  }, [initialContent]);
 
   const handleTextChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     switch (event.target.value) {
