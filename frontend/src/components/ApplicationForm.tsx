@@ -1,8 +1,14 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Job } from '../types';
 import RichTextEditor from './RichTextEditor';
 
 type Status = 'applied' | 'interviewing' | 'offered' | 'rejected';
+
+const getFormattedDate = () => {
+  return `${new Date().getFullYear()}-${
+    new Date().getMonth() + 1
+  }-${new Date().getDate()}`;
+};
 
 const ApplicationForm = ({ content }: { content?: Job }) => {
   const [positionTitle, setPositionTitle] = useState(
@@ -11,11 +17,7 @@ const ApplicationForm = ({ content }: { content?: Job }) => {
   const [company, setCompany] = useState(content ? content.company : '');
   const [address, setAddress] = useState(content ? content.address : '');
   const [applied, setApplied] = useState(
-    content
-      ? content.applied
-      : `${new Date().getFullYear()}-${
-          new Date().getMonth() + 1
-        }-${new Date().getDate()}`
+    content ? content.applied : getFormattedDate()
   );
   const [compensation, setCompensation] = useState(
     content ? content.compensation : ''
@@ -30,14 +32,34 @@ const ApplicationForm = ({ content }: { content?: Job }) => {
     content ? content.jobDescription : ''
   );
 
-  const [interviewDate, setInterviewDate] = useState(
-    `${new Date().getFullYear()}-${
-      new Date().getMonth() + 1
-    }-${new Date().getDate()}`
-  );
+  const [interviewDate, setInterviewDate] = useState(getFormattedDate());
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const submission = {
+      positionTitle,
+      company,
+      address,
+      applied,
+      compensation,
+      status,
+      interviews,
+      jobDescription,
+    };
+
+    console.log(submission);
+    setPositionTitle('');
+    setCompany('');
+    setAddress('');
+    setApplied(getFormattedDate());
+    setCompensation('');
+    setInterviewDate(getFormattedDate());
+    setInterviews([]);
+    setJobDescription('');
+  };
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <input
         type='text'
         placeholder='Position'
@@ -94,6 +116,9 @@ const ApplicationForm = ({ content }: { content?: Job }) => {
         >
           Add
         </button>
+        {interviews.map((e, i) => (
+          <p key={i}>{e}</p>
+        ))}
       </div>
       <div>
         <label htmlFor='jobDesc'>Job Description</label>
@@ -105,6 +130,7 @@ const ApplicationForm = ({ content }: { content?: Job }) => {
           setContent={setJobDescription}
         />
       </div>
+      <button>Submit</button>
     </form>
   );
 };
