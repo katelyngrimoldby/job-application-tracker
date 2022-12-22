@@ -1,10 +1,16 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../services/userAuth';
+import { useStateValue, setCurrentUser } from '../state';
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [, dispatch] = useStateValue();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const authPayload = {
@@ -12,10 +18,10 @@ const LoginForm = () => {
       password,
     };
 
-    console.log(authPayload);
+    const authResponse = await login(authPayload);
+    dispatch(setCurrentUser(authResponse));
 
-    setUsername('');
-    setPassword('');
+    navigate('/');
   };
 
   return (
