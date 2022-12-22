@@ -10,3 +10,4 @@
 | Dec. 22 | 1hr 40min  | Build basic application form           |
 | Dec. 22 | 1hr        | Build job endpoints                    |
 | Dec. 22 | 1hr        | User forms and routing                 |
+| Dec. 22 | 1hr 13 min | Integrate user management to frontend  |
