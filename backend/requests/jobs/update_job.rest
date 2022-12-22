@@ -1,0 +1,13 @@
+PUT http://localhost:3000/api/jobs/2
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImthdGVseW5ncmltb2xkYnkiLCJpZCI6MSwiaWF0IjoxNjcxNzQxMjc1fQ.2ZrbTKOz-xa30ZaK9QLBXJ7ww2a3jNlFKQ41VT_Jimc
+Content-Type: application/json
+
+{
+  "positionTitle": "testing",
+  "location": "remote",
+  "company": "test inc",
+  "applied": "2022-12-22",
+  "compensation": "5k",
+  "interviews": ["2022-12-22", "2021-01-02", "2020-08-29"],
+  "status": "rejected"
+}
