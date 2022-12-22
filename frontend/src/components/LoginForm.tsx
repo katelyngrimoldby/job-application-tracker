@@ -20,6 +20,7 @@ const LoginForm = () => {
 
     const authResponse = await login(authPayload);
     dispatch(setCurrentUser(authResponse));
+    window.localStorage.setItem('User', JSON.stringify(authResponse));
 
     navigate('/');
   };
