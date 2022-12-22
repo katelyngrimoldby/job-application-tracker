@@ -6,7 +6,7 @@ const dummyJob: Job = {
   jobDescription:
     '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"teee"}]}]}',
   positionTitle: 'test',
-  address: 'remote',
+  location: 'remote',
   company: 'test inc',
   applied: '2022-12-22',
   compensation: '5k',
