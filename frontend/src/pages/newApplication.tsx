@@ -1,5 +1,12 @@
+import ApplicationForm from '../components/ApplicationForm';
+
 const NewApplication = () => {
-  return <h1>New Application</h1>;
+  return (
+    <>
+      <h2>New Application</h2>
+      <ApplicationForm />
+    </>
+  );
 };
 
 export default NewApplication;
