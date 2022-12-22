@@ -10,3 +10,9 @@ export interface Job {
   jobDescription: string;
   userId: number;
 }
+
+export interface User {
+  name: string;
+  token: string;
+  username: string;
+}
