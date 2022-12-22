@@ -12,16 +12,16 @@ const RichTextEditor = ({
   id,
   setContent,
 }: {
-  initialContent?: JSONContent;
+  initialContent: JSONContent | string;
   id: string;
-  setContent?: (content: JSONContent) => void;
+  setContent: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const editor = useEditor({
     extensions: [StarterKit],
     content: initialContent ? initialContent : '',
     onUpdate: ({ editor }) => {
       const json = editor.getJSON();
-      console.log(typeof JSON.stringify(json));
+      setContent(JSON.stringify(json));
     },
   });
 
