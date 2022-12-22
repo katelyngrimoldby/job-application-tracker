@@ -1,9 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 const app = express();
-import { PORT, POSTGRES_URL } from './util/config';
+import { PORT } from './util/config';
 import { connectToDatabase } from './util/db';
-
 import userRouter from './routes/users';
 
 app.use(cors());
@@ -16,7 +15,6 @@ app.get('/', (_req, res) => {
 app.use('/api/users', userRouter);
 
 const start = async () => {
-  console.log(POSTGRES_URL);
   await connectToDatabase();
 
   app.listen(PORT, () => {
