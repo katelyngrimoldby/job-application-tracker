@@ -10,3 +10,14 @@ export interface Signature extends JwtPayload {
 export interface RequestUserAuth extends Request {
   decodedToken?: Signature;
 }
+
+export interface NewJob {
+  positionTitle: string;
+  company: string;
+  location: string;
+  applied: string;
+  compensation: string;
+  status: 'applied' | 'interviewing' | 'offered' | 'rejected';
+  interviews: string[];
+  jobDescription: string;
+}
