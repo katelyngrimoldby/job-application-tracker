@@ -18,7 +18,7 @@ const ApplicationForm = ({ content }: { content?: Job }) => {
     content ? content.positionTitle : ''
   );
   const [company, setCompany] = useState(content ? content.company : '');
-  const [address, setAddress] = useState(content ? content.address : '');
+  const [location, setLocation] = useState(content ? content.location : '');
   const [applied, setApplied] = useState(
     content ? content.applied : getFormattedDate()
   );
@@ -42,7 +42,7 @@ const ApplicationForm = ({ content }: { content?: Job }) => {
     const submission = {
       positionTitle,
       company,
-      address,
+      location,
       applied,
       compensation,
       status,
@@ -53,7 +53,7 @@ const ApplicationForm = ({ content }: { content?: Job }) => {
     console.log(submission);
     setPositionTitle('');
     setCompany('');
-    setAddress('');
+    setLocation('');
     setApplied(getFormattedDate());
     setCompensation('');
     setInterviewDate(getFormattedDate());
@@ -78,8 +78,8 @@ const ApplicationForm = ({ content }: { content?: Job }) => {
       <input
         type='text'
         placeholder='Location'
-        value={address}
-        onChange={(event) => setAddress(event.target.value)}
+        value={location}
+        onChange={(event) => setLocation(event.target.value)}
       />
       <label htmlFor='appliedDate'>Applied: </label>
       <input
