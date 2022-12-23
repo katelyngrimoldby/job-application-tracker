@@ -9,7 +9,7 @@ const getAll = async (token: string) => {
     },
   };
 
-  const response = await axios.get(`${baseUrl}/jobs`, config);
+  const response = await axios.get<Job[]>(`${baseUrl}/jobs`, config);
 
   return response.data;
 };
@@ -21,9 +21,41 @@ const addNew = async (token: string, payload: Omit<Job, 'id' | 'userId'>) => {
     },
   };
 
-  const response = await axios.post(`${baseUrl}/jobs`, payload, config);
+  const response = await axios.post<Job>(`${baseUrl}/jobs`, payload, config);
 
   return response.data;
 };
 
-export { getAll, addNew };
+const editJob = async (
+  token: string,
+  payload: Omit<Job, 'id' | 'userId'>,
+  id: number
+) => {
+  const config = {
+    headers: {
+      Authorization: `bearer ${token}`,
+    },
+  };
+
+  const response = await axios.put<Job>(
+    `${baseUrl}/jobs/${id}`,
+    payload,
+    config
+  );
+
+  return response.data;
+};
+
+const deleteJob = async (token: string, id: number) => {
+  const config = {
+    headers: {
+      Authorization: `bearer ${token}`,
+    },
+  };
+
+  const response = await axios.delete(`${baseUrl}/jobs/${id}`, config);
+
+  return response.data;
+};
+
+export { getAll, addNew, editJob, deleteJob };
