@@ -25,7 +25,7 @@ app.post('/api/login', async (req, res) => {
 
     res.json(result);
   } catch (err) {
-    res.status(401).json(err);
+    res.status(401).json('Incorrect username or password');
   }
 });
 
