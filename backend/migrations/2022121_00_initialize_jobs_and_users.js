@@ -36,7 +36,7 @@ const up = async ({ context: queryInterface }) => {
       type: DataTypes.ARRAY(DataTypes.DATE),
     },
     job_description: {
-      type: DataTypes.JSON,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
   });
