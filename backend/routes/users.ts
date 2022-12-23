@@ -31,7 +31,7 @@ userRouter.post('/', async (req, res) => {
       .json({ error: 'Password must be at least 3 characters long' });
   }
   try {
-    const user = await userService.addNew(username, name, password);
+    const user = await userService.addNew(username, password, name);
 
     return res.json(user);
   } catch (err) {
