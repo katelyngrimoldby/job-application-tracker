@@ -4,7 +4,7 @@ import StarterKit from '@tiptap/starter-kit';
 const ReadOnlyRichText = ({ content }: { content: string }) => {
   const editor = useEditor({
     extensions: [StarterKit],
-    content: JSON.parse(content),
+    content: content,
     editable: false,
   });
 
