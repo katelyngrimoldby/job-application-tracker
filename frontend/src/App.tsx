@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useMatch } from 'react-router-dom';
 import { useEffect } from 'react';
 import { getAll } from './services/jobs';
 import { useStateValue, setCurrentUser, setJobList } from './state';
@@ -9,23 +9,10 @@ import Login from './pages/login';
 import Register from './pages/register';
 import NewApplication from './pages/newApplication';
 import Custom404 from './pages/custom404';
-
-// const dummyJob: Job = {
-//   jobDescription:
-//     '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"teee"}]}]}',
-//   positionTitle: 'test',
-//   location: 'remote',
-//   company: 'test inc',
-//   applied: '2022-12-22',
-//   compensation: '5k',
-//   interviews: ['2022-12-22', '2021-01-02'],
-//   status: 'offered',
-//   id: 1,
-//   userId: 1,
-// };
+import SingleJob from './pages/singleJob';
 
 function App() {
-  const [{ user }, dispatch] = useStateValue();
+  const [{ jobs }, dispatch] = useStateValue();
 
   const fetchJobs = async (token: string) => {
     const jobs = await getAll(token);
@@ -42,13 +29,32 @@ function App() {
     }
   }, []);
 
+  const findJob = (id: number) => {
+    const job = Object.values(jobs).find((job) => job.id === id);
+    if (job) {
+      return job;
+    }
+    return null;
+  };
+
+  const match = useMatch('/jobs/:id');
+  const job = match ? findJob(Number(match.params.id)) : undefined;
+
   return (
     <>
       <Header />
       <Routes>
         <Route
           path='/'
-          element={user ? <Jobs /> : <Landing />}
+          element={<Landing />}
+        />
+        <Route
+          path='/jobs'
+          element={<Jobs />}
+        />
+        <Route
+          path='/jobs/:id'
+          element={<SingleJob job={job} />}
         />
         <Route
           path='/login'
