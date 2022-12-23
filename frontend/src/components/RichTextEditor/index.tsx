@@ -65,6 +65,7 @@ const RichTextEditor = ({
       <button
         onClick={() => editor?.chain().focus().toggleBold().run()}
         disabled={!editor?.can().chain().focus().toggleBold().run()}
+        type='button'
       >
         <img
           src={Bold}
@@ -74,6 +75,7 @@ const RichTextEditor = ({
       <button
         onClick={() => editor?.chain().focus().toggleItalic().run()}
         disabled={!editor?.can().chain().focus().toggleItalic().run()}
+        type='button'
       >
         <img
           src={Italic}
@@ -94,13 +96,19 @@ const RichTextEditor = ({
         <option value='h6'>Header 6</option>
       </select>
 
-      <button onClick={() => editor?.chain().focus().toggleBulletList().run()}>
+      <button
+        onClick={() => editor?.chain().focus().toggleBulletList().run()}
+        type='button'
+      >
         <img
           src={BulletList}
           width='24'
         />
       </button>
-      <button onClick={() => editor?.chain().focus().toggleOrderedList().run()}>
+      <button
+        onClick={() => editor?.chain().focus().toggleOrderedList().run()}
+        type='button'
+      >
         <img
           src={NumberList}
           width='24'
@@ -109,6 +117,7 @@ const RichTextEditor = ({
       <button
         onClick={() => editor?.chain().focus().undo().run()}
         disabled={!editor?.can().chain().focus().undo().run()}
+        type='button'
       >
         <img
           src={Undo}
@@ -118,6 +127,7 @@ const RichTextEditor = ({
       <button
         onClick={() => editor?.chain().focus().redo().run()}
         disabled={!editor?.can().chain().focus().redo().run()}
+        type='button'
       >
         <img
           src={Redo}
