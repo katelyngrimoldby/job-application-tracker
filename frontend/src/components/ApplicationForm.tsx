@@ -127,9 +127,7 @@ const ApplicationForm = ({ content }: { content?: Job }) => {
         <label htmlFor='jobDesc'>Job Description</label>
         <RichTextEditor
           id='jobDesc'
-          initialContent={
-            jobDescription ? JSON.parse(jobDescription) : jobDescription
-          }
+          initialContent={jobDescription}
           setContent={setJobDescription}
         />
       </div>
