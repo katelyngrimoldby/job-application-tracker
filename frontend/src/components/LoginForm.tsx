@@ -2,7 +2,8 @@ import { isAxiosError } from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/userAuth';
-import { useStateValue, setCurrentUser } from '../state';
+import { getAll } from '../services/jobs';
+import { useStateValue, setCurrentUser, setJobList } from '../state';
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -24,6 +25,9 @@ const LoginForm = () => {
       const authResponse = await login(authPayload);
       dispatch(setCurrentUser(authResponse));
       window.localStorage.setItem('User', JSON.stringify(authResponse));
+
+      const jobs = await getAll(authResponse.token);
+      dispatch(setJobList(jobs));
 
       navigate('/');
     } catch (err) {
