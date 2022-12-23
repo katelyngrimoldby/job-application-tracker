@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { isAxiosError } from 'axios';
+import { useStateValue, addJob } from '../state';
+import { addNew } from '../services/jobs';
 import { Job } from '../types';
 import RichTextEditor from './RichTextEditor';
 
@@ -14,6 +18,7 @@ const getFormattedDate = () => {
 };
 
 const ApplicationForm = ({ content }: { content?: Job }) => {
+  const navigate = useNavigate();
   const [positionTitle, setPositionTitle] = useState(
     content ? content.positionTitle : ''
   );
@@ -34,10 +39,16 @@ const ApplicationForm = ({ content }: { content?: Job }) => {
   const [jobDescription, setJobDescription] = useState(
     content ? content.jobDescription : ''
   );
-
   const [interviewDate, setInterviewDate] = useState(getFormattedDate());
+  const [error, setError] = useState('');
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [{ user }, dispatch] = useStateValue();
+
+  if (!user) {
+    return <h2>401 Unauthorized</h2>;
+  }
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const submission = {
       positionTitle,
@@ -50,36 +61,40 @@ const ApplicationForm = ({ content }: { content?: Job }) => {
       jobDescription,
     };
 
-    console.log(submission);
-    setPositionTitle('');
-    setCompany('');
-    setLocation('');
-    setApplied(getFormattedDate());
-    setCompensation('');
-    setInterviewDate(getFormattedDate());
-    setInterviews([]);
-    setJobDescription('');
+    try {
+      const job = await addNew(user.token, submission);
+      dispatch(addJob(job));
+      navigate('/');
+    } catch (err) {
+      if (isAxiosError(err)) {
+        setError(err.response?.data);
+      }
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      {error && <p>{error}</p>}
       <input
         type='text'
         placeholder='Position'
         value={positionTitle}
         onChange={(event) => setPositionTitle(event.target.value)}
+        required
       />
       <input
         type='text'
         placeholder='Company'
         value={company}
         onChange={(event) => setCompany(event.target.value)}
+        required
       />
       <input
         type='text'
         placeholder='Location'
         value={location}
         onChange={(event) => setLocation(event.target.value)}
+        required
       />
       <label htmlFor='appliedDate'>Applied: </label>
       <input
