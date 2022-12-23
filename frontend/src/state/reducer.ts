@@ -7,6 +7,10 @@ export type Action =
       payload: Job[];
     }
   | {
+      type: 'ADD_JOB';
+      payload: Job;
+    }
+  | {
       type: 'SET_CURRENT_USER';
       payload: User;
     }
@@ -17,6 +21,10 @@ export type Action =
 
 export const setJobList = (payload: Job[]): Action => {
   return { type: 'SET_JOB_LIST', payload: payload };
+};
+
+export const addJob = (payload: Job): Action => {
+  return { type: 'ADD_JOB', payload: payload };
 };
 
 export const setCurrentUser = (payload: User): Action => {
@@ -38,6 +46,14 @@ export const reducer = (state: State, action: Action): State => {
             {}
           ),
           ...state.jobs,
+        },
+      };
+    case 'ADD_JOB':
+      return {
+        ...state,
+        jobs: {
+          ...state.jobs,
+          [action.payload.id]: action.payload,
         },
       };
     case 'SET_CURRENT_USER':
