@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useEditor, EditorContent, JSONContent } from '@tiptap/react';
+import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Undo from '../../assets/undo.svg';
 import Redo from '../../assets/redo.svg';
@@ -13,7 +13,7 @@ const RichTextEditor = ({
   id,
   setContent,
 }: {
-  initialContent: JSONContent | string;
+  initialContent: string;
   id: string;
   setContent: React.Dispatch<React.SetStateAction<string>>;
 }) => {
@@ -21,8 +21,8 @@ const RichTextEditor = ({
     extensions: [StarterKit],
     content: initialContent ? initialContent : '',
     onUpdate: ({ editor }) => {
-      const json = editor.getJSON();
-      setContent(JSON.stringify(json));
+      const content = editor.getHTML();
+      setContent(content);
     },
   });
 
