@@ -54,7 +54,7 @@ Job.init(
       type: DataTypes.ARRAY(DataTypes.DATE),
     },
     jobDescription: {
-      type: DataTypes.JSON,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     userId: {
