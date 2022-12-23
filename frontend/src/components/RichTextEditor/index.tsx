@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useEditor, EditorContent, JSONContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import Undo from '../assets/undo.svg';
-import Redo from '../assets/redo.svg';
-import BulletList from '../assets/format-list-bulleted.svg';
-import NumberList from '../assets/format-list-numbered.svg';
-import Bold from '../assets/format-bold.svg';
-import Italic from '../assets/format-italic.svg';
+import Undo from '../../assets/undo.svg';
+import Redo from '../../assets/redo.svg';
+import BulletList from '../../assets/format-list-bulleted.svg';
+import NumberList from '../../assets/format-list-numbered.svg';
+import Bold from '../../assets/format-bold.svg';
+import Italic from '../../assets/format-italic.svg';
 
 const RichTextEditor = ({
   initialContent,
