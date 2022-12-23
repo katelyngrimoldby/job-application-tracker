@@ -1,6 +1,4 @@
 import express from 'express';
-import bcrypt from 'bcrypt';
-import { User } from '../models';
 import userService from '../services/userService';
 
 const userRouter = express.Router();
@@ -25,17 +23,15 @@ userRouter.post('/', async (req, res) => {
   const { username, name, password } = req.body;
 
   if (!password) {
-    return res.status(400).json({ error: 'password is required' });
+    return res.status(400).json({ error: 'Password is required' });
   }
   if (password.length < 3) {
     return res
       .status(400)
-      .json({ error: 'password must be at least 3 characters long' });
+      .json({ error: 'Password must be at least 3 characters long' });
   }
-  const saltRounds = 10;
-  const passwordHash = await bcrypt.hash(password, saltRounds);
   try {
-    const user = await User.create({ username, name, passwordHash });
+    const user = await userService.addNew(username, name, password);
 
     return res.json(user);
   } catch (err) {
