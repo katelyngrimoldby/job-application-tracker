@@ -10,6 +10,7 @@ import Register from './pages/register';
 import NewApplication from './pages/newApplication';
 import Custom404 from './pages/custom404';
 import SingleJob from './pages/singleJob';
+import Edit from './pages/singleJob/edit';
 
 function App() {
   const [{ jobs }, dispatch] = useStateValue();
@@ -37,8 +38,13 @@ function App() {
     return null;
   };
 
-  const match = useMatch('/jobs/:id');
-  const job = match ? findJob(Number(match.params.id)) : undefined;
+  const matchJob = useMatch('/jobs/:id');
+  const job = matchJob ? findJob(Number(matchJob.params.id)) : undefined;
+
+  const matchJobEdit = useMatch('/jobs/:id/edit');
+  const jobEdit = matchJobEdit
+    ? findJob(Number(matchJobEdit.params.id))
+    : undefined;
 
   return (
     <>
@@ -55,6 +61,10 @@ function App() {
         <Route
           path='/jobs/:id'
           element={<SingleJob job={job} />}
+        />
+        <Route
+          path='/jobs/:id/edit'
+          element={<Edit job={jobEdit} />}
         />
         <Route
           path='/login'
