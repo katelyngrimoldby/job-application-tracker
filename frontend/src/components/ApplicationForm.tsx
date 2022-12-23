@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { isAxiosError } from 'axios';
-import { useStateValue, addJob } from '../state';
-import { addNew } from '../services/jobs';
+import { useStateValue, addJob, updateJob } from '../state';
+import { addNew, editJob } from '../services/jobs';
 import { Job } from '../types';
 import RichTextEditor from './RichTextEditor';
 
@@ -25,7 +25,7 @@ const ApplicationForm = ({ content }: { content?: Job }) => {
   const [company, setCompany] = useState(content ? content.company : '');
   const [location, setLocation] = useState(content ? content.location : '');
   const [applied, setApplied] = useState(
-    content ? content.applied : getFormattedDate()
+    content ? content.applied.substring(0, 10) : getFormattedDate()
   );
   const [compensation, setCompensation] = useState(
     content ? content.compensation : ''
@@ -60,14 +60,25 @@ const ApplicationForm = ({ content }: { content?: Job }) => {
       interviews,
       jobDescription,
     };
-
-    try {
-      const job = await addNew(user.token, submission);
-      dispatch(addJob(job));
-      navigate('/');
-    } catch (err) {
-      if (isAxiosError(err)) {
-        setError(err.response?.data);
+    if (!content) {
+      try {
+        const job = await addNew(user.token, submission);
+        dispatch(addJob(job));
+        navigate(`/jobs/${job.id}`);
+      } catch (err) {
+        if (isAxiosError(err)) {
+          setError(err.response?.data);
+        }
+      }
+    } else {
+      try {
+        const job = await editJob(user.token, submission, content.id);
+        dispatch(updateJob(job));
+        navigate(`/jobs/${job.id}`);
+      } catch (err) {
+        if (isAxiosError(err)) {
+          setError(err.response?.data);
+        }
       }
     }
   };
@@ -135,7 +146,7 @@ const ApplicationForm = ({ content }: { content?: Job }) => {
           Add
         </button>
         {interviews.map((e, i) => (
-          <p key={i}>{e}</p>
+          <p key={i}>{e.substring(0, 10)}</p>
         ))}
       </div>
       <div>
