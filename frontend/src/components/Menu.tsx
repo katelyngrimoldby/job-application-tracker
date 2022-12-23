@@ -16,7 +16,7 @@ const Menu = () => {
   return (
     <ul>
       <li>
-        <Link to='/'>{user ? 'Your applications' : 'Home'}</Link>
+        <Link to='/'>Home</Link>
       </li>
       {!user && (
         <>
@@ -30,6 +30,9 @@ const Menu = () => {
       )}
       {user && (
         <>
+          <li>
+            <Link to='/jobs'>Your Applications</Link>
+          </li>
           <li>
             <Link to='/new'>New Application</Link>
           </li>
