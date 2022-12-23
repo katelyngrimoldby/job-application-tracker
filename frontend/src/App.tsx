@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useStateValue, setCurrentUser } from './state';
+import { getAll } from './services/jobs';
+import { useStateValue, setCurrentUser, setJobList } from './state';
 import { Header, Footer } from './components/Layout';
 import Jobs from './pages/jobs';
 import Landing from './pages/landing';
@@ -26,10 +27,18 @@ import Custom404 from './pages/custom404';
 function App() {
   const [{ user }, dispatch] = useStateValue();
 
+  const fetchJobs = async (token: string) => {
+    const jobs = await getAll(token);
+    dispatch(setJobList(jobs));
+  };
+
   useEffect(() => {
     const userJSON = window.localStorage.getItem('User');
     if (userJSON) {
-      dispatch(setCurrentUser(JSON.parse(userJSON)));
+      const userAuth = JSON.parse(userJSON);
+      dispatch(setCurrentUser(userAuth));
+
+      fetchJobs(userAuth.token);
     }
   }, []);
 
