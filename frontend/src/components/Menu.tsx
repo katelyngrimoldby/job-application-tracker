@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useStateValue, clearCurrentUser } from '../state';
 import { logout } from '../services/userAuth';
@@ -9,19 +10,22 @@ import styles from '../styles/components/Menu.module.css';
 const Menu = () => {
   const [{ user }, dispatch] = useStateValue();
   const [visible, setVisible] = useState(false);
+  const navigate = useNavigate();
 
   const handleClick = async () => {
     if (user) {
+      setVisible(false);
       await logout(user.token);
       dispatch(clearCurrentUser());
       window.localStorage.removeItem('User');
+      navigate('/');
     }
   };
 
   return (
     <div>
       <button
-        onClick={() => setVisible(!visible)}
+        onClick={() => setVisible(true)}
         className={styles.menuButton}
       >
         <img
@@ -33,7 +37,7 @@ const Menu = () => {
       </button>
       <nav className={visible ? styles.navVisible : styles.nav}>
         <button
-          onClick={() => setVisible(!visible)}
+          onClick={() => setVisible(false)}
           className={styles.menuButton}
         >
           <img
@@ -45,25 +49,50 @@ const Menu = () => {
         </button>
         <ul>
           <li>
-            <Link to='/'>Home</Link>
+            <Link
+              to='/'
+              onClick={() => setVisible(false)}
+            >
+              Home
+            </Link>
           </li>
           {!user && (
             <>
               <li>
-                <Link to='/login'>Log In</Link>
+                <Link
+                  to='/login'
+                  onClick={() => setVisible(false)}
+                >
+                  Log In
+                </Link>
               </li>
               <li>
-                <Link to='/register'>Register</Link>
+                <Link
+                  to='/register'
+                  onClick={() => setVisible(false)}
+                >
+                  Register
+                </Link>
               </li>
             </>
           )}
           {user && (
             <>
               <li>
-                <Link to='/jobs'>Your Applications</Link>
+                <Link
+                  to='/jobs'
+                  onClick={() => setVisible(false)}
+                >
+                  Your Applications
+                </Link>
               </li>
               <li>
-                <Link to='/new'>New Application</Link>
+                <Link
+                  to='/new'
+                  onClick={() => setVisible(false)}
+                >
+                  New Application
+                </Link>
               </li>
               <li>
                 <button
