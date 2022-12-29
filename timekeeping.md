@@ -10,5 +10,6 @@
 | Dec. 22 | 1hr 40min  | Build basic application form           |
 | Dec. 22 | 1hr        | Build job endpoints                    |
 | Dec. 22 | 1hr        | User forms and routing                 |
-| Dec. 22 | 1hr 15 min | Integrate user management to frontend  |
-| Dec.23  | 3hr 15min  | Integrate job management to frontend   |
+| Dec. 22 | 1hr 15min  | Integrate user management to frontend  |
+| Dec. 23 | 3hr 15min  | Integrate job management to frontend   |
+| Dec. 29 | 1hr 30min  | Implement type proofing for api        |
