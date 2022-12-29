@@ -20,7 +20,17 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 1rem;
+    }
+
+    a {
+      color: var(--accent-secondary);
+      font-weight: 500;
+      transition: color 200ms ease-in-out;
+
+      &:hover {
+        color: var(--accent-main);
+      }
     }
   }
 
@@ -31,10 +41,5 @@
   .navVisible {
     transform: translate(0%);
     box-shadow: 0 0 0 100000px rgba(0, 0, 0, 0.2);
-  }
-
-  .menuButton {
-    background: none;
-    border: none;
   }
 }
