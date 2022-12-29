@@ -1,0 +1,22 @@
+@import 'variables.css';
+
+.header,
+.footer {
+  background-color: var(--background-secondary);
+  padding: 1rem;
+}
+
+.header {
+  display: flex;
+}
+
+.footer {
+  background-color: var(--background-secondary);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+  p:first-of-type {
+    margin-bottom: 0.5rem;
+  }
+}

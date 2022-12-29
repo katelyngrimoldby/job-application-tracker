@@ -1,19 +1,22 @@
+import { useStateValue } from '../state';
 import Menu from './Menu';
+import styles from '../styles/Layout.module.css';
 
 const Header = () => {
+  const [{ user }] = useStateValue();
   return (
-    <header>
+    <header className={styles.header}>
       <Menu />
-      <h1>Job Application Tracker</h1>
+      {user && <span>Welcome, {user.name}</span>}
     </header>
   );
 };
 
 const Footer = () => {
   return (
-    <footer>
+    <footer className={styles.footer}>
       <p>Privacy Policy</p>
-      <p>Designed and developed Katelyn Grimoldby © 2022</p>
+      <p>Designed and developed by Katelyn Grimoldby © 2022</p>
     </footer>
   );
 };
