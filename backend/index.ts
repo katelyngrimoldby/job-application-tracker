@@ -1,11 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 const app = express();
+import 'express-async-errors';
 import { PORT } from './util/config';
 import { connectToDatabase } from './util/db';
 import tokenExtractor from './middleware/tokenExtractor';
 import errorHandler from './middleware/errorHandler';
-import { Response } from 'express';
 import { RequestUserAuth } from './types';
 
 import authService from './services/authService';
@@ -19,29 +19,21 @@ app.get('/', (_req, res) => {
   res.send('working');
 });
 
-app.post('/api/login', async (req, res, next) => {
+app.post('/api/login', async (req, res) => {
   const { username, password } = req.body;
-  try {
-    const result = await authService.login(username, password);
+  const result = await authService.login(username, password);
 
-    res.json(result);
-  } catch (err) {
-    next(err);
-  }
+  res.json(result);
 });
 
-app.delete(
-  '/api/logout',
-  tokenExtractor,
-  async (req: RequestUserAuth, res: Response) => {
-    if (req.decodedToken) {
-      const result = await authService.logout(req.decodedToken.id);
+app.delete('/api/logout', tokenExtractor, async (req: RequestUserAuth, res) => {
+  if (req.decodedToken) {
+    const result = await authService.logout(req.decodedToken.id);
 
-      return res.status(204).json(result);
-    }
-    return res.status(401).json({ error: 'Missing authentication' });
+    return res.status(204).json(result);
   }
-);
+  return res.status(401).json({ error: 'Missing authentication' });
+});
 
 app.use('/api/users', userRouter);
 app.use('/api/jobs', tokenExtractor, jobRouter);
