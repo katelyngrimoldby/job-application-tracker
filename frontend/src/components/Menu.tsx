@@ -69,6 +69,7 @@ const Menu = () => {
                 <button
                   type='button'
                   onClick={handleClick}
+                  className='secondary'
                 >
                   Log out
                 </button>
