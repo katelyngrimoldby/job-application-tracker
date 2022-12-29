@@ -1,5 +1,6 @@
 import express from 'express';
 import userService from '../services/userService';
+import { toNewUser } from '../util/parsers';
 
 const userRouter = express.Router();
 
@@ -22,20 +23,15 @@ userRouter.get('/:id', async (req, res) => {
 userRouter.post('/', async (req, res) => {
   const { username, name, password } = req.body;
 
-  if (!password) {
-    return res.status(400).json({ error: 'Password is required' });
-  }
-  if (password.length < 3) {
-    return res
-      .status(400)
-      .json({ error: 'Password must be at least 3 characters long' });
-  }
   try {
-    const user = await userService.addNew(username, password, name);
+    const newUser = toNewUser(username, name, password);
+    const user = await userService.addNew(newUser);
 
     return res.json(user);
   } catch (err) {
-    return res.status(400).send(err);
+    if (err instanceof Error) {
+      res.status(400).json({ error: err.message });
+    }
   }
 });
 
