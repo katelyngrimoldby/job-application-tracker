@@ -4,6 +4,7 @@ const app = express();
 import { PORT } from './util/config';
 import { connectToDatabase } from './util/db';
 import tokenExtractor from './middleware/tokenExtractor';
+import errorHandler from './middleware/errorHandler';
 import { Response } from 'express';
 import { RequestUserAuth } from './types';
 
@@ -18,14 +19,14 @@ app.get('/', (_req, res) => {
   res.send('working');
 });
 
-app.post('/api/login', async (req, res) => {
+app.post('/api/login', async (req, res, next) => {
   const { username, password } = req.body;
   try {
     const result = await authService.login(username, password);
 
     res.json(result);
   } catch (err) {
-    res.status(401).json('Incorrect username or password');
+    next(err);
   }
 });
 
@@ -44,6 +45,8 @@ app.delete(
 
 app.use('/api/users', userRouter);
 app.use('/api/jobs', tokenExtractor, jobRouter);
+
+app.use(errorHandler);
 
 const start = async () => {
   await connectToDatabase();
