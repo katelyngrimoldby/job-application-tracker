@@ -1,5 +1,6 @@
 import express, { Response } from 'express';
 import { RequestUserAuth } from '../types';
+import { toNewJob } from '../util/parsers';
 import jobService from '../services/jobService';
 
 const jobRouter = express.Router();
@@ -40,7 +41,8 @@ jobRouter.post('/', async (req: RequestUserAuth, res: Response) => {
   }
 
   try {
-    const result = await jobService.addNew(req.body, req.decodedToken.id);
+    const newJob = toNewJob(req.body);
+    const result = await jobService.addNew(newJob, req.decodedToken.id);
 
     res.json(result);
   } catch (err) {
@@ -56,10 +58,11 @@ jobRouter.put('/:id', async (req: RequestUserAuth, res: Response) => {
   const id = req.params.id;
 
   try {
+    const updatedJob = toNewJob(req.body);
     const result = await jobService.update(
       Number(id),
       req.decodedToken?.id,
-      req.body
+      updatedJob
     );
 
     if (!result) {
