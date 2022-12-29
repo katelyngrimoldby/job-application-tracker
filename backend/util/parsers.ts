@@ -1,4 +1,4 @@
-import { NewJob, Status } from '../types';
+import { NewJob, Status, NewUser } from '../types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const toNewJob = (obj: any): NewJob => {
@@ -14,6 +14,16 @@ const toNewJob = (obj: any): NewJob => {
   };
 
   return newJob;
+};
+
+const toNewUser = (username: unknown, name: unknown, password: unknown) => {
+  const newUser: NewUser = {
+    username: parseString(username, 'Username'),
+    name: parseString(name, 'Name'),
+    password: parsePassword(password),
+  };
+
+  return newUser;
 };
 
 const parseString = (string: unknown, key: string): string => {
@@ -50,6 +60,18 @@ const parseInterviews = (arr: unknown): string[] => {
   );
 };
 
+const parsePassword = (password: unknown): string => {
+  if (!password || !isString(password)) {
+    throw new Error('Missing or invalid password');
+  }
+
+  if (password.length < 5) {
+    throw new Error('Password must be at least five (5) characters long');
+  }
+
+  return password;
+};
+
 const isString = (string: unknown): string is string => {
   return typeof string === 'string' || string instanceof String;
 };
@@ -63,4 +85,4 @@ const isStatus = (string: any): string is Status => {
   return Object.values(Status).includes(string);
 };
 
-export { toNewJob };
+export { toNewJob, toNewUser };
