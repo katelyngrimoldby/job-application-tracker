@@ -1,11 +1,11 @@
-import express, { Response } from 'express';
+import express from 'express';
 import { RequestUserAuth } from '../types';
 import { toNewJob } from '../util/parsers';
 import jobService from '../services/jobService';
 
 const jobRouter = express.Router();
 
-jobRouter.get('/', async (req: RequestUserAuth, res: Response) => {
+jobRouter.get('/', async (req: RequestUserAuth, res) => {
   if (!req.decodedToken?.id) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
@@ -15,7 +15,7 @@ jobRouter.get('/', async (req: RequestUserAuth, res: Response) => {
   res.json(result);
 });
 
-jobRouter.get('/:id', async (req: RequestUserAuth, res: Response) => {
+jobRouter.get('/:id', async (req: RequestUserAuth, res, next) => {
   if (!req.decodedToken?.id) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
@@ -31,11 +31,11 @@ jobRouter.get('/:id', async (req: RequestUserAuth, res: Response) => {
 
     res.json(result);
   } catch (err) {
-    res.status(401).json(err);
+    next(err);
   }
 });
 
-jobRouter.post('/', async (req: RequestUserAuth, res: Response) => {
+jobRouter.post('/', async (req: RequestUserAuth, res, next) => {
   if (!req.decodedToken?.id) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
@@ -46,11 +46,11 @@ jobRouter.post('/', async (req: RequestUserAuth, res: Response) => {
 
     res.json(result);
   } catch (err) {
-    res.status(400).json(err);
+    next(err);
   }
 });
 
-jobRouter.put('/:id', async (req: RequestUserAuth, res: Response) => {
+jobRouter.put('/:id', async (req: RequestUserAuth, res, next) => {
   if (!req.decodedToken?.id) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
@@ -71,11 +71,11 @@ jobRouter.put('/:id', async (req: RequestUserAuth, res: Response) => {
 
     res.json(result);
   } catch (err) {
-    res.json(err);
+    next(err);
   }
 });
 
-jobRouter.delete('/:id', async (req: RequestUserAuth, res: Response) => {
+jobRouter.delete('/:id', async (req: RequestUserAuth, res, next) => {
   if (!req.decodedToken?.id) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
@@ -91,7 +91,7 @@ jobRouter.delete('/:id', async (req: RequestUserAuth, res: Response) => {
 
     res.json(result);
   } catch (err) {
-    res.json(err);
+    next(err);
   }
 });
 
