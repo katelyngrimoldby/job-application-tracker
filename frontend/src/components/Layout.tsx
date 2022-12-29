@@ -1,6 +1,6 @@
 import { useStateValue } from '../state';
 import Menu from './Menu';
-import styles from '../styles/Layout.module.css';
+import styles from '../styles/components/Layout.module.css';
 
 const Header = () => {
   const [{ user }] = useStateValue();
