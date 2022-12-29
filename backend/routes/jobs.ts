@@ -15,84 +15,68 @@ jobRouter.get('/', async (req: RequestUserAuth, res) => {
   res.json(result);
 });
 
-jobRouter.get('/:id', async (req: RequestUserAuth, res, next) => {
+jobRouter.get('/:id', async (req: RequestUserAuth, res) => {
   if (!req.decodedToken?.id) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
   const id = req.params.id;
 
-  try {
-    const result = await jobService.getOne(Number(id), req.decodedToken?.id);
+  const result = await jobService.getOne(Number(id), req.decodedToken?.id);
 
-    if (!result) {
-      return res.status(404).end();
-    }
-
-    res.json(result);
-  } catch (err) {
-    next(err);
+  if (!result) {
+    return res.status(404).end();
   }
+
+  res.json(result);
 });
 
-jobRouter.post('/', async (req: RequestUserAuth, res, next) => {
+jobRouter.post('/', async (req: RequestUserAuth, res) => {
   if (!req.decodedToken?.id) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  try {
-    const newJob = toNewJob(req.body);
-    const result = await jobService.addNew(newJob, req.decodedToken.id);
+  const newJob = toNewJob(req.body);
+  const result = await jobService.addNew(newJob, req.decodedToken.id);
 
-    res.json(result);
-  } catch (err) {
-    next(err);
-  }
+  res.json(result);
 });
 
-jobRouter.put('/:id', async (req: RequestUserAuth, res, next) => {
+jobRouter.put('/:id', async (req: RequestUserAuth, res) => {
   if (!req.decodedToken?.id) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
   const id = req.params.id;
 
-  try {
-    const updatedJob = toNewJob(req.body);
-    const result = await jobService.update(
-      Number(id),
-      req.decodedToken?.id,
-      updatedJob
-    );
+  const updatedJob = toNewJob(req.body);
+  const result = await jobService.update(
+    Number(id),
+    req.decodedToken?.id,
+    updatedJob
+  );
 
-    if (!result) {
-      return res.status(404).end();
-    }
-
-    res.json(result);
-  } catch (err) {
-    next(err);
+  if (!result) {
+    return res.status(404).end();
   }
+
+  res.json(result);
 });
 
-jobRouter.delete('/:id', async (req: RequestUserAuth, res, next) => {
+jobRouter.delete('/:id', async (req: RequestUserAuth, res) => {
   if (!req.decodedToken?.id) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
   const id = req.params.id;
 
-  try {
-    const result = await jobService.remove(Number(id), req.decodedToken?.id);
+  const result = await jobService.remove(Number(id), req.decodedToken?.id);
 
-    if (!result) {
-      return res.status(404).end();
-    }
-
-    res.json(result);
-  } catch (err) {
-    next(err);
+  if (!result) {
+    return res.status(404).end();
   }
+
+  res.json(result);
 });
 
 export default jobRouter;

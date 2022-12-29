@@ -20,17 +20,13 @@ userRouter.get('/:id', async (req, res) => {
   return res.status(404).end();
 });
 
-userRouter.post('/', async (req, res, next) => {
+userRouter.post('/', async (req, res) => {
   const { username, name, password } = req.body;
 
-  try {
-    const newUser = toNewUser(username, name, password);
-    const user = await userService.addNew(newUser);
+  const newUser = toNewUser(username, name, password);
+  const user = await userService.addNew(newUser);
 
-    return res.json(user);
-  } catch (err) {
-    next(err);
-  }
+  return res.json(user);
 });
 
 export default userRouter;
