@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import { User } from '../models';
+import { NewUser } from '../types';
 
 const getAll = async () => {
   const users = await User.findAll({
@@ -17,18 +18,21 @@ const getOne = async (id: number) => {
   return user;
 };
 
-const addNew = async (username: string, password: string, name: string) => {
+const addNew = async (newUser: NewUser) => {
   const saltRounds = 10;
-  const passwordHash = await bcrypt.hash(password, saltRounds);
+  const passwordHash = await bcrypt.hash(newUser.password, saltRounds);
   try {
-    const user = await User.create({ username, name, passwordHash });
+    const user = await User.create({
+      username: newUser.username,
+      name: newUser.name,
+      passwordHash,
+    });
 
     return user;
   } catch (err) {
     if (err instanceof Error) {
       throw err;
     }
-    throw new Error('idk what happened');
   }
 };
 
