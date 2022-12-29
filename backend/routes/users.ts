@@ -20,7 +20,7 @@ userRouter.get('/:id', async (req, res) => {
   return res.status(404).end();
 });
 
-userRouter.post('/', async (req, res) => {
+userRouter.post('/', async (req, res, next) => {
   const { username, name, password } = req.body;
 
   try {
@@ -29,9 +29,7 @@ userRouter.post('/', async (req, res) => {
 
     return res.json(user);
   } catch (err) {
-    if (err instanceof Error) {
-      res.status(400).json({ error: err.message });
-    }
+    next(err);
   }
 });
 
