@@ -24,15 +24,20 @@ button {
   font-weight: 600;
   border-radius: 7px;
   transition: all 200ms ease-in-out;
+  border: 3px solid var(--accent-main);
 }
 
 .primary {
   background-color: var(--accent-main);
   color: var(--background-main);
+
+  &:hover {
+    background: none;
+    color: var(--accent-main);
+  }
 }
 
 .secondary {
-  border: 3px solid var(--accent-main);
   color: var(--accent-main);
 
   &:hover {
