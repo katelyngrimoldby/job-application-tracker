@@ -11,7 +11,7 @@ interface RequestUserAuthHandler {
 const tokenExtractor: RequestUserAuthHandler = async (req, res, next) => {
   const authorization = req.get('authorization');
   if (!(authorization && authorization.toLowerCase().startsWith('bearer '))) {
-    return res.status(401).json({ error: 'token missing' });
+    return res.status(401).json({ error: 'Token missing' });
   }
 
   try {
@@ -25,11 +25,11 @@ const tokenExtractor: RequestUserAuthHandler = async (req, res, next) => {
     ) as Signature;
 
     if (!session || session.userId != req.decodedToken.id) {
-      return res.status(401).json({ error: 'session invalid' });
+      return res.status(401).json({ error: 'Session invalid' });
     }
     next();
-  } catch {
-    return res.status(401).json({ error: 'token invalid' });
+  } catch (err) {
+    next(err);
   }
 };
 
