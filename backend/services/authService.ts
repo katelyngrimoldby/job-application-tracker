@@ -9,7 +9,7 @@ const login = async (username: string, password: string) => {
     user === null ? false : await bcrypt.compare(password, user.passwordHash);
 
   if (!(user && passwordCorrect)) {
-    throw new Error('invalid username or password');
+    throw new Error('Invalid username or password');
   }
 
   const userForToken = {
