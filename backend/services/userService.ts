@@ -21,19 +21,14 @@ const getOne = async (id: number) => {
 const addNew = async (newUser: NewUser) => {
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(newUser.password, saltRounds);
-  try {
-    const user = await User.create({
-      username: newUser.username,
-      name: newUser.name,
-      passwordHash,
-    });
 
-    return user;
-  } catch (err) {
-    if (err instanceof Error) {
-      throw err;
-    }
-  }
+  const user = await User.create({
+    username: newUser.username,
+    name: newUser.name,
+    passwordHash,
+  });
+
+  return user;
 };
 
 export default { getAll, getOne, addNew };
