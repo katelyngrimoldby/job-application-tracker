@@ -28,3 +28,14 @@ export interface NewJob {
   interviews: string[];
   jobDescription: string;
 }
+
+export interface NewUser {
+  username: string;
+  name: string;
+  password: string;
+}
+
+export interface AuthUser {
+  username: string;
+  password: string;
+}
