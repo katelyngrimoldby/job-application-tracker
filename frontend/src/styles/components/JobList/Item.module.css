@@ -1,0 +1,57 @@
+@import '../../variables.css';
+
+.primaryInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.expandBtn,
+.collapseBtn {
+  vertical-align: middle;
+  transition: transform 400ms ease-in-out;
+}
+
+.collapseBtn {
+  transform: rotate(180deg);
+}
+
+.extraInfo,
+.extraVisible {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: max-height 400ms, padding 400ms;
+
+  div {
+    display: flex;
+    gap: 0.5rem;
+  }
+  span {
+    flex: 1;
+
+    &:nth-of-type(odd) {
+      text-align: left;
+    }
+
+    &:nth-of-type(even) {
+      text-align: right;
+    }
+
+    &:last-of-type {
+      text-transform: capitalize;
+    }
+  }
+}
+
+.extraInfo {
+  max-height: 0px;
+  overflow: hidden;
+  padding: 0 1rem;
+}
+
+.extraVisible {
+  max-height: 1000px;
+  overflow: hidden;
+  padding: 0.5rem 1rem;
+}
