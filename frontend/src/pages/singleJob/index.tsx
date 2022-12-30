@@ -32,7 +32,7 @@ const SingleJob = ({ job }: { job: Job | null | undefined }) => {
   };
 
   return (
-    <>
+    <main>
       {error && <p>{error}</p>}
       <h2>{job.positionTitle}</h2>
       <h3>{job.company}</h3>
@@ -64,7 +64,7 @@ const SingleJob = ({ job }: { job: Job | null | undefined }) => {
       >
         Delete
       </button>
-    </>
+    </main>
   );
 };
 

@@ -6,7 +6,11 @@ const Edit = ({ job }: { job: Job | null | undefined }) => {
   if (!job) {
     return <Custom404 />;
   }
-  return <ApplicationForm content={job} />;
+  return (
+    <main>
+      <ApplicationForm content={job} />
+    </main>
+  );
 };
 
 export default Edit;
