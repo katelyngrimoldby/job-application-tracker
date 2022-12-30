@@ -4,6 +4,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5rem;
+  > * {
+    flex: 1;
+  }
+  b {
+    text-align: left;
+  }
+  span {
+    text-align: center;
+  }
+  button {
+    text-align: right;
+  }
 }
 
 .expandBtn,
