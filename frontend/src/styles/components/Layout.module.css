@@ -4,19 +4,20 @@
 .footer {
   background-color: var(--background-secondary);
   padding: 1rem;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 
 .header {
   display: flex;
+  position: sticky;
+  top: 0;
   justify-content: space-between;
   align-items: center;
 }
 
 .footer {
   background-color: var(--background-secondary);
-  position: fixed;
-  bottom: 0;
-  left: 0;
   text-align: center;
   p:first-of-type {
     margin-bottom: 0.5rem;
