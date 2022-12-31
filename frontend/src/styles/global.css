@@ -67,8 +67,8 @@ button {
   color: var(--accent-main);
 
   &:hover {
-    background-color: var(--accent-main);
-    color: var(--background-main);
+    border-color: var(--accent-secondary);
+    color: var(--accent-secondary);
   }
 }
 
