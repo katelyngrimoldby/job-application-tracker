@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../services/userAuth';
 import { isAxiosError } from 'axios';
+import styles from '../styles/components/RegistrationForm.module.css';
 
 const RegistrationForm = () => {
   const navigate = useNavigate();
@@ -32,7 +33,10 @@ const RegistrationForm = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={handleSubmit}
+        className={styles.form}
+      >
         <input
           type='text'
           placeholder='Username'
@@ -70,6 +74,7 @@ const RegistrationForm = () => {
             !confirmPass ||
             password !== confirmPass
           }
+          className='primary'
         >
           Sign Up
         </button>
