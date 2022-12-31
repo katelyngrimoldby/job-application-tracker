@@ -1,5 +1,15 @@
 @import '../../variables.css';
 
+.wrapper::after {
+  content: '';
+  position: absolute;
+  width: calc(100% - 2rem);
+  height: 2px;
+  margin-top: 0.5rem;
+  background-color: var(--text-secondary);
+  opacity: 0.3;
+}
+
 .primaryInfo {
   display: flex;
   justify-content: space-between;

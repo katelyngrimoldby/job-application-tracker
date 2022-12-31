@@ -8,7 +8,7 @@ const JobListItem = ({ job }: { job: Job }) => {
   const [visible, setVisible] = useState(false);
 
   return (
-    <li>
+    <li className={styles.wrapper}>
       <div className={styles.primaryInfo}>
         <b>{job.positionTitle}</b> <span>{job.company}</span>
         <button onClick={() => setVisible(!visible)}>
