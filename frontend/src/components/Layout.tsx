@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useStateValue } from '../state';
 import Menu from './Menu';
 import styles from '../styles/components/Layout.module.css';
@@ -7,7 +8,24 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <Menu />
-      {user && <span>Welcome, {user.name}</span>}
+      {user ? (
+        <span>Welcome, {user.name}</span>
+      ) : (
+        <div className={styles.cta}>
+          <Link
+            to='/login'
+            className='secondary'
+          >
+            Log In
+          </Link>
+          <Link
+            to='/register'
+            className='primary'
+          >
+            Register
+          </Link>
+        </div>
+      )}
     </header>
   );
 };
