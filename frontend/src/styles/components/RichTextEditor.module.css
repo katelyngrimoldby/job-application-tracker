@@ -1,0 +1,38 @@
+@import '../variables.css';
+
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.125rem;
+  img,
+  button {
+    vertical-align: middle;
+  }
+
+  button {
+    padding: 0.25rem;
+    border: 1px solid transparent;
+    transition: border 200ms ease-in-out;
+    border-radius: 5px;
+
+    &:hover {
+      border-color: var(--accent-tertiary);
+    }
+
+    &:disabled {
+      cursor: auto;
+      img {
+        opacity: 0.5;
+      }
+
+      &:hover {
+        border-color: transparent;
+      }
+    }
+  }
+}
+
+.active {
+  border-color: var(--accent-main) !important;
+}
