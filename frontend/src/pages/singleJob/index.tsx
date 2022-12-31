@@ -56,7 +56,7 @@ const SingleJob = ({ job }: { job: Job | null | undefined }) => {
         </ul>
       </section>
       <section className={styles.jobDesc}>
-        <h4>Job Description</h4>
+        <h4>Job Description:</h4>
         <ReadOnlyRichText content={job.jobDescription} />
       </section>
       <div className={styles.buttons}>
