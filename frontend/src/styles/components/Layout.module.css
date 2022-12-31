@@ -17,6 +17,12 @@
   z-index: 2;
 }
 
+.cta {
+  a:first-of-type {
+    margin-right: 0.25rem;
+  }
+}
+
 .footer {
   background-color: var(--background-secondary);
   text-align: center;
