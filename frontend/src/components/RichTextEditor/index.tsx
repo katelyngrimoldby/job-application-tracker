@@ -7,6 +7,7 @@ import BulletList from '../../assets/format-list-bulleted.svg';
 import NumberList from '../../assets/format-list-numbered.svg';
 import Bold from '../../assets/format-bold.svg';
 import Italic from '../../assets/format-italic.svg';
+import styles from '../../styles/components/RichTextEditor.module.css';
 
 const RichTextEditor = ({
   initialContent,
@@ -62,78 +63,84 @@ const RichTextEditor = ({
 
   return (
     <div id={id}>
-      <button
-        onClick={() => editor?.chain().focus().toggleBold().run()}
-        disabled={!editor?.can().chain().focus().toggleBold().run()}
-        type='button'
-      >
-        <img
-          src={Bold}
-          width='24'
-        />
-      </button>
-      <button
-        onClick={() => editor?.chain().focus().toggleItalic().run()}
-        disabled={!editor?.can().chain().focus().toggleItalic().run()}
-        type='button'
-      >
-        <img
-          src={Italic}
-          width='24'
-        />
-      </button>
-
-      <select
-        name='textType'
-        onChange={handleTextChange}
-      >
-        <option value='paragraph'>Paragraph</option>
-        <option value='h1'>Header 1</option>
-        <option value='h2'>Header 2</option>
-        <option value='h3'>Header 3</option>
-        <option value='h4'>Header 4</option>
-        <option value='h5'>Header 5</option>
-        <option value='h6'>Header 6</option>
-      </select>
-
-      <button
-        onClick={() => editor?.chain().focus().toggleBulletList().run()}
-        type='button'
-      >
-        <img
-          src={BulletList}
-          width='24'
-        />
-      </button>
-      <button
-        onClick={() => editor?.chain().focus().toggleOrderedList().run()}
-        type='button'
-      >
-        <img
-          src={NumberList}
-          width='24'
-        />
-      </button>
-      <button
-        onClick={() => editor?.chain().focus().undo().run()}
-        disabled={!editor?.can().chain().focus().undo().run()}
-        type='button'
-      >
-        <img
-          src={Undo}
-          width='24'
-        />
-      </button>
-      <button
-        onClick={() => editor?.chain().focus().redo().run()}
-        disabled={!editor?.can().chain().focus().redo().run()}
-        type='button'
-      >
-        <img
-          src={Redo}
-          width='24'
-        />
-      </button>
+      <div className={styles.menu}>
+        <button
+          onClick={() => editor?.chain().focus().toggleBold().run()}
+          disabled={!editor?.can().chain().focus().toggleBold().run()}
+          type='button'
+          className={editor?.isActive('bold') ? styles.active : undefined}
+        >
+          <img
+            src={Bold}
+            width='24'
+          />
+        </button>
+        <button
+          onClick={() => editor?.chain().focus().toggleItalic().run()}
+          disabled={!editor?.can().chain().focus().toggleItalic().run()}
+          type='button'
+          className={editor?.isActive('italic') ? styles.active : undefined}
+        >
+          <img
+            src={Italic}
+            width='24'
+          />
+        </button>
+        <select
+          name='textType'
+          onChange={handleTextChange}
+        >
+          <option value='paragraph'>Paragraph</option>
+          <option value='h1'>Header 1</option>
+          <option value='h2'>Header 2</option>
+          <option value='h3'>Header 3</option>
+          <option value='h4'>Header 4</option>
+          <option value='h5'>Header 5</option>
+          <option value='h6'>Header 6</option>
+        </select>
+        <button
+          onClick={() => editor?.chain().focus().toggleBulletList().run()}
+          type='button'
+          className={editor?.isActive('bulletList') ? styles.active : undefined}
+        >
+          <img
+            src={BulletList}
+            width='24'
+          />
+        </button>
+        <button
+          onClick={() => editor?.chain().focus().toggleOrderedList().run()}
+          type='button'
+          className={
+            editor?.isActive('orderedList') ? styles.active : undefined
+          }
+        >
+          <img
+            src={NumberList}
+            width='24'
+          />
+        </button>
+        <button
+          onClick={() => editor?.chain().focus().undo().run()}
+          disabled={!editor?.can().chain().focus().undo().run()}
+          type='button'
+        >
+          <img
+            src={Undo}
+            width='24'
+          />
+        </button>
+        <button
+          onClick={() => editor?.chain().focus().redo().run()}
+          disabled={!editor?.can().chain().focus().redo().run()}
+          type='button'
+        >
+          <img
+            src={Redo}
+            width='24'
+          />
+        </button>
+      </div>
       <EditorContent editor={editor} />
     </div>
   );
