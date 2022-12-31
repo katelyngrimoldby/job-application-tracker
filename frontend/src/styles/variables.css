@@ -4,9 +4,10 @@
   --background-main: #fafbff;
   --background-secondary: #f2f6fc;
   --text-main: #1f1f22;
-  --text-secondary: #1f1f22;
+  --text-secondary: #242831;
   --accent-main: #5555f1;
   --accent-secondary: #3a3a8a;
+  --accent-tertiary: #b9babe;
 
   --font: 'Inter', sans-serif;
 }
