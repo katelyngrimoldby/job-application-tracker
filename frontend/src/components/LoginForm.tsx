@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { login } from '../services/userAuth';
 import { getAll } from '../services/jobs';
 import { useStateValue, setCurrentUser, setJobList } from '../state';
+import styles from '../styles/components/LoginForm.module.css';
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -38,7 +39,10 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      className={styles.form}
+    >
       <input
         type='text'
         placeholder='Username'
@@ -53,7 +57,12 @@ const LoginForm = () => {
         value={password}
         onChange={(event) => setPassword(event.target.value)}
       />
-      <button disabled={!username || !password}>Log In</button>
+      <button
+        disabled={!username || !password}
+        className='primary'
+      >
+        Log In
+      </button>
       {error && <p>{error}</p>}
     </form>
   );
