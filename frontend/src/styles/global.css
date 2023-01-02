@@ -17,13 +17,16 @@ body,
 #root {
   display: flex;
   flex-direction: column;
+  background-color: var(--background-main);
 }
 
 main {
   padding: 1rem;
-  background-color: var(--background-main);
   min-height: 100%;
   flex-grow: 1;
+  width: 100%;
+  max-width: 1000px;
+  align-self: center;
 }
 
 h4 {
