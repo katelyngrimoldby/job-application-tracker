@@ -1,98 +1,119 @@
 @import '../variables.css';
 
-.form {
-  margin-top: 0.25rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.75rem;
+@media screen and (min-width: 0px) {
+  .form {
+    margin-top: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
 
-  select {
-    appearance: none;
-    background: none;
-    background-image: url('../../assets/menu-down.svg');
-    background-repeat: no-repeat;
-    background-position: right center;
-    padding-right: 2rem !important;
-  }
+    select {
+      appearance: none;
+      background: none;
+      background-image: url('../../assets/menu-down.svg');
+      background-repeat: no-repeat;
+      background-position: right center;
+      padding-right: 2rem !important;
+    }
 
-  input,
-  select {
-    padding: 0.25rem 0.5rem;
-    border: 1px solid transparent;
-    border-bottom: 1px solid var(--accent-tertiary);
-    color: var(---text-primary);
-    font-size: 1rem;
-    transition: all 200ms ease-in-out;
-    cursor: pointer;
+    input,
+    select {
+      padding: 0.25rem 0.5rem;
+      border: 1px solid transparent;
+      border-bottom: 1px solid var(--accent-tertiary);
+      color: var(---text-primary);
+      font-size: 1rem;
+      transition: all 200ms ease-in-out;
+      cursor: pointer;
 
-    &:focus {
-      border-radius: 5px;
-      outline: none;
-      border-color: var(--accent-main);
+      &:focus {
+        border-radius: 5px;
+        outline: none;
+        border-color: var(--accent-main);
+      }
+    }
+
+    input[type='text'] {
+      width: 100%;
+      font-size: 1rem;
+      cursor: auto;
+
+      &::placeholder {
+        color: var(--text-secondary);
+        font-weight: 600;
+      }
+    }
+
+    button {
+      align-self: stretch;
     }
   }
 
-  input[type='text'] {
-    width: 100%;
-    font-size: 1rem;
-    cursor: auto;
-
-    &::placeholder {
-      color: var(--text-secondary);
+  .inputWrapper {
+    display: flex;
+    flex-direction: column;
+    label {
       font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: var(--text-secondary);
     }
   }
 
-  button {
-    align-self: stretch;
-  }
-}
+  .interviewInput {
+    input {
+      margin-right: 0.55rem;
+    }
 
-.inputWrapper {
-  display: flex;
-  flex-direction: column;
-  label {
-    font-weight: 600;
-    margin-bottom: 0.25rem;
-    color: var(--text-secondary);
-  }
-}
+    button {
+      padding: 0.25rem 0.5rem;
+      border: 1px solid transparent;
+      border-bottom: 1px solid var(--accent-tertiary);
+      vertical-align: bottom;
+      transition: all 200ms ease-in-out;
+      cursor: pointer;
 
-.interviewInput {
-  input {
-    margin-right: 0.55rem;
+      &:hover {
+        border-radius: 5px;
+        outline: none;
+        border-color: var(--accent-main);
+      }
+    }
   }
 
-  button {
+  .interviews {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .interview {
+    background-color: var(--background-secondary);
     padding: 0.25rem 0.5rem;
-    border: 1px solid transparent;
-    border-bottom: 1px solid var(--accent-tertiary);
-    vertical-align: bottom;
-    transition: all 200ms ease-in-out;
-    cursor: pointer;
+    border-radius: 5px;
 
-    &:hover {
-      border-radius: 5px;
-      outline: none;
-      border-color: var(--accent-main);
+    button {
+      margin-left: 0.125rem;
+      vertical-align: middle;
     }
   }
 }
 
-.interviews {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
+@media screen and (min-width: 1024px) {
+  .form {
+    gap: 2rem;
+    > button {
+      margin-inline: 10rem;
+    }
+  }
+  .inputs {
+    width: 100%;
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+  }
 
-.interview {
-  background-color: var(--background-secondary);
-  padding: 0.25rem 0.5rem;
-  border-radius: 5px;
-
-  button {
-    margin-left: 0.125rem;
-    vertical-align: middle;
+  .inputWrapper:last-of-type {
+    width: 70%;
   }
 }

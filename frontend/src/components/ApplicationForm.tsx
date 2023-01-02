@@ -96,101 +96,108 @@ const ApplicationForm = ({ content }: { content?: Job }) => {
       className={styles.form}
     >
       {error && <p>{error}</p>}
-      <input
-        type='text'
-        placeholder='Position'
-        value={positionTitle}
-        onChange={(event) => setPositionTitle(event.target.value)}
-        required
-      />
-      <input
-        type='text'
-        placeholder='Company'
-        value={company}
-        onChange={(event) => setCompany(event.target.value)}
-        required
-      />
-      <input
-        type='text'
-        placeholder='Location'
-        value={location}
-        onChange={(event) => setLocation(event.target.value)}
-        required
-      />
-      <input
-        type='text'
-        placeholder='Compensation'
-        value={compensation}
-        onChange={(event) => setCompensation(event.target.value)}
-      />
-      <div className={styles.inputWrapper}>
-        <label htmlFor='appliedDate'>Applied</label>
+      <div className={styles.inputs}>
         <input
-          type='date'
-          id='appliedDate'
-          value={applied}
-          onChange={(event) => setApplied(event.target.value)}
+          type='text'
+          placeholder='Position'
+          value={positionTitle}
+          onChange={(event) => setPositionTitle(event.target.value)}
+          required
+        />
+        <input
+          type='text'
+          placeholder='Company'
+          value={company}
+          onChange={(event) => setCompany(event.target.value)}
+          required
         />
       </div>
-
-      <div className={styles.inputWrapper}>
-        <label htmlFor='status'>Status</label>
-        <select
-          id='status'
-          onChange={(event) => setStatus(event.target.value as Status)}
-          value={status}
-        >
-          <option value='applied'>Applied</option>
-          <option value='interviewing'>Interviewing</option>
-          <option value='offered'>Offered</option>
-          <option value='rejected'>Rejected</option>
-        </select>
+      <div className={styles.inputs}>
+        <input
+          type='text'
+          placeholder='Location'
+          value={location}
+          onChange={(event) => setLocation(event.target.value)}
+          required
+        />
+        <input
+          type='text'
+          placeholder='Compensation'
+          value={compensation}
+          onChange={(event) => setCompensation(event.target.value)}
+        />
       </div>
-      <div className={styles.inputWrapper}>
-        <label htmlFor='interviewDate'>Interview Dates</label>
-        <div className={styles.interviewInput}>
-          <input
-            type='date'
-            id='interviewDate'
-            value={interviewDate}
-            onChange={(event) => setInterviewDate(event.target.value)}
-          />
-          <button
-            onClick={() => setInterviews([...interviews, interviewDate])}
-            type='button'
-          >
-            Add
-          </button>
-        </div>
-      </div>
-      <div className={styles.interviews}>
-        {interviews.map((e, i) => (
-          <p
-            key={i}
-            className={styles.interview}
-          >
-            {e.substring(0, 10)}{' '}
-            <button
-              type='button'
-              onClick={() => handleDelete(i)}
+      <div className={styles.inputs}>
+        <div>
+          <div className={styles.inputWrapper}>
+            <label htmlFor='appliedDate'>Applied</label>
+            <input
+              type='date'
+              id='appliedDate'
+              value={applied}
+              onChange={(event) => setApplied(event.target.value)}
+            />
+          </div>
+          <div className={styles.inputWrapper}>
+            <label htmlFor='status'>Status</label>
+            <select
+              id='status'
+              onChange={(event) => setStatus(event.target.value as Status)}
+              value={status}
             >
-              <img
-                src={closeIcon}
-                alt='Delete'
-                width='24'
-                height='24'
+              <option value='applied'>Applied</option>
+              <option value='interviewing'>Interviewing</option>
+              <option value='offered'>Offered</option>
+              <option value='rejected'>Rejected</option>
+            </select>
+          </div>
+          <div className={styles.inputWrapper}>
+            <label htmlFor='interviewDate'>Interview Dates</label>
+            <div className={styles.interviewInput}>
+              <input
+                type='date'
+                id='interviewDate'
+                value={interviewDate}
+                onChange={(event) => setInterviewDate(event.target.value)}
               />
-            </button>
-          </p>
-        ))}
-      </div>
-      <div className={styles.inputWrapper}>
-        <label htmlFor='jobDesc'>Job Description</label>
-        <RichTextEditor
-          id='jobDesc'
-          initialContent={jobDescription}
-          setContent={setJobDescription}
-        />
+              <button
+                onClick={() => setInterviews([...interviews, interviewDate])}
+                type='button'
+              >
+                Add
+              </button>
+            </div>
+          </div>
+          <div className={styles.interviews}>
+            {interviews.map((e, i) => (
+              <p
+                key={i}
+                className={styles.interview}
+              >
+                {e.substring(0, 10)}{' '}
+                <button
+                  type='button'
+                  onClick={() => handleDelete(i)}
+                >
+                  <img
+                    src={closeIcon}
+                    alt='Delete'
+                    width='24'
+                    height='24'
+                  />
+                </button>
+              </p>
+            ))}
+          </div>
+        </div>
+        <div className={styles.inputWrapper}>
+          <label htmlFor='jobDesc'>Job Description</label>
+          <RichTextEditor
+            id='jobDesc'
+            initialContent={jobDescription}
+            setContent={setJobDescription}
+          />
+        </div>
       </div>
       <button className='primary'>Submit</button>
     </form>
