@@ -58,7 +58,7 @@ const Menu = () => {
           </li>
           {!user && (
             <>
-              <li>
+              <li className={styles.cta}>
                 <Link
                   to='/login'
                   onClick={() => setVisible(false)}
@@ -66,7 +66,7 @@ const Menu = () => {
                   Log In
                 </Link>
               </li>
-              <li>
+              <li className={styles.cta}>
                 <Link
                   to='/register'
                   onClick={() => setVisible(false)}

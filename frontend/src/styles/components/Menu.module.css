@@ -62,6 +62,10 @@
     }
   }
 
+  .cta {
+    display: none;
+  }
+
   .menuButton {
     display: none;
   }
