@@ -37,35 +37,39 @@ const RegistrationForm = () => {
         onSubmit={handleSubmit}
         className={styles.form}
       >
-        <input
-          type='text'
-          placeholder='Username'
-          required
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
-        />
-        <input
-          type='text'
-          placeholder='Name'
-          required
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-        />
-        <input
-          type='password'
-          placeholder='Password'
-          required
-          min={3}
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-        />
-        <input
-          type='password'
-          placeholder='Confirm Password'
-          required
-          value={confirmPass}
-          onChange={(event) => setConfirmPass(event.target.value)}
-        />
+        <div className={styles.inputs}>
+          <input
+            type='text'
+            placeholder='Username'
+            required
+            value={username}
+            onChange={(event) => setUsername(event.target.value)}
+          />
+          <input
+            type='text'
+            placeholder='Name'
+            required
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+          />
+        </div>
+        <div className={styles.inputs}>
+          <input
+            type='password'
+            placeholder='Password'
+            required
+            min={3}
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+          />
+          <input
+            type='password'
+            placeholder='Confirm Password'
+            required
+            value={confirmPass}
+            onChange={(event) => setConfirmPass(event.target.value)}
+          />
+        </div>
         <button
           disabled={
             !username ||

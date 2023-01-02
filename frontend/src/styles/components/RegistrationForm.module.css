@@ -1,37 +1,53 @@
-.form {
-  margin-top: 0.25rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.75rem;
+@media screen and (min-width: 0px) {
+  .form {
+    margin-top: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
 
-  input {
-    padding: 0.25rem 0.5rem;
-    border: 1px solid transparent;
-    border-bottom: 1px solid var(--accent-tertiary);
-    color: var(---text-primary);
-    font-size: 1rem;
-    transition: all 200ms ease-in-out;
-    width: 100%;
-    cursor: auto;
+    input {
+      padding: 0.25rem 0.5rem;
+      border: 1px solid transparent;
+      border-bottom: 1px solid var(--accent-tertiary);
+      color: var(---text-primary);
+      font-size: 1rem;
+      transition: all 200ms ease-in-out;
+      width: 100%;
+      cursor: auto;
 
-    &:focus {
-      border-radius: 5px;
-      outline: none;
-      border-color: var(--accent-main);
+      &:focus {
+        border-radius: 5px;
+        outline: none;
+        border-color: var(--accent-main);
+      }
+
+      &::placeholder {
+        color: var(--text-secondary);
+        font-weight: 600;
+      }
     }
 
-    &::placeholder {
-      color: var(--text-secondary);
-      font-weight: 600;
+    button {
+      align-self: stretch;
+
+      &:disabled {
+        opacity: 0.5;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .form {
+    > button {
+      margin-inline: 10rem;
     }
   }
 
-  button {
-    align-self: stretch;
-
-    &:disabled {
-      opacity: 0.5;
-    }
+  .inputs {
+    width: 100%;
+    display: flex;
+    gap: 3rem;
   }
 }
