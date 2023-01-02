@@ -45,3 +45,24 @@
     box-shadow: 0 0 0 100000px rgba(0, 0, 0, 0.2);
   }
 }
+
+@media screen and (min-width: 1024px) {
+  .nav,
+  .navVisible {
+    transform: translate(0%);
+    transform: none;
+    position: static;
+    background: none;
+    height: fit-content;
+    padding: 0;
+
+    ul {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  .menuButton {
+    display: none;
+  }
+}
