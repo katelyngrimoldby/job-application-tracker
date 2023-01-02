@@ -42,19 +42,21 @@ const SingleJob = ({ job }: { job: Job | null | undefined }) => {
         <h3>{job.company}</h3>
         <p>Applied on {job.applied.substring(0, 10)}</p>
       </section>
-      <div className={styles.basicInfo}>
-        <p>{job.location}</p>
-        <p>{job.compensation}</p>
-        <p>{job.status}</p>
+      <div className={styles.infoWrapper}>
+        <div className={styles.basicInfo}>
+          <p>{job.location}</p>
+          <p>{job.compensation}</p>
+          <p>{job.status}</p>
+        </div>
+        <section className={styles.interviews}>
+          <h4>Interviews:</h4>
+          <ul>
+            {job.interviews.map((date) => (
+              <li key={date}>{date.substring(0, 10)}</li>
+            ))}
+          </ul>
+        </section>
       </div>
-      <section className={styles.interviews}>
-        <h4>Interviews:</h4>
-        <ul>
-          {job.interviews.map((date) => (
-            <li key={date}>{date.substring(0, 10)}</li>
-          ))}
-        </ul>
-      </section>
       <section className={styles.jobDesc}>
         <h4>Job Description:</h4>
         <ReadOnlyRichText content={job.jobDescription} />
