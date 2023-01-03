@@ -1,6 +1,6 @@
 import express from 'express';
 import { RequestUserAuth } from '../types';
-import { toNewJob } from '../util/parsers';
+import { toNewJob, parseFilter, parseSort } from '../util/parsers';
 import jobService from '../services/jobService';
 
 const jobRouter = express.Router();
@@ -10,7 +10,10 @@ jobRouter.get('/', async (req: RequestUserAuth, res) => {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  const result = await jobService.getAll(req.decodedToken.id);
+  const filter = parseFilter(req.query.filter);
+  const sort = parseSort(req.query.sort);
+
+  const result = await jobService.getAll(req.decodedToken.id, filter, sort);
 
   res.json(result);
 });

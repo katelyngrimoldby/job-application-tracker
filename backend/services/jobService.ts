@@ -1,8 +1,19 @@
 import { Job } from '../models';
-import { NewJob } from '../types';
+import { NewJob, Status } from '../types';
+import { getFilter, getOrder } from '../util/filtrationHelper';
 
-const getAll = async (id: number) => {
-  const jobs = await Job.findAll({ where: { userId: id } });
+const getAll = async (
+  id: number,
+  statusFilter: Status | undefined,
+  order: string | undefined
+) => {
+  const filter = getFilter(statusFilter);
+  const sort = getOrder(order);
+
+  const jobs = await Job.findAll({
+    where: { ...filter, userId: id },
+    order: sort,
+  });
 
   return jobs;
 };
