@@ -2,7 +2,7 @@ import { Job } from '../../types';
 import JobListItem from './Item';
 import styles from '../../styles/components/JobList/JobList.module.css';
 
-const JobList = ({ jobs }: { jobs: { [id: string]: Job } }) => {
+const JobList = ({ jobs }: { jobs: Job[] }) => {
   return (
     <ul className={styles.list}>
       {Object.values(jobs).map((job) => (
