@@ -62,6 +62,30 @@ const parseStatus = (status: unknown): Status => {
   return status;
 };
 
+const parseFilter = (status: unknown): Status | undefined => {
+  if (!status) {
+    return undefined;
+  }
+
+  if (!isStatus(status)) {
+    throw new Error('Incorrect filter');
+  }
+
+  return status;
+};
+
+const parseSort = (string: unknown): string | undefined => {
+  if (!string) {
+    return undefined;
+  }
+
+  if (!isString(string)) {
+    throw new Error(`Incorrect order parameter`);
+  }
+
+  return string;
+};
+
 const parseInterviews = (arr: unknown): string[] => {
   if (!arr || !Array.isArray(arr)) {
     throw new Error('Missing interview array');
@@ -97,4 +121,4 @@ const isStatus = (string: any): string is Status => {
   return Object.values(Status).includes(string);
 };
 
-export { toNewJob, toNewUser };
+export { toNewJob, toNewUser, parseFilter, parseSort };
