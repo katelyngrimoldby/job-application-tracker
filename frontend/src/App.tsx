@@ -16,8 +16,14 @@ function App() {
   const [{ jobs }, dispatch] = useStateValue();
 
   const fetchJobs = async (token: string) => {
-    const jobs = await getAll(token);
-    dispatch(setJobList(jobs));
+    if (location.pathname === '/jobs') {
+      const params = location.search.toString();
+      const jobs = await getAll(token, params);
+      dispatch(setJobList(jobs));
+    } else {
+      const jobs = await getAll(token);
+      dispatch(setJobList(jobs));
+    }
   };
 
   useEffect(() => {
