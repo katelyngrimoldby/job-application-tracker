@@ -16,3 +16,4 @@
 | Dec. 29      | 40 min     | Centralize error handling & remove try/catch blocks |
 | Dec. 29 - 31 | 7hr 44min  | Basic mobile styling                                |
 | Jan. 2       | 1hr 37min  | Basic desktop styling                               |
+| Jan. 3       | 1hr        | Backend: Implement filtering and sorting            |
