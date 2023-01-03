@@ -15,4 +15,4 @@
 | Dec. 29      | 1hr 30min  | Implement type proofing for api                     |
 | Dec. 29      | 40 min     | Centralize error handling & remove try/catch blocks |
 | Dec. 29 - 31 | 7hr 44min  | Basic mobile styling                                |
-| Jan. 2       | 1hr 5min   | Basic Desktop Styling                               |
+| Jan. 2       | 1hr 37min  | Basic desktop styling                               |
