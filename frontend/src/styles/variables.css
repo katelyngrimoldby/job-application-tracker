@@ -9,5 +9,8 @@
   --accent-secondary: #3a3a8a;
   --accent-tertiary: #b9babe;
 
+  --error-background: #f2d5d9;
+  --error-foreground: #c73f3f;
+
   --font: 'Inter', sans-serif;
 }
