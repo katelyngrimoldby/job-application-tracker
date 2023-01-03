@@ -56,33 +56,27 @@ export const reducer = (state: State, action: Action): State => {
     case 'SET_JOB_LIST':
       return {
         ...state,
-        jobs: {
-          ...action.payload.reduce(
-            (memo, job) => ({ ...memo, [job.id]: job }),
-            {}
-          ),
-          ...state.jobs,
-        },
+        jobs: action.payload,
       };
     case 'ADD_JOB':
       return {
         ...state,
-        jobs: {
-          ...state.jobs,
-          [action.payload.id]: action.payload,
-        },
+        jobs: [action.payload, ...state.jobs],
       };
     case 'UPDATE_JOB':
       return {
         ...state,
-        jobs: {
-          ...state.jobs,
-          [action.payload.id]: action.payload,
-        },
+        jobs: [
+          ...state.jobs.map((job) =>
+            job.id !== action.payload.id ? job : action.payload
+          ),
+        ],
       };
     case 'REMOVE_JOB':
-      delete state.jobs[action.payload];
-      return state;
+      return {
+        ...state,
+        jobs: [...state.jobs.filter((job) => job.id !== action.payload)],
+      };
     case 'SET_CURRENT_USER':
       return {
         ...state,

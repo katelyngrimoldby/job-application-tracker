@@ -3,12 +3,12 @@ import { Action } from './reducer';
 import { Job, User } from '../types';
 
 export type State = {
-  jobs: { [id: string]: Job };
+  jobs: Job[];
   user: User | null;
 };
 
 const initialState: State = {
-  jobs: {},
+  jobs: [],
   user: null,
 };
 
