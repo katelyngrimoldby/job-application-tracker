@@ -2,14 +2,19 @@ import axios from 'axios';
 import { Job } from '../types';
 const baseUrl = 'http://localhost:3000/api';
 
-const getAll = async (token: string) => {
+const getAll = async (token: string, params?: string) => {
   const config = {
     headers: {
       Authorization: `bearer ${token}`,
     },
   };
 
-  const response = await axios.get<Job[]>(`${baseUrl}/jobs`, config);
+  console.log(params);
+
+  const response = await axios.get<Job[]>(
+    `${baseUrl}/jobs${params ? params : ''}`,
+    config
+  );
 
   return response.data;
 };
