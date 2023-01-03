@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { login } from '../services/userAuth';
 import { getAll } from '../services/jobs';
 import { useStateValue, setCurrentUser, setJobList } from '../state';
+import Error from './Error';
 import styles from '../styles/components/LoginForm.module.css';
 
 const LoginForm = () => {
@@ -30,10 +31,11 @@ const LoginForm = () => {
       const jobs = await getAll(authResponse.token);
       dispatch(setJobList(jobs));
 
-      navigate('/');
+      navigate('/jobs');
     } catch (err) {
       if (isAxiosError(err)) {
-        setError(err.response?.data);
+        setError(err.response?.data.error);
+        setTimeout(() => setError(''), 5000);
       }
     }
   };
@@ -43,6 +45,7 @@ const LoginForm = () => {
       onSubmit={handleSubmit}
       className={styles.form}
     >
+      {error && <Error err={error} />}
       <input
         type='text'
         placeholder='Username'
@@ -63,7 +66,6 @@ const LoginForm = () => {
       >
         Log In
       </button>
-      {error && <p>{error}</p>}
     </form>
   );
 };

@@ -5,6 +5,7 @@ import { useStateValue, addJob, updateJob } from '../state';
 import { addNew, editJob } from '../services/jobs';
 import { Job } from '../types';
 import RichTextEditor from './RichTextEditor';
+import Error from './Error';
 import styles from '../styles/components/ApplicationForm.module.css';
 import closeIcon from '../assets/close.svg';
 
@@ -74,7 +75,9 @@ const ApplicationForm = ({ content }: { content?: Job }) => {
         navigate(`/jobs/${job.id}`);
       } catch (err) {
         if (isAxiosError(err)) {
-          setError(err.response?.data);
+          console.log(err);
+          setError(err.response?.data.error);
+          setTimeout(() => setError(''), 5000);
         }
       }
     } else {
@@ -84,7 +87,8 @@ const ApplicationForm = ({ content }: { content?: Job }) => {
         navigate(`/jobs/${job.id}`);
       } catch (err) {
         if (isAxiosError(err)) {
-          setError(err.response?.data);
+          setError(err.response?.data.error);
+          setTimeout(() => setError(''), 5000);
         }
       }
     }
@@ -95,7 +99,7 @@ const ApplicationForm = ({ content }: { content?: Job }) => {
       onSubmit={handleSubmit}
       className={styles.form}
     >
-      {error && <p>{error}</p>}
+      {error && <Error err={error} />}
       <div className={styles.inputs}>
         <input
           type='text'
