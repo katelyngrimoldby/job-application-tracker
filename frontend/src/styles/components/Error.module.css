@@ -1,0 +1,12 @@
+.error {
+  background-color: var(--error-background);
+  padding: 1rem;
+  width: 100%;
+  border: 2px solid var(--error-foreground);
+  border-radius: 10px;
+}
+
+.errorText {
+  font-weight: 500;
+  color: var(--error-foreground);
+}
