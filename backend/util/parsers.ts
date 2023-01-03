@@ -10,7 +10,7 @@ const toNewJob = (obj: any): NewJob => {
     compensation: parseString(obj.compensation, 'Compensaton'),
     status: parseStatus(obj.status),
     interviews: parseInterviews(obj.interviews),
-    jobDescription: parseString(obj.jobDescription, 'Job Description'),
+    jobDescription: parseDesc(obj.jobDescription),
   };
 
   return newJob;
@@ -24,6 +24,18 @@ const toNewUser = (username: unknown, name: unknown, password: unknown) => {
   };
 
   return newUser;
+};
+
+const parseDesc = (description: unknown): string => {
+  if (!isString(description)) {
+    throw new Error('Incorrect Job Description');
+  }
+
+  if (!description) {
+    return '';
+  }
+
+  return description;
 };
 
 const parseString = (string: unknown, key: string): string => {
