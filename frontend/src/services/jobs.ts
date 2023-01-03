@@ -9,8 +9,6 @@ const getAll = async (token: string, params?: string) => {
     },
   };
 
-  console.log(params);
-
   const response = await axios.get<Job[]>(
     `${baseUrl}/jobs${params ? params : ''}`,
     config
