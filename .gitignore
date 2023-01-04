@@ -104,3 +104,4 @@ dist
 .tern-port
 
 pg_data
+redis_data
