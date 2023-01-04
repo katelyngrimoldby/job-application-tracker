@@ -18,3 +18,4 @@
 | Jan. 2       | 1hr 37min  | Basic desktop styling                               |
 | Jan. 3       | 1hr        | Backend: Implement filtering and sorting            |
 | Jan. 3       | 2h 41min   | Frontend: Implement filtering and sorting           |
+| Jan. 4       | 1hr 51min  | Transistion session management to Redis             |
