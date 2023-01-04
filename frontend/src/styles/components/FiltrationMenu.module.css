@@ -90,3 +90,29 @@
     transform: rotate(270deg);
   }
 }
+
+@media screen and (min-width: 1024px) {
+  .sidebar,
+  .sidebarVisible {
+    position: static;
+    width: fit-content;
+    transform: translate(0);
+
+    .content {
+      box-shadow: none;
+    }
+  }
+
+  .content {
+    padding: 0;
+    background-color: transparent;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .button,
+  .buttonVisible {
+    display: none;
+  }
+}
