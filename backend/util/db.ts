@@ -1,8 +1,12 @@
 import { Sequelize } from 'sequelize';
+import { createClient } from 'redis';
 import { Umzug, SequelizeStorage } from 'umzug';
-import { POSTGRES_URL } from './config';
+import { POSTGRES_URL, REDIS_URL } from './config';
 
 const sequelize = new Sequelize(POSTGRES_URL ? POSTGRES_URL : 'nodb:');
+const redis = createClient({
+  url: REDIS_URL,
+});
 
 const migrationConf = {
   migrations: {
@@ -29,6 +33,7 @@ const rollbackMigration = async () => {
 const connectToDatabase = async () => {
   try {
     await sequelize.authenticate();
+    await redis.connect();
     await runMigrations();
     console.log('connected to the database');
   } catch (err) {
@@ -39,4 +44,4 @@ const connectToDatabase = async () => {
   return null;
 };
 
-export { sequelize, connectToDatabase, rollbackMigration };
+export { sequelize, redis, connectToDatabase, rollbackMigration };
