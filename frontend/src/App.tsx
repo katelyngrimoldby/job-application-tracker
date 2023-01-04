@@ -1,6 +1,7 @@
 import { Routes, Route, useMatch } from 'react-router-dom';
 import { useEffect } from 'react';
 import { getAll } from './services/jobs';
+import { getSession } from './services/userAuth';
 import { useStateValue, setCurrentUser, setJobList } from './state';
 import { Header, Footer } from './components/Layout';
 import Jobs from './pages/jobs';
@@ -26,13 +27,16 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    const userJSON = window.localStorage.getItem('User');
-    if (userJSON) {
-      const userAuth = JSON.parse(userJSON);
-      dispatch(setCurrentUser(userAuth));
+  const fetchUser = async (id: number) => {
+    const userAuth = await getSession(id);
+    dispatch(setCurrentUser(userAuth));
+    fetchJobs(userAuth.token);
+  };
 
-      fetchJobs(userAuth.token);
+  useEffect(() => {
+    const userId = window.localStorage.getItem('id');
+    if (userId) {
+      fetchUser(Number(userId));
     }
   }, []);
 
