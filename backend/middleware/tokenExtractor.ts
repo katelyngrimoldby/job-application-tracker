@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { SECRET } from '../util/config';
-import { Session } from '../models';
 import { Response, NextFunction } from 'express';
+import authService from '../services/authService';
 import { RequestUserAuth, Signature } from '../types';
 
 interface RequestUserAuthHandler {
@@ -15,16 +15,14 @@ const tokenExtractor: RequestUserAuthHandler = async (req, res, next) => {
   }
 
   try {
-    const session = await Session.findOne({
-      where: { token: authorization.substring(7) },
-    });
-
     req.decodedToken = jwt.verify(
       authorization.substring(7),
       SECRET ? SECRET : 'secret'
     ) as Signature;
 
-    if (!session || session.userId != req.decodedToken.id) {
+    const session = await authService.getSession(req.decodedToken.id);
+
+    if (!session || session.token != authorization.substring(7)) {
       return res.status(401).json({ error: 'Session invalid' });
     }
     next();
