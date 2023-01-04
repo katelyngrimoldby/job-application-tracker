@@ -25,10 +25,10 @@ const LoginForm = () => {
 
     try {
       const authResponse = await login(authPayload);
-      dispatch(setCurrentUser(authResponse));
-      window.localStorage.setItem('User', JSON.stringify(authResponse));
+      dispatch(setCurrentUser(authResponse.session));
+      window.localStorage.setItem('id', authResponse.id);
 
-      const jobs = await getAll(authResponse.token);
+      const jobs = await getAll(authResponse.session.token);
       dispatch(setJobList(jobs));
 
       navigate('/jobs');

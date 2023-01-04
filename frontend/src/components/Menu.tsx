@@ -17,7 +17,7 @@ const Menu = () => {
       setVisible(false);
       await logout(user.token);
       dispatch(clearCurrentUser());
-      window.localStorage.removeItem('User');
+      window.localStorage.removeItem('id');
       navigate('/');
     }
   };
