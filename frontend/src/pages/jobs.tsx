@@ -1,6 +1,7 @@
 import { useStateValue } from '../state';
 import JobList from '../components/JobList';
 import FiltrationMenu from '../components/FiltrationMenu';
+import styles from '../styles/pages/jobs.module.css';
 
 const Jobs = () => {
   const [{ jobs, user }] = useStateValue();
@@ -10,7 +11,7 @@ const Jobs = () => {
   }
 
   return (
-    <main style={{ position: 'relative' }}>
+    <main className={styles.main}>
       <FiltrationMenu user={user} />
       <JobList jobs={jobs} />
     </main>
