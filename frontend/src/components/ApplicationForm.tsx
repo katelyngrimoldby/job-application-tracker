@@ -21,8 +21,8 @@ const ApplicationForm = ({
   handleUpdate,
 }: {
   content?: Job;
-  handleAddition: (submission: NewJob) => void;
-  handleUpdate: (submission: NewJob, id: number) => void;
+  handleAddition?: (submission: NewJob) => void;
+  handleUpdate?: (submission: NewJob, id: number) => void;
 }) => {
   const [positionTitle, setPositionTitle] = useState(
     content ? content.positionTitle : ''
@@ -65,9 +65,9 @@ const ApplicationForm = ({
     };
 
     if (!content) {
-      handleAddition(submission);
+      if (handleAddition) handleAddition(submission);
     } else {
-      handleUpdate(submission, content.id);
+      if (handleUpdate) handleUpdate(submission, content.id);
     }
   };
 

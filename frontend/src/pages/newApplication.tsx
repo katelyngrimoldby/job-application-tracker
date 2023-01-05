@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useStateValue, addJob, updateJob } from '../state';
+import { useStateValue, addJob } from '../state';
 import { isAxiosError } from 'axios';
-import { addNew, editJob } from '../services/jobs';
+import { addNew } from '../services/jobs';
 import { NewJob } from '../types';
 import ApplicationForm from '../components/ApplicationForm';
 import Error from '../components/Error';
@@ -34,27 +34,11 @@ const NewApplication = () => {
     }
   };
 
-  const handleUpdate = async (submission: NewJob, id: number) => {
-    try {
-      const job = await editJob(user.token, submission, id);
-      dispatch(updateJob(job));
-      navigate(`/jobs/${job.id}`);
-    } catch (err) {
-      if (isAxiosError(err)) {
-        setError(err.response?.data.error);
-        setTimeout(() => setError(''), 5000);
-      }
-    }
-  };
-
   return (
     <main>
       <h2>New Application</h2>
       {error && <Error err={error} />}
-      <ApplicationForm
-        handleAddition={handleAddition}
-        handleUpdate={handleUpdate}
-      />
+      <ApplicationForm handleAddition={handleAddition} />
     </main>
   );
 };
