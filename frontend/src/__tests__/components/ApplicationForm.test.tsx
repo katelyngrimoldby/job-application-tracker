@@ -4,6 +4,8 @@ import { render, screen, fireEvent, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ApplicationForm from '../../components/ApplicationForm';
 
+type Status = 'applied' | 'interviewing' | 'offered' | 'rejected';
+
 //For the sake of unit testing, no tests with the WYSIWYG editor will be written here.
 
 const getFormattedDate = () => {
@@ -241,6 +243,138 @@ describe('ApplicationForm component', () => {
 
         expect(mockCreate.mock.calls[0][0].interviews).toEqual([]);
       });
+    });
+  });
+
+  describe('Editing application', () => {
+    const content = {
+      positionTitle: 'Test',
+      company: 'Test',
+      location: 'Remote',
+      applied: '2022-09-10T00:00:00.000Z',
+      compensation: '500k/yr',
+      status: 'offered' as Status,
+      interviews: [
+        '2022-12-08T00:00:00.000Z',
+        '2022-11-08T00:00:00.000Z',
+        '2022-10-08T00:00:00.000Z',
+      ],
+      jobDescription: '',
+      id: 10,
+      userId: 2,
+    };
+
+    const submission = {
+      positionTitle: 'Changed',
+      company: 'Changed',
+      location: 'Changed',
+      applied: '2022-09-11',
+      compensation: '200k/yr',
+      status: 'rejected',
+      interviews: ['2022-12-08T00:00:00.000Z', '2022-11-08T00:00:00.000Z'],
+      jobDescription: '',
+    };
+
+    const unchangedSubmission = {
+      positionTitle: 'Test',
+      company: 'Test',
+      location: 'Remote',
+      applied: '2022-09-10',
+      compensation: '500k/yr',
+      status: 'offered' as Status,
+      interviews: [
+        '2022-12-08T00:00:00.000Z',
+        '2022-11-08T00:00:00.000Z',
+        '2022-10-08T00:00:00.000Z',
+      ],
+      jobDescription: '',
+    };
+
+    beforeEach(() => {
+      render(
+        <ApplicationForm
+          content={content}
+          handleAddition={mockCreate}
+          handleUpdate={mockUpdate}
+        />
+      );
+    });
+
+    afterEach(() => vi.clearAllMocks());
+
+    it('Populates form with content', () => {
+      const positionInput = screen.getByPlaceholderText('Position');
+      const companyInput = screen.getByPlaceholderText('Company');
+      const locationInput = screen.getByPlaceholderText('Location');
+      const compensationInput = screen.getByPlaceholderText('Compensation');
+      const appliedInput = screen.getByLabelText('Applied');
+      const interview0 = screen.getByTestId('interview0');
+      const interview1 = screen.getByTestId('interview1');
+      const interview2 = screen.getByTestId('interview2');
+
+      expect(positionInput.getAttribute('value')).toBe(content.positionTitle);
+      expect(companyInput.getAttribute('value')).toBe(content.company);
+      expect(locationInput.getAttribute('value')).toBe(content.location);
+      expect(compensationInput.getAttribute('value')).toBe(
+        content.compensation
+      );
+      expect(appliedInput.getAttribute('value')).toBe(
+        content.applied.substring(0, 10)
+      );
+      expect(interview0.textContent).toBe(
+        content.interviews[0].substring(0, 10) + ' '
+      );
+      expect(interview1.textContent).toBe(
+        content.interviews[1].substring(0, 10) + ' '
+      );
+      expect(interview2.textContent).toBe(
+        content.interviews[2].substring(0, 10) + ' '
+      );
+    });
+
+    it('Submits changed content successfully', async () => {
+      const user = userEvent.setup();
+      const positionInput = screen.getByPlaceholderText('Position');
+      const companyInput = screen.getByPlaceholderText('Company');
+      const locationInput = screen.getByPlaceholderText('Location');
+      const compensationInput = screen.getByPlaceholderText('Compensation');
+      const appliedInput = screen.getByLabelText('Applied');
+      const statusSelect = screen.getByLabelText('Status');
+      const interview2 = screen.getByTestId('interview2');
+      const submitButton = screen.getByText('Submit');
+
+      await user.clear(positionInput);
+      await user.clear(companyInput);
+      await user.clear(locationInput);
+      await user.clear(compensationInput);
+
+      await user.type(positionInput, submission.positionTitle);
+      await user.type(companyInput, submission.company);
+      await user.type(locationInput, submission.location);
+      await user.type(compensationInput, submission.compensation);
+
+      await user.clear(appliedInput);
+      fireEvent.change(appliedInput, {
+        target: { value: submission.applied },
+      });
+
+      await user.selectOptions(statusSelect, submission.status);
+
+      await user.click(within(interview2).getByRole('button'));
+
+      await user.click(submitButton);
+
+      expect(mockUpdate.mock.calls).toHaveLength(1);
+      expect(mockUpdate.mock.calls[0]).toEqual([submission, 10]);
+    });
+    it('Submits original content if no user inputs made', async () => {
+      const user = userEvent.setup();
+      const submitButton = screen.getByText('Submit');
+
+      await user.click(submitButton);
+
+      expect(mockUpdate.mock.calls).toHaveLength(1);
+      expect(mockUpdate.mock.calls[0]).toEqual([unchangedSubmission, 10]);
     });
   });
 });
