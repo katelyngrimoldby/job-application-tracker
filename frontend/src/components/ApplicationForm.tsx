@@ -1,11 +1,6 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { isAxiosError } from 'axios';
-import { useStateValue, addJob, updateJob } from '../state';
-import { addNew, editJob } from '../services/jobs';
-import { Job } from '../types';
+import { useState } from 'react';
+import { Job, NewJob } from '../types';
 import RichTextEditor from './RichTextEditor';
-import Error from './Error';
 import styles from '../styles/components/ApplicationForm.module.css';
 import closeIcon from '../assets/close.svg';
 
@@ -20,8 +15,15 @@ const getFormattedDate = () => {
   }`;
 };
 
-const ApplicationForm = ({ content }: { content?: Job }) => {
-  const navigate = useNavigate();
+const ApplicationForm = ({
+  content,
+  handleAddition,
+  handleUpdate,
+}: {
+  content?: Job;
+  handleAddition: (submission: NewJob) => void;
+  handleUpdate: (submission: NewJob, id: number) => void;
+}) => {
   const [positionTitle, setPositionTitle] = useState(
     content ? content.positionTitle : ''
   );
@@ -43,20 +45,13 @@ const ApplicationForm = ({ content }: { content?: Job }) => {
     content ? content.jobDescription : ''
   );
   const [interviewDate, setInterviewDate] = useState(getFormattedDate());
-  const [error, setError] = useState('');
-
-  const [{ user }, dispatch] = useStateValue();
-
-  if (!user) {
-    return <h2>401 Unauthorized</h2>;
-  }
 
   const handleDelete = (interview: number) => {
     const newInterviews = interviews.filter((_, index) => index != interview);
     setInterviews(newInterviews);
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const submission = {
       positionTitle,
@@ -68,29 +63,11 @@ const ApplicationForm = ({ content }: { content?: Job }) => {
       interviews,
       jobDescription,
     };
+
     if (!content) {
-      try {
-        const job = await addNew(user.token, submission);
-        dispatch(addJob(job));
-        navigate(`/jobs/${job.id}`);
-      } catch (err) {
-        if (isAxiosError(err)) {
-          console.log(err);
-          setError(err.response?.data.error);
-          setTimeout(() => setError(''), 5000);
-        }
-      }
+      handleAddition(submission);
     } else {
-      try {
-        const job = await editJob(user.token, submission, content.id);
-        dispatch(updateJob(job));
-        navigate(`/jobs/${job.id}`);
-      } catch (err) {
-        if (isAxiosError(err)) {
-          setError(err.response?.data.error);
-          setTimeout(() => setError(''), 5000);
-        }
-      }
+      handleUpdate(submission, content.id);
     }
   };
 
@@ -99,7 +76,6 @@ const ApplicationForm = ({ content }: { content?: Job }) => {
       onSubmit={handleSubmit}
       className={styles.form}
     >
-      {error && <Error err={error} />}
       <div className={styles.inputs}>
         <input
           type='text'
