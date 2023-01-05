@@ -33,7 +33,9 @@ describe('ApplicationForm component', () => {
       );
     });
 
-    afterEach(() => vi.clearAllMocks());
+    afterEach(() => {
+      vi.clearAllMocks();
+    });
 
     describe('Interview input', () => {
       it('Displays a list of added interview dates', async () => {
@@ -300,7 +302,9 @@ describe('ApplicationForm component', () => {
       );
     });
 
-    afterEach(() => vi.clearAllMocks());
+    afterEach(() => {
+      vi.clearAllMocks();
+    });
 
     it('Populates form with content', () => {
       const positionInput = screen.getByPlaceholderText('Position');
