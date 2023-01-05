@@ -1,18 +1,44 @@
-import { useStateValue } from '../state';
+import { useStateValue, setJobList } from '../state';
+import { useSearchParams } from 'react-router-dom';
+import { isAxiosError } from 'axios';
+import { getAll } from '../services/jobs';
 import JobList from '../components/JobList';
 import FiltrationMenu from '../components/FiltrationMenu';
 import styles from '../styles/pages/jobs.module.css';
 
 const Jobs = () => {
-  const [{ jobs, user }] = useStateValue();
+  const [{ jobs, user }, dispatch] = useStateValue();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   if (!user) {
     return <h2>401 Unauthorized</h2>;
   }
 
+  const handleChange = async (name: string, value: string) => {
+    if (value) {
+      searchParams.set(name, value);
+      setSearchParams(searchParams);
+    } else {
+      if (searchParams.get('filter')) {
+        searchParams.delete(name);
+        setSearchParams(searchParams);
+      }
+    }
+    const params = location.search.toString();
+
+    try {
+      const jobs = await getAll(user.token, params);
+      dispatch(setJobList(jobs));
+    } catch (err) {
+      if (isAxiosError(err)) {
+        console.log(err.response?.data.error);
+      }
+    }
+  };
+
   return (
     <main className={styles.main}>
-      <FiltrationMenu user={user} />
+      <FiltrationMenu handleChange={handleChange} />
       <JobList jobs={jobs} />
     </main>
   );

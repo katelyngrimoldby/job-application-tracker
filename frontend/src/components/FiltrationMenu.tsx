@@ -1,9 +1,4 @@
 import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { isAxiosError } from 'axios';
-import { useStateValue, setJobList } from '../state';
-import { getAll } from '../services/jobs';
-import { User } from '../types';
 import toggleArrow from '../assets/menu-down.svg';
 import styles from '../styles/components/FiltrationMenu.module.css';
 
@@ -17,34 +12,17 @@ const sort = [
 ];
 const filter = ['applied', 'interviewing', 'offered', 'rejected'];
 
-const FiltrationMenu = ({ user }: { user: User }) => {
+const FiltrationMenu = ({
+  handleChange,
+}: {
+  handleChange: (name: string, value: string) => void;
+}) => {
   const [visible, setVisible] = useState(false);
-  const [, dispatch] = useStateValue();
-  const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value) {
-      searchParams.set(event.target.name, event.target.value);
-      setSearchParams(searchParams);
-    } else {
-      if (searchParams.get('filter')) {
-        searchParams.delete(event.target.name);
-        setSearchParams(searchParams);
-      }
-    }
-    const params = location.search.toString();
-
-    try {
-      const jobs = await getAll(user.token, params);
-      dispatch(setJobList(jobs));
-    } catch (err) {
-      if (isAxiosError(err)) {
-        console.log(err.response?.data.error);
-        //  setError(err.response?.data.error);
-        //  setTimeout(() => setError(''), 5000);
-      }
-    }
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleChange(event.target.name, event.target.value);
   };
+
   return (
     <aside className={visible ? styles.sidebarVisible : styles.sidebar}>
       <button
@@ -67,7 +45,7 @@ const FiltrationMenu = ({ user }: { user: User }) => {
               name='filter'
               id='none'
               value=''
-              onChange={handleChange}
+              onChange={onChange}
             />
             <label htmlFor='none'>No Filter</label>
           </div>
@@ -78,7 +56,7 @@ const FiltrationMenu = ({ user }: { user: User }) => {
                 name='filter'
                 id={e}
                 value={e}
-                onChange={handleChange}
+                onChange={onChange}
               />
               <label htmlFor={e}>{e}</label>
             </div>
@@ -93,7 +71,7 @@ const FiltrationMenu = ({ user }: { user: User }) => {
                 name='sort'
                 id={e.value}
                 value={e.value}
-                onChange={handleChange}
+                onChange={onChange}
               />
               <label htmlFor={e.value}>{e.label}</label>
             </div>
