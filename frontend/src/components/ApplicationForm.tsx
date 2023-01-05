@@ -80,6 +80,7 @@ const ApplicationForm = ({
         <input
           type='text'
           placeholder='Position'
+          id='position'
           value={positionTitle}
           onChange={(event) => setPositionTitle(event.target.value)}
           required
@@ -87,6 +88,7 @@ const ApplicationForm = ({
         <input
           type='text'
           placeholder='Company'
+          id='company'
           value={company}
           onChange={(event) => setCompany(event.target.value)}
           required
@@ -96,6 +98,7 @@ const ApplicationForm = ({
         <input
           type='text'
           placeholder='Location'
+          id='location'
           value={location}
           onChange={(event) => setLocation(event.target.value)}
           required
@@ -103,6 +106,7 @@ const ApplicationForm = ({
         <input
           type='text'
           placeholder='Compensation'
+          id='compensation'
           value={compensation}
           onChange={(event) => setCompensation(event.target.value)}
         />
@@ -143,6 +147,7 @@ const ApplicationForm = ({
               <button
                 onClick={() => setInterviews([...interviews, interviewDate])}
                 type='button'
+                id='addButton'
               >
                 Add
               </button>
@@ -153,6 +158,7 @@ const ApplicationForm = ({
               <p
                 key={i}
                 className={styles.interview}
+                data-testid={`interview${i}`}
               >
                 {e.substring(0, 10)}{' '}
                 <button
@@ -179,7 +185,12 @@ const ApplicationForm = ({
           />
         </div>
       </div>
-      <button className='primary'>Submit</button>
+      <button
+        className='primary'
+        id='submit'
+      >
+        Submit
+      </button>
     </form>
   );
 };
