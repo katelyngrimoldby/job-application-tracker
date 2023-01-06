@@ -5,7 +5,7 @@ import { isAxiosError } from 'axios';
 import RegistrationForm from '../components/RegistrationForm';
 import Error from '../components/Error';
 
-const Register = async () => {
+const Register = () => {
   const navigate = useNavigate();
   const [error, setError] = useState('');
 
@@ -24,6 +24,7 @@ const Register = async () => {
       }
     }
   };
+
   return (
     <main>
       <h2>Register</h2>
