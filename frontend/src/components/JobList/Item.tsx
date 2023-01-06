@@ -1,37 +1,22 @@
 import { useState } from 'react';
-import { isAxiosError } from 'axios';
 import { Link } from 'react-router-dom';
-import { deleteJob } from '../../services/jobs';
-import { useStateValue, removeJob } from '../../state';
 import { Job } from '../../types';
 import toggleArrow from '../../assets/menu-down.svg';
 import PencilIcon from '../../components/icons/PencilIcon';
 import TrashIcon from '../../components/icons/TrashIcon';
 import styles from '../../styles/components/JobList/Item.module.css';
 
-const JobListItem = ({ job }: { job: Job }) => {
+const JobListItem = ({
+  job,
+  handleDelete,
+}: {
+  job: Job;
+  handleDelete: (id: number) => void;
+}) => {
   const [visible, setVisible] = useState(false);
-  const [{ user }, dispatch] = useStateValue();
-  const [error, setError] = useState('');
-
-  if (!user) {
-    return <h2>401 Unauthorized</h2>;
-  }
-
-  const handleDelete = async () => {
-    try {
-      await deleteJob(user.token, job.id);
-      dispatch(removeJob(job.id));
-    } catch (err) {
-      if (isAxiosError(err)) {
-        setError(err.response?.data);
-      }
-    }
-  };
 
   return (
     <>
-      {error && <p>{error}</p>}
       <li className={styles.wrapper}>
         <div className={styles.primaryInfo}>
           <b>{job.positionTitle}</b> <span>{job.company}</span>
@@ -69,7 +54,7 @@ const JobListItem = ({ job }: { job: Job }) => {
               </Link>
               <button
                 type='button'
-                onClick={handleDelete}
+                onClick={() => handleDelete(job.id)}
                 className='secondary'
               >
                 <TrashIcon />
