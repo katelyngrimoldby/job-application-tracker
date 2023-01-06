@@ -16,7 +16,7 @@ const RichTextEditor = ({
 }: {
   initialContent: string;
   id: string;
-  setContent: React.Dispatch<React.SetStateAction<string>>;
+  setContent: (content: string) => void;
 }) => {
   const editor = useEditor({
     extensions: [StarterKit],
