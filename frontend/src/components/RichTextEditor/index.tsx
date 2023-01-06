@@ -69,6 +69,7 @@ const RichTextEditor = ({
           disabled={!editor?.can().chain().focus().toggleBold().run()}
           type='button'
           className={editor?.isActive('bold') ? styles.active : undefined}
+          aria-label='Toggle Bold'
         >
           <img
             src={Bold}
@@ -80,6 +81,7 @@ const RichTextEditor = ({
           disabled={!editor?.can().chain().focus().toggleItalic().run()}
           type='button'
           className={editor?.isActive('italic') ? styles.active : undefined}
+          aria-label='Toggle Italic'
         >
           <img
             src={Italic}
@@ -102,6 +104,7 @@ const RichTextEditor = ({
           onClick={() => editor?.chain().focus().toggleBulletList().run()}
           type='button'
           className={editor?.isActive('bulletList') ? styles.active : undefined}
+          aria-label='Toggle Bulleted List'
         >
           <img
             src={BulletList}
@@ -114,6 +117,7 @@ const RichTextEditor = ({
           className={
             editor?.isActive('orderedList') ? styles.active : undefined
           }
+          aria-label='Toggle Ordered List'
         >
           <img
             src={NumberList}
@@ -124,6 +128,7 @@ const RichTextEditor = ({
           onClick={() => editor?.chain().focus().undo().run()}
           disabled={!editor?.can().chain().focus().undo().run()}
           type='button'
+          aria-label='Undo'
         >
           <img
             src={Undo}
@@ -134,6 +139,7 @@ const RichTextEditor = ({
           onClick={() => editor?.chain().focus().redo().run()}
           disabled={!editor?.can().chain().focus().redo().run()}
           type='button'
+          aria-label='Redo'
         >
           <img
             src={Redo}
