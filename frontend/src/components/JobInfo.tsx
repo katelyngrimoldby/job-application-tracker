@@ -3,7 +3,7 @@ import { Job } from '../types';
 import ReadOnlyRichText from './RichTextEditor/ReadOnly';
 import PencilIcon from './icons/PencilIcon';
 import TrashIcon from './icons/TrashIcon';
-import styles from '../styles/pages/singleJob.module.css';
+import styles from '../styles/components/JobInfo.module.css';
 
 const JobInfo = ({
   job,
