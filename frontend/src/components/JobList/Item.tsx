@@ -49,6 +49,7 @@ const JobListItem = ({
               <Link
                 to={`/jobs/${job.id}/edit`}
                 className='secondary'
+                aria-label='Edit Application'
               >
                 <PencilIcon />
               </Link>
@@ -56,6 +57,7 @@ const JobListItem = ({
                 type='button'
                 onClick={() => handleDelete(job.id)}
                 className='secondary'
+                aria-label='Delete Application'
               >
                 <TrashIcon />
               </button>
