@@ -13,9 +13,10 @@
 | Dec. 22      | 1hr 15min  | Integrate user management to frontend               |
 | Dec. 23      | 3hr 15min  | Integrate job management to frontend                |
 | Dec. 29      | 1hr 30min  | Implement type proofing for api                     |
-| Dec. 29      | 40 min     | Centralize error handling & remove try/catch blocks |
+| Dec. 29      | 40min      | Centralize error handling & remove try/catch blocks |
 | Dec. 29 - 31 | 7hr 44min  | Basic mobile styling                                |
 | Jan. 2       | 1hr 37min  | Basic desktop styling                               |
 | Jan. 3       | 1hr        | Backend: Implement filtering and sorting            |
 | Jan. 3       | 2h 41min   | Frontend: Implement filtering and sorting           |
 | Jan. 4       | 1hr 51min  | Transistion session management to Redis             |
+| Jan. 5 - 6   | 8hr 17min  | Unit testing                                        |
