@@ -48,9 +48,7 @@ const login = async (username: string, password: string) => {
 const logout = async (id: number) => {
   await redis.del(id.toString());
 
-  return {
-    message: 'Logout Successful',
-  };
+  return;
 };
 
 export default { login, logout, getSession };

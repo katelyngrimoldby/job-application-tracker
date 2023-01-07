@@ -11,7 +11,7 @@ authRouter.get('/:id', async (req, res) => {
   const session = await authService.getSession(Number(id));
 
   if (!session) {
-    res.status(204).send(null);
+    res.status(204).end();
   }
 
   res.json(session);
@@ -29,9 +29,9 @@ authRouter.delete(
   tokenExtractor,
   async (req: RequestUserAuth, res) => {
     if (req.decodedToken) {
-      const result = await authService.logout(req.decodedToken.id);
+      await authService.logout(req.decodedToken.id);
 
-      return res.status(204).json(result);
+      return res.status(204).end();
     }
     return res.status(401).json({ error: 'Missing authentication' });
   }
