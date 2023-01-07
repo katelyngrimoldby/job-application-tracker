@@ -2,6 +2,7 @@ import { Router } from 'express';
 import tokenExtractor from '../middleware/tokenExtractor';
 import { RequestUserAuth } from '../types';
 import authService from '../services/authService';
+import sessionValidator from '../middleware/sessionValidator';
 
 const authRouter = Router();
 
@@ -27,6 +28,7 @@ authRouter.post('/login', async (req, res) => {
 authRouter.delete(
   '/logout',
   tokenExtractor,
+  sessionValidator,
   async (req: RequestUserAuth, res) => {
     if (req.decodedToken) {
       await authService.logout(req.decodedToken.id);
