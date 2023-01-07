@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { SECRET } from '../util/config';
 import { Response, NextFunction } from 'express';
-// import authService from '../services/authService';
 import { RequestUserAuth, Signature } from '../types';
 
 interface RequestUserAuthHandler {
