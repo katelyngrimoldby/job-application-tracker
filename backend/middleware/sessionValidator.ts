@@ -18,17 +18,13 @@ const sessionValidator: RequestUserAuthHandler = async (req, res, next) => {
     return res.status(401).json({ error: 'Token missing' });
   }
 
-  try {
-    const session = await authService.getSession(req.decodedToken.id);
-    if (!session || session.token != authorization.substring(7)) {
-      console.log('here2');
-      return res.status(401).json({ error: 'Session invalid' });
-    }
+  const session = await authService.getSession(req.decodedToken.id);
 
-    next();
-  } catch (err) {
-    next(err);
+  if (!session) {
+    return res.status(401).json({ error: 'Session invalid' });
   }
+
+  next();
 };
 
 export default sessionValidator;
