@@ -4,7 +4,7 @@ import helper from '../util/testHelper';
 import { NextFunction, Response } from 'express';
 import { RequestUserAuth } from '../types';
 import userService from '../services/userService';
-// import authService from '../services/authService';
+import authService from '../services/authService';
 import tokenExtractor from '../middleware/tokenExtractor';
 
 describe('Token extractor middleware', () => {
@@ -60,51 +60,31 @@ describe('Token extractor middleware', () => {
     );
   });
 
-  // it('Saves token payload if valid token', async () => {
-  //   const user = helper.initialUsers[0];
-  //   const loginRes = await authService.login(user.username, user.password);
+  it('Saves token payload if valid token', async () => {
+    const user = helper.initialUsers[0];
+    const loginRes = await authService.login(user.username, user.password);
 
-  //   mockRequest = {
-  //     headers: {
-  //       authorization: `bearer ${loginRes.session.token}`,
-  //     },
-  //   };
+    mockRequest = {
+      headers: {
+        authorization: `bearer ${loginRes.session.token}`,
+      },
+    };
 
-  //   tokenExtractor(
-  //     mockRequest as RequestUserAuth,
-  //     mockResponse as Response,
-  //     mockNext
-  //   );
+    tokenExtractor(
+      mockRequest as RequestUserAuth,
+      mockResponse as Response,
+      mockNext
+    );
 
-  //   expect(mockRequest.decodedToken).toEqual({
-  //     iat: expect.any(Number),
-  //     id: loginRes.id,
-  //     username: user.username,
-  //   });
-  // });
+    expect(mockRequest.decodedToken).toEqual({
+      iat: expect.any(Number),
+      id: loginRes.id,
+      username: user.username,
+    });
 
-  // it('Returns invalid session error if user has no session', async () => {
-  //   const user = helper.initialUsers[0];
-  //   const loginRes = await authService.login(user.username, user.password);
-
-  //   await authService.logout(loginRes.id);
-
-  //   mockRequest = {
-  //     headers: {
-  //       authorization: `bearer ${loginRes.session.token}`,
-  //     },
-  //   };
-
-  //   tokenExtractor(
-  //     mockRequest as RequestUserAuth,
-  //     mockResponse as Response,
-  //     mockNext
-  //   );
-
-  //   // expect(mockResponse.status).toBeCalledWith(401);
-  //   expect(mockNext).toBeCalledWith();
-  //   expect(mockResponse.json).toBeCalledWith({ error: 'Session invalid' });
-  // });
+    expect(mockNext).toBeCalledTimes(2);
+    expect(mockNext).toBeCalledWith();
+  });
 
   afterAll(async () => {
     await sequelize.close();
