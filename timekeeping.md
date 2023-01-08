@@ -21,3 +21,4 @@
 | Jan. 4       | 1hr 51min  | Transistion session management to Redis             |
 | Jan. 5 - 6   | 8hr 17min  | Unit testing                                        |
 | Jan. 6 - 8   | 5hr 29min  | Integration testing                                 |
+| Jan. 6       | 1hr        | Configuring and building for production             |
