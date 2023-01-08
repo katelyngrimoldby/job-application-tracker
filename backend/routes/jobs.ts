@@ -79,7 +79,7 @@ jobRouter.delete('/:id', async (req: RequestUserAuth, res) => {
     return res.status(404).end();
   }
 
-  res.json(result);
+  res.status(204).end();
 });
 
 export default jobRouter;
