@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Job } from '../types';
-const baseUrl = 'http://localhost:3000/api';
+const baseUrl = '/api/jobs';
 
 const getAll = async (token: string, params?: string) => {
   const config = {
@@ -10,7 +10,7 @@ const getAll = async (token: string, params?: string) => {
   };
 
   const response = await axios.get<Job[]>(
-    `${baseUrl}/jobs${params ? params : ''}`,
+    `${baseUrl}/${params ? params : ''}`,
     config
   );
 
@@ -24,7 +24,7 @@ const addNew = async (token: string, payload: Omit<Job, 'id' | 'userId'>) => {
     },
   };
 
-  const response = await axios.post<Job>(`${baseUrl}/jobs`, payload, config);
+  const response = await axios.post<Job>(`${baseUrl}`, payload, config);
 
   return response.data;
 };
@@ -40,11 +40,7 @@ const editJob = async (
     },
   };
 
-  const response = await axios.put<Job>(
-    `${baseUrl}/jobs/${id}`,
-    payload,
-    config
-  );
+  const response = await axios.put<Job>(`${baseUrl}/${id}`, payload, config);
 
   return response.data;
 };
@@ -56,7 +52,7 @@ const deleteJob = async (token: string, id: number) => {
     },
   };
 
-  const response = await axios.delete(`${baseUrl}/jobs/${id}`, config);
+  const response = await axios.delete(`${baseUrl}/${id}`, config);
 
   return response.data;
 };
