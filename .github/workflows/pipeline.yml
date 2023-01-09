@@ -1,0 +1,36 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+jobs:
+  frontend-predeploy:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Install deps
+        run: cd frontend && npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        run: npm test
+
+  backend-predeploy:
+    runs-on: ubuntu-20.04
+    env:
+      POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+      REDIS_URL: ${{ secrets.REDIS_URL }}
+      SECRET: ${{ secrets.SECRET }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
