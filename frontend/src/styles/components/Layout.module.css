@@ -27,8 +27,17 @@
   .footer {
     background-color: var(--background-secondary);
     text-align: center;
-    p:first-of-type {
+
+    p {
       margin-bottom: 0.5rem;
+
+      &:last-of-type {
+        margin: 0;
+      }
+    }
+    a {
+      color: var(--accent-secondary);
+      font-weight: 600;
     }
   }
 }
