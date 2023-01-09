@@ -19,7 +19,7 @@ jobs:
       - name: Install deps
         run: cd frontend && npm ci
       - name: Lint
-        run: npm run lint
+        run: cd frontend && npm run lint
       - name: Test
         run: npm test
 
@@ -34,3 +34,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
+      - name: Install deps
+        run: cd backend && npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        run: npm test
