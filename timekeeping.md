@@ -22,4 +22,4 @@
 | Jan. 5 - 6   | 8hr 17min  | Unit testing                                        |
 | Jan. 6 - 8   | 5hr 29min  | Integration testing                                 |
 | Jan. 8       | 1hr        | Configuring and building for production             |
-| Jan. 8       | 45min      | Frontend tweaks & landing page                      |
+| Jan. 8       | 1hr 30min  | Frontend tweaks & landing page                      |
