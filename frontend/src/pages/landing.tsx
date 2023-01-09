@@ -4,19 +4,23 @@ import styles from '../styles/pages/landing.module.css';
 const Landing = () => {
   return (
     <main className={styles.main}>
-      <header>
-        <h1 className={styles.header}>Job hunting?</h1>
+      <header className={styles.heading}>
+        <div className={styles.headingContent}>
+          <h1>Job hunting?</h1>
+        </div>
+      </header>
+      <div className={styles.cta}>
         <p className={styles.subtext}>
           Utilize this job tracker to manage your applications&apos; statuses,
           interviews, and even job postings - all in one easy-to-use platform.
         </p>
-      </header>
-      <Link
-        to='/register'
-        className='primary'
-      >
-        Sign up - It&apos;s Free
-      </Link>
+        <Link
+          to='/register'
+          className='primary'
+        >
+          Sign up - It&apos;s Free
+        </Link>
+      </div>
     </main>
   );
 };
