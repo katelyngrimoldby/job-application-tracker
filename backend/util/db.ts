@@ -3,6 +3,8 @@ import { createClient } from 'redis';
 import { Umzug, SequelizeStorage } from 'umzug';
 import { POSTGRES_URL, REDIS_URL } from './config';
 
+console.log(POSTGRES_URL);
+
 const sequelize = new Sequelize(POSTGRES_URL ? POSTGRES_URL : 'nodb:');
 const redis = createClient({
   url: REDIS_URL,
