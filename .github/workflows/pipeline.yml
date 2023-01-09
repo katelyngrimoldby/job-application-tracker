@@ -40,6 +40,13 @@ jobs:
         options: >-
           --health-cmd pg_isready --health-interval 10s --health-timeout 5s
           --health-retries 5
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping" --health-interval 10s --health-timeout
+          5s --health-retries 5
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -58,5 +65,5 @@ jobs:
         working-directory: ./backend
         env:
           POSTGRES_URL: postgresql://localUser:localPassword@localhost:5432/test
-          REDIS_URL: ${{ secrets.REDIS_URL }}
+          REDIS_URL: redis://localhost:6379
           SECRET: ${{ secrets.SECRET }}
