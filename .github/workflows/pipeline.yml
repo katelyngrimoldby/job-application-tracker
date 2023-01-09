@@ -67,3 +67,23 @@ jobs:
           POSTGRES_URL: postgresql://localUser:localPassword@localhost:5432/test
           REDIS_URL: redis://localhost:6379
           SECRET: ${{ secrets.SECRET }}
+      - name: Build app
+        run: npm run build
+        working-directory: ./backend
+  deploy:
+    needs: [frontend-predeploy, backend-predeploy]
+    runs-on: ubuntu-20.04
+    if: github.event_name == 'push'
+    env:
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Install deps
+        run: npm ci
+        working-directory: ./backend
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: npm run build && flyctl deploy --remote-only
+        working-directory: ./backend
