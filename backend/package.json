@@ -9,7 +9,7 @@
     "build": "rm -rf build/dist && tsc && cd ../frontend && npm run build && cp -r dist ../backend/build",
     "start": "node build/index.js",
     "test": "jest --forceExit --verbose --runInBand",
-    "lint": "eslint './**/*.{ts}"
+    "lint": "eslint './**/*.ts'"
   },
   "author": "",
   "license": "ISC",
