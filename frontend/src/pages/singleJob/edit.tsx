@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStateValue, updateJob } from '../../state';
 import { isAxiosError } from 'axios';
@@ -16,13 +16,14 @@ const Edit = ({ job }: { job: Job | null | undefined }) => {
   if (!job) {
     return <Custom404 />;
   }
+  useEffect(() => {
+    if (!user) {
+      navigate('/');
+    }
+  }, []);
 
   if (!user) {
-    return (
-      <main>
-        <h2>401 Unauthorized</h2>
-      </main>
-    );
+    return null;
   }
 
   const handleUpdate = async (submission: NewJob, id: number) => {

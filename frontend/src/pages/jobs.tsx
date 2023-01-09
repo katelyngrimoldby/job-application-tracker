@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import { useStateValue, setJobList } from '../state';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { isAxiosError } from 'axios';
 import { getAll } from '../services/jobs';
 import JobList from '../components/JobList';
@@ -9,9 +10,16 @@ import styles from '../styles/pages/jobs.module.css';
 const Jobs = () => {
   const [{ jobs, user }, dispatch] = useStateValue();
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/');
+    }
+  }, []);
 
   if (!user) {
-    return <h2>401 Unauthorized</h2>;
+    return null;
   }
 
   const handleChange = async (name: string, value: string) => {

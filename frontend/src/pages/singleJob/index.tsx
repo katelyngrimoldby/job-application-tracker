@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { isAxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Job } from '../../types';
@@ -12,8 +12,14 @@ const SingleJob = ({ job }: { job: Job | null | undefined }) => {
   const [{ user }, dispatch] = useStateValue();
   const [error, setError] = useState('');
 
+  useEffect(() => {
+    if (!user) {
+      navigate('/');
+    }
+  }, []);
+
   if (!user) {
-    return <h2>401 Unauthorized</h2>;
+    return null;
   }
 
   if (!job) {
