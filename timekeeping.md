@@ -24,3 +24,4 @@
 | Jan. 8       | 1hr        | Configuring and building for production             |
 | Jan. 8       | 1hr 30min  | Frontend tweaks & landing page                      |
 | Jan. 9       | 53min      | Landing Page                                        |
+| Jan. 9       | 1hr 54min  | CI/CD Pipeline                                      |
