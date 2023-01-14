@@ -6,7 +6,6 @@ const app = express();
 import 'express-async-errors';
 import path from 'path';
 import tokenExtractor from './middleware/tokenExtractor';
-import sessionValidator from './middleware/sessionValidator';
 import errorHandler from './middleware/errorHandler';
 import authRouter from './routes/auth';
 import userRouter from './routes/users';
@@ -24,7 +23,7 @@ app.get('/api/ping', (_req, res) => {
 
 app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
-app.use('/api/jobs', tokenExtractor, sessionValidator, jobRouter);
+app.use('/api/jobs', tokenExtractor, jobRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.get('*', (_req, res) => {
