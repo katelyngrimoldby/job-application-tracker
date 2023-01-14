@@ -29,7 +29,7 @@ const tokenExtractor: RequestUserAuthHandler = async (req, res, next) => {
     if (err instanceof Error) {
       if (err.name === 'TokenExpiredError') {
         if (!req.headers['userid']) {
-          return res.status(401).json({ error: 'No user id' });
+          return res.status(401).json({ error: 'No refresh token' });
         }
 
         const session = await authService.getSession(
@@ -51,6 +51,7 @@ const tokenExtractor: RequestUserAuthHandler = async (req, res, next) => {
           next(err);
         }
       }
+      next(err);
     }
   }
 };
