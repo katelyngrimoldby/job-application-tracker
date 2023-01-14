@@ -37,7 +37,7 @@ function App() {
       }
     } catch (err) {
       if (isAxiosError(err)) {
-        handleError(err.response?.data);
+        handleError(err.response?.data.error);
       }
     }
   };
