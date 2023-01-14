@@ -27,7 +27,7 @@ describe('Job application management', () => {
     await userService.addNew(user);
     const userAuth = await authService.login(user.username, user.password);
     userId = userAuth.id;
-    userToken = userAuth.session.token;
+    userToken = userAuth.accessToken;
 
     await jobService.addNew(helper.initialJobs[0], userId);
   });
@@ -67,7 +67,7 @@ describe('Job application management', () => {
 
       const response = await api
         .get(`/api/jobs/${jobId}`)
-        .set('authorization', `bearer ${userAuth.session.token}`);
+        .set('authorization', `bearer ${userAuth.accessToken}`);
 
       expect(response.status).toBe(401);
       expect(response.body).toEqual({ error: 'Invalid Permissions' });
@@ -125,7 +125,7 @@ describe('Job application management', () => {
 
       const response = await api
         .put(`/api/jobs/${jobId}`)
-        .set('authorization', `bearer ${userAuth.session.token}`)
+        .set('authorization', `bearer ${userAuth.accessToken}`)
         .send(helper.initialJobs[1]);
 
       expect(response.status).toBe(401);
@@ -171,7 +171,7 @@ describe('Job application management', () => {
 
       const response = await api
         .delete(`/api/jobs/${jobId}`)
-        .set('authorization', `bearer ${userAuth.session.token}`);
+        .set('authorization', `bearer ${userAuth.accessToken}`);
 
       expect(response.status).toBe(401);
       expect(response.body).toEqual({ error: 'Invalid Permissions' });
