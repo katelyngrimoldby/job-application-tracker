@@ -14,7 +14,7 @@ const getSession = async (
     return null;
   }
 
-  const refreshToken = JSON.parse(session);
+  const refreshToken = session;
 
   if (!SECRET) {
     throw new Error('Missing env variable');
@@ -56,7 +56,7 @@ const login = async (username: string, password: string) => {
 
   const refreshToken = jwt.sign(userForToken, SECRET, { expiresIn: '30 days' });
 
-  await redis.set(user.id.toString(), JSON.stringify(refreshToken));
+  await redis.set(user.id.toString(), refreshToken);
 
   return { accessToken, id: user.id, name: user.name };
 };
