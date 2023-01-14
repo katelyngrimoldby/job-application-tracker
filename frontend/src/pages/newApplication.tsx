@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStateValue, addJob } from '../state';
+import useErrorHandler from '../hooks/useErrorHandler';
 import { isAxiosError } from 'axios';
 import { addNew } from '../services/jobs';
 import { NewJob } from '../types';
@@ -10,7 +11,7 @@ import Error from '../components/Error';
 const NewApplication = () => {
   const navigate = useNavigate();
   const [{ user }, dispatch] = useStateValue();
-  const [error, setError] = useState('');
+  const [error, handleError] = useErrorHandler();
 
   useEffect(() => {
     if (!user) {
@@ -24,14 +25,14 @@ const NewApplication = () => {
 
   const handleAddition = async (submission: NewJob) => {
     try {
-      const job = await addNew(user.token, submission);
+      const userId = window.localStorage.getItem('id');
+
+      const job = await addNew(user.token, Number(userId), submission);
       dispatch(addJob(job));
       navigate(`/jobs/${job.id}`);
     } catch (err) {
       if (isAxiosError(err)) {
-        console.log(err);
-        setError(err.response?.data.error);
-        setTimeout(() => setError(''), 5000);
+        handleError(err.response?.data);
       }
     }
   };
