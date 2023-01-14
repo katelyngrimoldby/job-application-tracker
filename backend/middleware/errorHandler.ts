@@ -14,6 +14,9 @@ const errorHandler = (
     res.status(400).json({ error: 'Username is already taken' });
   }
 
+  if (err.name === 'TokenExpiredError') {
+    res.status(401).json({ error: 'No refresh token' });
+  }
   if (
     err.message === 'Invalid Permissions' ||
     err.message === 'Invalid username or password'
