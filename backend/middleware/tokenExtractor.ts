@@ -32,17 +32,17 @@ const tokenExtractor: RequestUserAuthHandler = async (req, res, next) => {
           return res.status(401).json({ error: 'No user id' });
         }
 
-        const accessToken = await authService.getSession(
+        const session = await authService.getSession(
           Number(req.headers['userid'])
         );
 
-        if (!accessToken) {
+        if (!session) {
           return res.status(401).json({ error: 'No refresh token' });
         }
 
         try {
           req.decodedToken = jwt.verify(
-            accessToken,
+            session.accessToken,
             SECRET ? SECRET : 'secret'
           ) as Signature;
 

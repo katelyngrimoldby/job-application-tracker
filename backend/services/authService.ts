@@ -5,7 +5,9 @@ import { redis } from '../util/db';
 import { User } from '../models';
 import { Signature } from '../types';
 
-const getSession = async (id: number): Promise<string | null> => {
+const getSession = async (
+  id: number
+): Promise<{ accessToken: string; name: string } | null> => {
   const session = await redis.get(id.toString());
 
   if (!session) {
@@ -28,7 +30,7 @@ const getSession = async (id: number): Promise<string | null> => {
 
   const accessToken = jwt.sign(userForToken, SECRET, { expiresIn: '20m' });
 
-  return accessToken;
+  return { accessToken, name: userForToken.name };
 };
 
 const login = async (username: string, password: string) => {
@@ -56,7 +58,7 @@ const login = async (username: string, password: string) => {
 
   await redis.set(user.id.toString(), JSON.stringify(refreshToken));
 
-  return { accessToken, id: user.id };
+  return { accessToken, id: user.id, name: user.name };
 };
 
 const logout = async (id: number) => {
