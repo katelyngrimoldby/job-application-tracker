@@ -16,7 +16,7 @@ const Menu = () => {
     const userId = window.localStorage.getItem('id');
     if (user && userId) {
       setVisible(false);
-      await logout(user.token, userId);
+      await logout(user.token, Number(userId));
       dispatch(clearCurrentUser());
       window.localStorage.removeItem('id');
       navigate('/');
