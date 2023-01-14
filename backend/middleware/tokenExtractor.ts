@@ -51,6 +51,7 @@ const tokenExtractor: RequestUserAuthHandler = async (req, res, next) => {
           next(err);
         }
       }
+    } else {
       next(err);
     }
   }
