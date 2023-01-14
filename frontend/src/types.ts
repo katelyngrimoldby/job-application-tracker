@@ -14,7 +14,6 @@ export interface Job {
 export interface User {
   name: string;
   token: string;
-  username: string;
 }
 
 export type NewJob = Omit<Job, 'id' | 'userId'>;

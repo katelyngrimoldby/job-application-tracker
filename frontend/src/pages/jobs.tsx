@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
 import { useStateValue, setJobList } from '../state';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import useErrorHandler from '../hooks/useErrorHandler';
 import { isAxiosError } from 'axios';
 import { getAll } from '../services/jobs';
+import Error from '../components/Error';
 import JobList from '../components/JobList';
 import FiltrationMenu from '../components/FiltrationMenu';
 import styles from '../styles/pages/jobs.module.css';
@@ -10,13 +11,7 @@ import styles from '../styles/pages/jobs.module.css';
 const Jobs = () => {
   const [{ jobs, user }, dispatch] = useStateValue();
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!user) {
-      navigate('/');
-    }
-  }, []);
+  const [error, handleError] = useErrorHandler();
 
   if (!user) {
     return null;
@@ -35,17 +30,20 @@ const Jobs = () => {
     const params = location.search.toString();
 
     try {
-      const jobs = await getAll(user.token, params);
+      const userId = window.localStorage.getItem('id');
+
+      const jobs = await getAll(user.token, Number(userId), params);
       dispatch(setJobList(jobs));
     } catch (err) {
       if (isAxiosError(err)) {
-        console.log(err.response?.data.error);
+        handleError(err.response?.data.error);
       }
     }
   };
 
   return (
     <main className={styles.main}>
+      {error && <Error err={error} />}
       <FiltrationMenu handleChange={handleChange} />
       <JobList jobs={jobs} />
     </main>

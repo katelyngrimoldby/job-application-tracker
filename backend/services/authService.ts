@@ -3,17 +3,34 @@ import bcrypt from 'bcrypt';
 import { SECRET } from '../util/config';
 import { redis } from '../util/db';
 import { User } from '../models';
+import { Signature } from '../types';
 
 const getSession = async (
   id: number
-): Promise<{ token: string; username: string; name: string } | null> => {
+): Promise<{ accessToken: string; name: string } | null> => {
   const session = await redis.get(id.toString());
 
   if (!session) {
     return null;
   }
 
-  return JSON.parse(session);
+  const refreshToken = session;
+
+  if (!SECRET) {
+    throw new Error('Missing env variable');
+  }
+
+  const decodedToken = jwt.verify(refreshToken, SECRET) as Signature;
+
+  const userForToken = {
+    username: decodedToken.username,
+    name: decodedToken.name,
+    id: decodedToken.id,
+  };
+
+  const accessToken = jwt.sign(userForToken, SECRET, { expiresIn: '20m' });
+
+  return { accessToken, name: userForToken.name };
 };
 
 const login = async (username: string, password: string) => {
@@ -27,22 +44,21 @@ const login = async (username: string, password: string) => {
 
   const userForToken = {
     username: user.username,
+    name: user.name,
     id: user.id,
   };
+
   if (!SECRET) {
     throw new Error('Missing env variable');
   }
-  const token = jwt.sign(userForToken, SECRET ? SECRET : 'secret');
 
-  const session = {
-    token,
-    username: user.username,
-    name: user.name,
-  };
+  const accessToken = jwt.sign(userForToken, SECRET, { expiresIn: '20m' });
 
-  await redis.set(user.id.toString(), JSON.stringify(session));
+  const refreshToken = jwt.sign(userForToken, SECRET, { expiresIn: '30 days' });
 
-  return { session, id: user.id };
+  await redis.set(user.id.toString(), refreshToken);
+
+  return { accessToken, id: user.id, name: user.name };
 };
 
 const logout = async (id: number) => {

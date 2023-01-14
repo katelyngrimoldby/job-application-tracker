@@ -22,7 +22,7 @@ describe('User authentication', () => {
   });
 
   describe('Logging in', () => {
-    it('Logs the user in and saves their session to redis', async () => {
+    it('Logs the user in and saves their refresh token to redis', async () => {
       const user = helper.initialUsers[0];
       const response = await api
         .post('/api/auth/login')
@@ -30,25 +30,15 @@ describe('User authentication', () => {
 
       const userId = response.body.id;
 
-      expect(response.body).toEqual(
-        expect.objectContaining({
-          session: {
-            token: expect.any(String),
-            username: 'root',
-            name: 'root',
-          },
-          id: userId,
-        })
-      );
+      expect(response.body).toEqual({
+        accessToken: expect.any(String),
+        name: 'root',
+        id: userId,
+      });
 
-      const session = await authService.getSession(userId);
-      expect(session).toEqual(
-        expect.objectContaining({
-          token: expect.any(String),
-          username: 'root',
-          name: 'root',
-        })
-      );
+      const session = await redis.get(userId.toString());
+
+      expect(session).toEqual(expect.any(String));
     });
 
     it('Returns error when username is incorrect', async () => {
@@ -81,7 +71,10 @@ describe('User authentication', () => {
 
       const response = await api.get(`/api/auth/${loginRes.id}`);
 
-      expect(response.body).toEqual(loginRes.session);
+      expect(response.body).toEqual({
+        accessToken: expect.any(String),
+        name: user.name,
+      });
     });
 
     it('Returns 204 if invalid id is given', async () => {
@@ -98,7 +91,7 @@ describe('User authentication', () => {
 
       const response = await api
         .delete('/api/auth/logout')
-        .set('Authorization', `bearer ${loginRes.session.token}`);
+        .set('Authorization', `bearer ${loginRes.accessToken}`);
 
       expect(response.status).toBe(204);
     });

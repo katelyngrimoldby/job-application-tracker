@@ -7,21 +7,24 @@ const errorHandler = (
   next: NextFunction
 ) => {
   if (err.name === 'JsonWebTokenError') {
-    res.status(401).json({ error: 'Invalid token' });
+    return res.status(401).json({ error: 'Invalid token' });
   }
 
   if (err.name === 'SequelizeUniqueConstraintError') {
-    res.status(400).json({ error: 'Username is already taken' });
+    return res.status(400).json({ error: 'Username is already taken' });
   }
 
+  if (err.name === 'TokenExpiredError') {
+    return res.status(401).json({ error: 'No refresh token' });
+  }
   if (
     err.message === 'Invalid Permissions' ||
     err.message === 'Invalid username or password'
   ) {
-    res.status(401).json({ error: err.message });
+    return res.status(401).json({ error: err.message });
   }
 
-  res.status(400).json({ error: err.message });
+  return res.status(400).json({ error: err.message });
   next(err);
 };
 

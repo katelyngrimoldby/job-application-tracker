@@ -66,24 +66,39 @@ describe('Token extractor middleware', () => {
 
     mockRequest = {
       headers: {
-        authorization: `bearer ${loginRes.session.token}`,
+        authorization: `bearer ${loginRes.accessToken}`,
       },
     };
 
-    tokenExtractor(
+    await tokenExtractor(
       mockRequest as RequestUserAuth,
       mockResponse as Response,
       mockNext
     );
 
     expect(mockRequest.decodedToken).toEqual({
+      exp: expect.any(Number),
       iat: expect.any(Number),
       id: loginRes.id,
       username: user.username,
+      name: user.name,
     });
 
     expect(mockNext).toBeCalledTimes(2);
     expect(mockNext).toBeCalledWith();
+  });
+
+  it('Returns error if no refresh token exists', async () => {
+    const user = helper.initialUsers[0];
+    const loginRes = await authService.login(user.username, user.password);
+    await authService.logout(loginRes.id);
+
+    mockRequest = {
+      headers: {
+        authorization: `bearer ${loginRes.accessToken}`,
+        userid: `${loginRes.id}`,
+      },
+    };
   });
 
   afterAll(async () => {

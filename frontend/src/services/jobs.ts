@@ -2,10 +2,11 @@ import axios from 'axios';
 import { Job } from '../types';
 const baseUrl = '/api/jobs';
 
-const getAll = async (token: string, params?: string) => {
+const getAll = async (token: string, userid: number, params?: string) => {
   const config = {
     headers: {
       Authorization: `bearer ${token}`,
+      userid,
     },
   };
 
@@ -17,10 +18,15 @@ const getAll = async (token: string, params?: string) => {
   return response.data;
 };
 
-const addNew = async (token: string, payload: Omit<Job, 'id' | 'userId'>) => {
+const addNew = async (
+  token: string,
+  userid: number,
+  payload: Omit<Job, 'id' | 'userId'>
+) => {
   const config = {
     headers: {
       Authorization: `bearer ${token}`,
+      userid,
     },
   };
 
@@ -32,11 +38,13 @@ const addNew = async (token: string, payload: Omit<Job, 'id' | 'userId'>) => {
 const editJob = async (
   token: string,
   payload: Omit<Job, 'id' | 'userId'>,
+  userid: number,
   id: number
 ) => {
   const config = {
     headers: {
       Authorization: `bearer ${token}`,
+      userid,
     },
   };
 
@@ -45,10 +53,11 @@ const editJob = async (
   return response.data;
 };
 
-const deleteJob = async (token: string, id: number) => {
+const deleteJob = async (token: string, userid: number, id: number) => {
   const config = {
     headers: {
       Authorization: `bearer ${token}`,
+      userid,
     },
   };
 
