@@ -21,7 +21,7 @@ const tokenExtractor: RequestUserAuthHandler = async (req, res, next) => {
   try {
     req.decodedToken = jwt.verify(
       authorization.substring(7),
-      SECRET ? SECRET : 'secret'
+      SECRET
     ) as Signature;
 
     next();
@@ -43,7 +43,7 @@ const tokenExtractor: RequestUserAuthHandler = async (req, res, next) => {
         try {
           req.decodedToken = jwt.verify(
             session.accessToken,
-            SECRET ? SECRET : 'secret'
+            SECRET
           ) as Signature;
 
           next();
