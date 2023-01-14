@@ -13,9 +13,10 @@ const Menu = () => {
   const navigate = useNavigate();
 
   const handleClick = async () => {
-    if (user) {
+    const userId = window.localStorage.getItem('id');
+    if (user && userId) {
       setVisible(false);
-      await logout(user.token);
+      await logout(user.token, userId);
       dispatch(clearCurrentUser());
       window.localStorage.removeItem('id');
       navigate('/');
