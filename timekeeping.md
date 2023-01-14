@@ -25,3 +25,4 @@
 | Jan. 8       | 1hr 30min  | Frontend tweaks & landing page                      |
 | Jan. 9       | 53min      | Landing Page                                        |
 | Jan. 9       | 1hr 54min  | CI/CD Pipeline                                      |
+| Jan. 13 - 14 | 4h2 2min   | Add refresh token to authorization flow             |
