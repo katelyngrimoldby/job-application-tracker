@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
 import { useStateValue, setJobList } from '../state';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import useErrorHandler from '../hooks/useErrorHandler';
 import { isAxiosError } from 'axios';
 import { getAll } from '../services/jobs';
@@ -13,13 +12,6 @@ const Jobs = () => {
   const [{ jobs, user }, dispatch] = useStateValue();
   const [searchParams, setSearchParams] = useSearchParams();
   const [error, handleError] = useErrorHandler();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!user) {
-      navigate('/');
-    }
-  }, []);
 
   if (!user) {
     return null;

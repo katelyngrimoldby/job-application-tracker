@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStateValue, addJob } from '../state';
 import useErrorHandler from '../hooks/useErrorHandler';
@@ -12,12 +11,6 @@ const NewApplication = () => {
   const navigate = useNavigate();
   const [{ user }, dispatch] = useStateValue();
   const [error, handleError] = useErrorHandler();
-
-  useEffect(() => {
-    if (!user) {
-      navigate('/');
-    }
-  }, []);
 
   if (!user) {
     return null;

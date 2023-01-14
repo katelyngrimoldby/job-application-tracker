@@ -1,4 +1,4 @@
-import { Routes, Route, useMatch } from 'react-router-dom';
+import { Routes, Route, useMatch, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { isAxiosError } from 'axios';
 import { getAll } from './services/jobs';
@@ -19,6 +19,7 @@ import Edit from './pages/singleJob/edit';
 function App() {
   const [{ jobs }, dispatch] = useStateValue();
   const [error, handleError] = useErrorHandler();
+  const navigate = useNavigate();
 
   const fetchData = async (id: number) => {
     try {
@@ -47,6 +48,8 @@ function App() {
     const userId = window.localStorage.getItem('id');
     if (userId) {
       fetchData(Number(userId));
+    } else {
+      navigate('/');
     }
   }, []);
 
@@ -81,11 +84,11 @@ function App() {
         />
         <Route
           path='/jobs/:id'
-          element={<SingleJob job={job} />}
+          element={job ? <SingleJob job={job} /> : <Custom404 />}
         />
         <Route
           path='/jobs/:id/edit'
-          element={<Edit job={jobEdit} />}
+          element={jobEdit ? <Edit job={jobEdit} /> : <Custom404 />}
         />
         <Route
           path='/login'
