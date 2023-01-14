@@ -1,9 +1,12 @@
 import { Routes, Route, useMatch } from 'react-router-dom';
 import { useEffect } from 'react';
+import { isAxiosError } from 'axios';
 import { getAll } from './services/jobs';
 import { getSession } from './services/userAuth';
 import { useStateValue, setCurrentUser, setJobList } from './state';
+import useErrorHandler from './hooks/useErrorHandler';
 import { Header, Footer } from './components/Layout';
+import Error from './components/Error';
 import Jobs from './pages/jobs';
 import Landing from './pages/landing';
 import Login from './pages/login';
@@ -15,28 +18,35 @@ import Edit from './pages/singleJob/edit';
 
 function App() {
   const [{ jobs }, dispatch] = useStateValue();
+  const [error, handleError] = useErrorHandler();
 
-  const fetchJobs = async (token: string) => {
-    if (location.pathname === '/jobs') {
-      const params = location.search.toString();
-      const jobs = await getAll(token, params);
-      dispatch(setJobList(jobs));
-    } else {
-      const jobs = await getAll(token);
-      dispatch(setJobList(jobs));
+  const fetchData = async (id: number) => {
+    try {
+      const userAuth = await getSession(id);
+      dispatch(
+        setCurrentUser({ token: userAuth.accessToken, name: userAuth.name })
+      );
+
+      if (location.pathname === '/jobs') {
+        const params = location.search.toString();
+        const jobs = await getAll(userAuth.accessToken, id, params);
+        dispatch(setJobList(jobs));
+      } else {
+        const jobs = await getAll(userAuth.accessToken, id);
+        dispatch(setJobList(jobs));
+      }
+    } catch (err) {
+      if (isAxiosError(err)) {
+        handleError(err.response?.data);
+      }
     }
   };
 
-  const fetchUser = async (id: number) => {
-    const userAuth = await getSession(id);
-    dispatch(setCurrentUser(userAuth));
-    fetchJobs(userAuth.token);
-  };
-
   useEffect(() => {
+    console.log('here');
     const userId = window.localStorage.getItem('id');
     if (userId) {
-      fetchUser(Number(userId));
+      fetchData(Number(userId));
     }
   }, []);
 
@@ -59,6 +69,7 @@ function App() {
   return (
     <>
       <Header />
+      {error && <Error err={error} />}
       <Routes>
         <Route
           path='/'

@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStateValue, updateJob } from '../../state';
+import useErrorHandler from '../../hooks/useErrorHandler';
 import { isAxiosError } from 'axios';
 import { editJob } from '../../services/jobs';
 import ApplicationForm from '../../components/ApplicationForm';
@@ -11,7 +12,7 @@ import Error from '../../components/Error';
 const Edit = ({ job }: { job: Job | null | undefined }) => {
   const navigate = useNavigate();
   const [{ user }, dispatch] = useStateValue();
-  const [error, setError] = useState('');
+  const [error, handleError] = useErrorHandler();
 
   if (!job) {
     return <Custom404 />;
@@ -28,13 +29,14 @@ const Edit = ({ job }: { job: Job | null | undefined }) => {
 
   const handleUpdate = async (submission: NewJob, id: number) => {
     try {
-      const job = await editJob(user.token, submission, id);
+      const userId = window.localStorage.getItem('id');
+
+      const job = await editJob(user.token, submission, Number(userId), id);
       dispatch(updateJob(job));
       navigate(`/jobs/${job.id}`);
     } catch (err) {
       if (isAxiosError(err)) {
-        setError(err.response?.data.error);
-        setTimeout(() => setError(''), 5000);
+        handleError(err.response?.data.error);
       }
     }
   };
