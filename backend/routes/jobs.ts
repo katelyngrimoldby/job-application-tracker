@@ -15,7 +15,11 @@ jobRouter.get('/', async (req: RequestUserAuth, res) => {
 
   const result = await jobService.getAll(req.decodedToken.id, filter, sort);
 
-  res.json(result);
+  res.json(
+    result.map((job) => {
+      return { ...job, contacts: job.contacts.map((e) => JSON.parse(e)) };
+    })
+  );
 });
 
 jobRouter.get('/:id', async (req: RequestUserAuth, res) => {
@@ -31,7 +35,7 @@ jobRouter.get('/:id', async (req: RequestUserAuth, res) => {
     return res.status(404).end();
   }
 
-  res.json(result);
+  res.json({ ...result, contacts: result.contacts.map((e) => JSON.parse(e)) });
 });
 
 jobRouter.post('/', async (req: RequestUserAuth, res) => {
@@ -42,7 +46,7 @@ jobRouter.post('/', async (req: RequestUserAuth, res) => {
   const newJob = toNewJob(req.body);
   const result = await jobService.addNew(newJob, req.decodedToken.id);
 
-  res.json(result);
+  res.json({ ...result, contacts: result.contacts.map((e) => JSON.parse(e)) });
 });
 
 jobRouter.put('/:id', async (req: RequestUserAuth, res) => {
@@ -63,7 +67,7 @@ jobRouter.put('/:id', async (req: RequestUserAuth, res) => {
     return res.status(404).end();
   }
 
-  res.json(result);
+  res.json({ ...result, contacts: result.contacts.map((e) => JSON.parse(e)) });
 });
 
 jobRouter.delete('/:id', async (req: RequestUserAuth, res) => {

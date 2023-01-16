@@ -29,7 +29,11 @@ const getOne = async (id: number, userId: number) => {
 };
 
 const addNew = async (obj: NewJob, id: number) => {
-  const job = await Job.create({ ...obj, userId: id });
+  const job = await Job.create({
+    ...obj,
+    contacts: obj.contacts.map((e) => JSON.stringify(e)),
+    userId: id,
+  });
 
   return job;
 };
@@ -41,7 +45,10 @@ const update = async (id: number, userId: number, obj: NewJob) => {
     return null;
   }
 
-  const updatedJob = await job.update(obj);
+  const updatedJob = await job.update({
+    ...obj,
+    contacts: obj.contacts.map((e) => JSON.stringify(e)),
+  });
   return updatedJob;
 };
 

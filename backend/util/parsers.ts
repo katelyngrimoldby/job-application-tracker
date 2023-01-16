@@ -10,8 +10,8 @@ const toNewJob = (obj: any): NewJob => {
     compensation: parseString(obj.compensation, 'Compensaton'),
     status: parseStatus(obj.status),
     interviews: parseInterviews(obj.interviews),
-    jobDescription: parseRtf(obj.jobDescription, 'Job Description'),
-    notes: parseRtf(obj.notes, 'Notes'),
+    jobDescription: parseOptionalString(obj.jobDescription, 'Job Description'),
+    notes: parseOptionalString(obj.notes, 'Notes'),
     contacts: parseContacts(obj.contacts),
   };
 
@@ -28,7 +28,7 @@ const toNewUser = (username: unknown, name: unknown, password: unknown) => {
   return newUser;
 };
 
-const parseRtf = (text: unknown, key: string): string => {
+const parseOptionalString = (text: unknown, key: string): string => {
   if (!isString(text)) {
     throw new Error(`Incorrect parameter: ${key}`);
   }
@@ -74,14 +74,31 @@ const parseInterviews = (arr: unknown): string[] => {
   );
 };
 
-const parseContacts = (arr: unknown): string[] => {
+const parseContacts = (
+  arr: unknown
+): { name: string; email: string; number: string }[] => {
   if (!arr || !Array.isArray(arr)) {
     throw new Error('Missing interview array');
   }
 
-  return arr.map((item: unknown, key: number): string =>
-    parseString(item, `Contact #${key + 1}`)
+  return arr.map(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (item: any, key: number): { name: string; email: string; number: string } =>
+      parseContact(item.name, item.email, item.number, key)
   );
+};
+
+const parseContact = (
+  name: string,
+  email: string,
+  number: string,
+  id: number
+): { name: string; email: string; number: string } => {
+  return {
+    name: parseString(name, `Name on contact #${id}`),
+    email: parseOptionalString(email, `Email on contact #${id}`),
+    number: parseOptionalString(number, `Number on contact #${id}`),
+  };
 };
 
 const parseFilter = (status: unknown): Status | undefined => {
