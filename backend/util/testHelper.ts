@@ -11,6 +11,8 @@ const initialJobs: NewJob[] = [
     location: 'Remote',
     positionTitle: 'Sample Job',
     status: 'offered' as Status,
+    notes: '',
+    contacts: [],
   },
   {
     applied: '2023-01-05T00:00:00.000Z',
@@ -21,6 +23,8 @@ const initialJobs: NewJob[] = [
     location: 'Remote',
     positionTitle: 'Junior Web Developer',
     status: 'rejected' as Status,
+    notes: '',
+    contacts: [],
   },
 ];
 
