@@ -18,6 +18,8 @@ class Job extends Model<InferAttributes<Job>, InferCreationAttributes<Job>> {
   declare interviews: string[];
   declare jobDescription: string;
   declare userId: number;
+  declare notes: string;
+  declare contacts: string[];
 }
 Job.init(
   {
@@ -52,6 +54,7 @@ Job.init(
     },
     interviews: {
       type: DataTypes.ARRAY(DataTypes.DATE),
+      defaultValue: [],
     },
     jobDescription: {
       type: DataTypes.TEXT,
@@ -61,6 +64,14 @@ Job.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: { model: 'users', key: 'id' },
+    },
+    notes: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    contacts: {
+      type: DataTypes.ARRAY(DataTypes.DATE),
+      defaultValue: [],
     },
   },
   {

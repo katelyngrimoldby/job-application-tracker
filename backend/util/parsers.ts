@@ -10,7 +10,9 @@ const toNewJob = (obj: any): NewJob => {
     compensation: parseString(obj.compensation, 'Compensaton'),
     status: parseStatus(obj.status),
     interviews: parseInterviews(obj.interviews),
-    jobDescription: parseDesc(obj.jobDescription),
+    jobDescription: parseRtf(obj.jobDescription, 'Job Description'),
+    notes: parseRtf(obj.notes, 'Notes'),
+    contacts: parseContacts(obj.contacts),
   };
 
   return newJob;
@@ -26,16 +28,16 @@ const toNewUser = (username: unknown, name: unknown, password: unknown) => {
   return newUser;
 };
 
-const parseDesc = (description: unknown): string => {
-  if (!isString(description)) {
-    throw new Error('Incorrect Job Description');
+const parseRtf = (text: unknown, key: string): string => {
+  if (!isString(text)) {
+    throw new Error(`Incorrect parameter: ${key}`);
   }
 
-  if (!description) {
+  if (!text) {
     return '';
   }
 
-  return description;
+  return text;
 };
 
 const parseString = (string: unknown, key: string): string => {
@@ -62,6 +64,26 @@ const parseStatus = (status: unknown): Status => {
   return status;
 };
 
+const parseInterviews = (arr: unknown): string[] => {
+  if (!arr || !Array.isArray(arr)) {
+    throw new Error('Missing interview array');
+  }
+
+  return arr.map((item: unknown, key: number): string =>
+    parseDate(item, `Interview #${key + 1}`)
+  );
+};
+
+const parseContacts = (arr: unknown): string[] => {
+  if (!arr || !Array.isArray(arr)) {
+    throw new Error('Missing interview array');
+  }
+
+  return arr.map((item: unknown, key: number): string =>
+    parseString(item, `Contact #${key + 1}`)
+  );
+};
+
 const parseFilter = (status: unknown): Status | undefined => {
   if (!status) {
     return undefined;
@@ -84,16 +106,6 @@ const parseSort = (string: unknown): string | undefined => {
   }
 
   return string;
-};
-
-const parseInterviews = (arr: unknown): string[] => {
-  if (!arr || !Array.isArray(arr)) {
-    throw new Error('Missing interview array');
-  }
-
-  return arr.map((item: unknown, key: number): string =>
-    parseDate(item, `Interview #${key + 1}`)
-  );
 };
 
 const parsePassword = (password: unknown): string => {
