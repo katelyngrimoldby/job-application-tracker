@@ -11,7 +11,7 @@ authRouter.get('/:id', async (req, res) => {
   const session = await authService.getSession(Number(id));
 
   if (!session) {
-    res.status(204).end();
+    res.status(404).end();
   }
 
   res.json(session);
