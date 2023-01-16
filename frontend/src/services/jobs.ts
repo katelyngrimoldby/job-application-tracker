@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Job } from '../types';
+import { NewJob, Job } from '../types';
 const baseUrl = '/api/jobs';
 
 const getAll = async (token: string, userid: number, params?: string) => {
@@ -18,11 +18,7 @@ const getAll = async (token: string, userid: number, params?: string) => {
   return response.data;
 };
 
-const addNew = async (
-  token: string,
-  userid: number,
-  payload: Omit<Job, 'id' | 'userId'>
-) => {
+const addNew = async (token: string, userid: number, payload: NewJob) => {
   const config = {
     headers: {
       Authorization: `bearer ${token}`,
