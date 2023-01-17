@@ -24,8 +24,9 @@ const NewApplication = () => {
       dispatch(addJob(job));
       navigate(`/jobs/${job.id}`);
     } catch (err) {
+      console.log(err);
       if (isAxiosError(err)) {
-        handleError(err.response?.data);
+        handleError(err.response?.data.error);
       }
     }
   };
