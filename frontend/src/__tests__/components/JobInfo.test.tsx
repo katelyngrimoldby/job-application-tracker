@@ -17,6 +17,10 @@ describe('JobInfo component', () => {
     location: 'Remote',
     positionTitle: 'Junior Web Developer',
     status: 'applied',
+    notes: '',
+    contacts: [
+      { name: 'Katelyn', email: 'katelyng@gmail.com', number: '5877082468' },
+    ],
     userId: 1,
   };
 

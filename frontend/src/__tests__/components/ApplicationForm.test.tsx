@@ -41,7 +41,7 @@ describe('ApplicationForm component', () => {
       it('Displays a list of added interview dates', async () => {
         const user = userEvent.setup();
         const interviewInput = document.getElementById('interviewDate');
-        const button = document.getElementById('addButton');
+        const button = document.getElementById('addInterviewButton');
 
         expect(interviewInput).toBeInTheDocument();
         expect(button).toBeInTheDocument();
@@ -60,7 +60,7 @@ describe('ApplicationForm component', () => {
       it('deletes date on button click', async () => {
         const user = userEvent.setup();
         const interviewInput = document.getElementById('interviewDate');
-        const addButton = document.getElementById('addButton');
+        const addButton = document.getElementById('addInterviewButton');
 
         expect(interviewInput).toBeInTheDocument();
         expect(addButton).toBeInTheDocument();
@@ -83,7 +83,7 @@ describe('ApplicationForm component', () => {
       it('Appends further submissions to bottom of list', async () => {
         const user = userEvent.setup();
         const interviewInput = document.getElementById('interviewDate');
-        const button = document.getElementById('addButton');
+        const button = document.getElementById('addInterviewButton');
 
         expect(interviewInput).toBeInTheDocument();
         expect(button).toBeInTheDocument();
@@ -113,7 +113,7 @@ describe('ApplicationForm component', () => {
       it('Successfully preserves lower entries on deletion', async () => {
         const user = userEvent.setup();
         const interviewInput = document.getElementById('interviewDate');
-        const button = document.getElementById('addButton');
+        const button = document.getElementById('addInterviewButton');
 
         expect(interviewInput).toBeInTheDocument();
         expect(button).toBeInTheDocument();
@@ -151,6 +151,8 @@ describe('ApplicationForm component', () => {
         status: 'offered',
         interviews: interviewDates,
         jobDescription: '',
+        notes: '',
+        contacts: [],
       };
 
       it('Successfully calls callback with content', async () => {
@@ -162,7 +164,7 @@ describe('ApplicationForm component', () => {
         const appliedInput = screen.getByLabelText('Applied');
         const statusSelect = screen.getByLabelText('Status');
         const interviewInput = screen.getByLabelText('Interview Dates');
-        const addButton = screen.getByText('Add');
+        const addButton = document.getElementById('addInterviewButton');
         const submitButton = screen.getByText('Submit');
 
         await user.type(positionInput, submission.positionTitle);
@@ -182,7 +184,9 @@ describe('ApplicationForm component', () => {
           fireEvent.change(interviewInput, {
             target: { value: interview },
           });
-          await user.click(addButton);
+          if (addButton) {
+            await user.click(addButton);
+          }
         }
 
         await user.click(submitButton);
@@ -206,7 +210,8 @@ describe('ApplicationForm component', () => {
         const locationInput = screen.getByPlaceholderText('Location');
         const compensationInput = screen.getByPlaceholderText('Compensation');
         const interviewInput = screen.getByLabelText('Interview Dates');
-        const addButton = screen.getByText('Add');
+        const addButton = document.getElementById('addInterviewButton');
+
         const submitButton = screen.getByText('Submit');
 
         await user.type(positionInput, submission.positionTitle);
@@ -219,7 +224,9 @@ describe('ApplicationForm component', () => {
           fireEvent.change(interviewInput, {
             target: { value: interview },
           });
-          await user.click(addButton);
+          if (addButton) {
+            await user.click(addButton);
+          }
         }
 
         await user.click(submitButton);
@@ -262,6 +269,8 @@ describe('ApplicationForm component', () => {
         '2022-10-08T00:00:00.000Z',
       ],
       jobDescription: '',
+      notes: '',
+      contacts: [],
       id: 10,
       userId: 2,
     };
@@ -275,6 +284,8 @@ describe('ApplicationForm component', () => {
       status: 'rejected',
       interviews: ['2022-12-08T00:00:00.000Z', '2022-11-08T00:00:00.000Z'],
       jobDescription: '',
+      notes: '',
+      contacts: [],
     };
 
     const unchangedSubmission = {
@@ -290,6 +301,8 @@ describe('ApplicationForm component', () => {
         '2022-10-08T00:00:00.000Z',
       ],
       jobDescription: '',
+      notes: '',
+      contacts: [],
     };
 
     beforeEach(() => {
