@@ -70,7 +70,7 @@ Job.init(
       allowNull: true,
     },
     contacts: {
-      type: DataTypes.ARRAY(DataTypes.DATE),
+      type: DataTypes.ARRAY(DataTypes.TEXT),
       defaultValue: [],
     },
   },

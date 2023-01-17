@@ -8,7 +8,7 @@ const up = async ({ context: queryInterface }) => {
   });
 
   await queryInterface.addColumn('jobs', 'contacts', {
-    type: DataTypes.ARRAY(DataTypes.DATE),
+    type: DataTypes.ARRAY(DataTypes.TEXT),
     defaultValue: [],
   });
 };
