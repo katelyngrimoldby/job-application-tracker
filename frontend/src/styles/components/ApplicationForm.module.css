@@ -26,6 +26,7 @@
       font-size: 1rem;
       transition: all 200ms ease-in-out;
       cursor: pointer;
+      background-color: var(--background-main);
 
       &:focus {
         border-radius: 5px;
@@ -34,9 +35,10 @@
       }
     }
 
-    input[type='text'] {
+    input[type='text'],
+    input[type='email'],
+    input[type='tel'] {
       width: 100%;
-      font-size: 1rem;
       cursor: auto;
 
       &::placeholder {
@@ -50,13 +52,23 @@
     }
   }
 
+  .inputs {
+    width: 100%;
+  }
+
+  .formSection {
+    width: 100%;
+  }
+
   .inputWrapper {
     display: flex;
     flex-direction: column;
+
     label {
       font-weight: 600;
       margin-bottom: 0.25rem;
       color: var(--text-secondary);
+      margin-top: 0.75rem;
     }
   }
 
@@ -64,7 +76,7 @@
     margin-bottom: 1rem;
 
     input {
-      margin-right: 0.55rem;
+      margin-right: 0.5rem;
     }
 
     button {
@@ -99,6 +111,61 @@
       vertical-align: middle;
     }
   }
+
+  .contactInputs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-bottom: 1rem;
+
+    button {
+      padding: 0.25rem 0.5rem;
+      border: 1px solid transparent;
+      border-bottom: 1px solid var(--accent-tertiary);
+      vertical-align: bottom;
+      transition: all 200ms ease-in-out;
+      cursor: pointer;
+      align-self: flex-start;
+
+      &:hover {
+        border-radius: 5px;
+        outline: none;
+        border-color: var(--accent-main);
+      }
+    }
+  }
+
+  .contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .contact {
+    background-color: var(--background-secondary);
+    padding: 0.5rem 0.75rem;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: max(100%, 300px);
+    p {
+      margin-top: 0.125rem;
+      font-weight: 300;
+
+      &:first-of-type {
+        color: Var(--text-secondary);
+        margin-top: 0;
+        font-weight: 500;
+      }
+    }
+
+    button {
+      vertical-align: middle;
+      align-self: center;
+    }
+  }
 }
 
 @media screen and (min-width: 1024px) {
@@ -112,10 +179,14 @@
     width: 100%;
     display: flex;
     gap: 3rem;
-    justify-content: center;
+    justify-content: space-evenly;
   }
 
-  .inputWrapper:last-of-type {
-    width: 60%;
+  .formSection {
+    width: 40%;
+
+    &:last-of-type {
+      width: 60%;
+    }
   }
 }

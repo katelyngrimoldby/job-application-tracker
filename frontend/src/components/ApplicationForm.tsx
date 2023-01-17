@@ -126,7 +126,7 @@ const ApplicationForm = ({
         />
       </div>
       <div className={styles.inputs}>
-        <div>
+        <div className={styles.formSection}>
           <div className={styles.inputWrapper}>
             <label htmlFor='appliedDate'>Applied</label>
             <input
@@ -191,19 +191,10 @@ const ApplicationForm = ({
           </div>
           <div className={styles.inputWrapper}>
             <label htmlFor='contactInputs'>Contacts</label>
-            <button
-              onClick={() => {
-                if (newContact.name) {
-                  setContacts([...contacts, newContact]);
-                  setNewContact({ name: '', email: '', number: '' });
-                }
-              }}
-              type='button'
-              id='addContactButton'
+            <div
+              id='contactInputs'
+              className={styles.contactInputs}
             >
-              Add
-            </button>
-            <div id='contactInputs'>
               <input
                 type='text'
                 placeholder='Name'
@@ -231,13 +222,30 @@ const ApplicationForm = ({
                   setNewContact({ ...newContact, number: event.target.value })
                 }
               />
+              <button
+                onClick={() => {
+                  if (newContact.name) {
+                    setContacts([...contacts, newContact]);
+                    setNewContact({ name: '', email: '', number: '' });
+                  }
+                }}
+                type='button'
+                id='addContactButton'
+              >
+                Add
+              </button>
             </div>
             <div className={styles.contacts}>
               {contacts.map((e, i) => (
-                <div key={i}>
-                  <p>{e.name}</p>
-                  <p>{e.email}</p>
-                  <p>{e.number}</p>
+                <div
+                  key={i}
+                  className={styles.contact}
+                >
+                  <div>
+                    <p>{e.name}</p>
+                    <p>{e.email}</p>
+                    <p>{e.number}</p>
+                  </div>
                   <button
                     type='button'
                     onClick={() => handleContactDelete(i)}
@@ -254,21 +262,23 @@ const ApplicationForm = ({
             </div>
           </div>
         </div>
-        <div className={styles.inputWrapper}>
-          <label htmlFor='jobDesc'>Job Description</label>
-          <RichTextEditor
-            id='jobDesc'
-            initialContent={jobDescription}
-            setContent={setJobDescription}
-          />
-        </div>
-        <div className={styles.inputWrapper}>
-          <label htmlFor='notes'>Notes</label>
-          <RichTextEditor
-            id='notes'
-            initialContent={notes}
-            setContent={setNotes}
-          />
+        <div className={styles.formSection}>
+          <div className={styles.inputWrapper}>
+            <label htmlFor='jobDesc'>Job Description</label>
+            <RichTextEditor
+              id='jobDesc'
+              initialContent={jobDescription}
+              setContent={setJobDescription}
+            />
+          </div>
+          <div className={styles.inputWrapper}>
+            <label htmlFor='notes'>Notes</label>
+            <RichTextEditor
+              id='notes'
+              initialContent={notes}
+              setContent={setNotes}
+            />
+          </div>
         </div>
       </div>
       <button
