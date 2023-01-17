@@ -40,6 +40,25 @@
     }
   }
 
+  .contacts {
+    margin-bottom: 1rem;
+    ul {
+      padding-left: 0.5rem;
+    }
+    li {
+      list-style: none;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      margin-bottom: 0.125rem;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+
   .jobDesc {
     margin-bottom: 1rem;
   }
