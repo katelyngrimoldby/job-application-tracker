@@ -44,7 +44,6 @@ function App() {
   };
 
   useEffect(() => {
-    console.log('here');
     const userId = window.localStorage.getItem('id');
     if (userId) {
       fetchData(Number(userId));
