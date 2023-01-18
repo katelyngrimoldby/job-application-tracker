@@ -44,7 +44,9 @@ const ApplicationForm = ({
   const [jobDescription, setJobDescription] = useState(
     content ? content.jobDescription : ''
   );
-  const [notes, setNotes] = useState(content ? content.notes : '');
+  const [notes, setNotes] = useState(
+    content ? (content.notes ? content.notes : '') : ''
+  );
   const [contacts, setContacts] = useState(content ? content.contacts : []);
   const [interviewDate, setInterviewDate] = useState(getFormattedDate());
   const [newContact, setNewContact] = useState({
