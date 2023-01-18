@@ -17,7 +17,7 @@
 | Dec. 29 - 31 | 7hr 44min  | Basic mobile styling                                |
 | Jan. 2       | 1hr 37min  | Basic desktop styling                               |
 | Jan. 3       | 1hr        | Backend: Implement filtering and sorting            |
-| Jan. 3       | 2h 41min   | Frontend: Implement filtering and sorting           |
+| Jan. 3       | 2hr 41min  | Frontend: Implement filtering and sorting           |
 | Jan. 4       | 1hr 51min  | Transistion session management to Redis             |
 | Jan. 5 - 6   | 8hr 17min  | Unit testing                                        |
 | Jan. 6 - 8   | 5hr 29min  | Integration testing                                 |
@@ -25,4 +25,5 @@
 | Jan. 8       | 1hr 30min  | Frontend tweaks & landing page                      |
 | Jan. 9       | 53min      | Landing Page                                        |
 | Jan. 9       | 1hr 54min  | CI/CD Pipeline                                      |
-| Jan. 13 - 14 | 4h2 2min   | Add refresh token to authorization flow             |
+| Jan. 13 - 14 | 4hr 2min   | Add refresh token to authorization flow             |
+| Jan. 16 - 17 | 4hr 46min  | Add new fields for job applications                 |
