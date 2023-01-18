@@ -17,6 +17,8 @@ describe('JobListItem component', () => {
     location: 'Remote',
     positionTitle: 'Junior Web Developer',
     status: 'applied',
+    notes: '',
+    contacts: [],
     userId: 1,
   };
 
