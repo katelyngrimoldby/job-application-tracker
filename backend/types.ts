@@ -27,6 +27,8 @@ export interface NewJob {
   status: Status;
   interviews: string[];
   jobDescription: string;
+  notes: string;
+  contacts: { name: string; email: string; number: string }[];
 }
 
 export interface NewUser {

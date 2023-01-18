@@ -10,7 +10,9 @@ const toNewJob = (obj: any): NewJob => {
     compensation: parseString(obj.compensation, 'Compensaton'),
     status: parseStatus(obj.status),
     interviews: parseInterviews(obj.interviews),
-    jobDescription: parseDesc(obj.jobDescription),
+    jobDescription: parseOptionalString(obj.jobDescription, 'Job Description'),
+    notes: parseOptionalString(obj.notes, 'Notes'),
+    contacts: parseContacts(obj.contacts),
   };
 
   return newJob;
@@ -26,16 +28,16 @@ const toNewUser = (username: unknown, name: unknown, password: unknown) => {
   return newUser;
 };
 
-const parseDesc = (description: unknown): string => {
-  if (!isString(description)) {
-    throw new Error('Incorrect Job Description');
+const parseOptionalString = (text: unknown, key: string): string => {
+  if (!isString(text)) {
+    throw new Error(`Incorrect parameter: ${key}`);
   }
 
-  if (!description) {
+  if (!text) {
     return '';
   }
 
-  return description;
+  return text;
 };
 
 const parseString = (string: unknown, key: string): string => {
@@ -62,6 +64,43 @@ const parseStatus = (status: unknown): Status => {
   return status;
 };
 
+const parseInterviews = (arr: unknown): string[] => {
+  if (!arr || !Array.isArray(arr)) {
+    throw new Error('Missing interview array');
+  }
+
+  return arr.map((item: unknown, key: number): string =>
+    parseDate(item, `Interview #${key + 1}`)
+  );
+};
+
+const parseContacts = (
+  arr: unknown
+): { name: string; email: string; number: string }[] => {
+  if (!arr || !Array.isArray(arr)) {
+    throw new Error('Missing interview array');
+  }
+
+  return arr.map(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (item: any, key: number): { name: string; email: string; number: string } =>
+      parseContact(item.name, item.email, item.number, key)
+  );
+};
+
+const parseContact = (
+  name: string,
+  email: string,
+  number: string,
+  id: number
+): { name: string; email: string; number: string } => {
+  return {
+    name: parseString(name, `Name on contact #${id}`),
+    email: parseOptionalString(email, `Email on contact #${id}`),
+    number: parseOptionalString(number, `Number on contact #${id}`),
+  };
+};
+
 const parseFilter = (status: unknown): Status | undefined => {
   if (!status) {
     return undefined;
@@ -84,16 +123,6 @@ const parseSort = (string: unknown): string | undefined => {
   }
 
   return string;
-};
-
-const parseInterviews = (arr: unknown): string[] => {
-  if (!arr || !Array.isArray(arr)) {
-    throw new Error('Missing interview array');
-  }
-
-  return arr.map((item: unknown, key: number): string =>
-    parseDate(item, `Interview #${key + 1}`)
-  );
 };
 
 const parsePassword = (password: unknown): string => {

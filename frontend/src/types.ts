@@ -9,6 +9,8 @@ export interface Job {
   id: number;
   jobDescription: string;
   userId: number;
+  notes: string;
+  contacts: { name: string; email: string; number: string }[];
 }
 
 export interface User {

@@ -44,11 +44,23 @@ const ApplicationForm = ({
   const [jobDescription, setJobDescription] = useState(
     content ? content.jobDescription : ''
   );
+  const [notes, setNotes] = useState(content ? content.notes : '');
+  const [contacts, setContacts] = useState(content ? content.contacts : []);
   const [interviewDate, setInterviewDate] = useState(getFormattedDate());
+  const [newContact, setNewContact] = useState({
+    name: '',
+    email: '',
+    number: '',
+  });
 
-  const handleDelete = (interview: number) => {
+  const handleInterviewDelete = (interview: number) => {
     const newInterviews = interviews.filter((_, index) => index != interview);
     setInterviews(newInterviews);
+  };
+
+  const handleContactDelete = (contact: number) => {
+    const newContacts = contacts.filter((_, index) => index != contact);
+    setContacts(newContacts);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -62,6 +74,8 @@ const ApplicationForm = ({
       status,
       interviews,
       jobDescription,
+      notes,
+      contacts,
     };
 
     if (!content) {
@@ -112,7 +126,7 @@ const ApplicationForm = ({
         />
       </div>
       <div className={styles.inputs}>
-        <div>
+        <div className={styles.formSection}>
           <div className={styles.inputWrapper}>
             <label htmlFor='appliedDate'>Applied</label>
             <input
@@ -147,7 +161,7 @@ const ApplicationForm = ({
               <button
                 onClick={() => setInterviews([...interviews, interviewDate])}
                 type='button'
-                id='addButton'
+                id='addInterviewButton'
               >
                 Add
               </button>
@@ -163,7 +177,7 @@ const ApplicationForm = ({
                 {e.substring(0, 10)}{' '}
                 <button
                   type='button'
-                  onClick={() => handleDelete(i)}
+                  onClick={() => handleInterviewDelete(i)}
                 >
                   <img
                     src={closeIcon}
@@ -175,14 +189,97 @@ const ApplicationForm = ({
               </p>
             ))}
           </div>
+          <div className={styles.inputWrapper}>
+            <label htmlFor='contactInputs'>Contacts</label>
+            <div
+              id='contactInputs'
+              className={styles.contactInputs}
+            >
+              <input
+                type='text'
+                placeholder='Name'
+                id='name'
+                value={newContact.name}
+                onChange={(event) =>
+                  setNewContact({ ...newContact, name: event.target.value })
+                }
+              />
+              <input
+                type='email'
+                placeholder='Email'
+                id='email'
+                value={newContact.email}
+                onChange={(event) =>
+                  setNewContact({ ...newContact, email: event.target.value })
+                }
+              />
+              <input
+                type='tel'
+                placeholder='Number'
+                id='number'
+                value={newContact.number}
+                onChange={(event) =>
+                  setNewContact({ ...newContact, number: event.target.value })
+                }
+              />
+              <button
+                onClick={() => {
+                  if (newContact.name) {
+                    setContacts([...contacts, newContact]);
+                    setNewContact({ name: '', email: '', number: '' });
+                  }
+                }}
+                type='button'
+                id='addContactButton'
+              >
+                Add
+              </button>
+            </div>
+            <div className={styles.contacts}>
+              {contacts.map((e, i) => (
+                <div
+                  key={i}
+                  className={styles.contact}
+                  data-testid={`contact${i}`}
+                >
+                  <div>
+                    <p>{e.name}</p>
+                    <p>{e.email}</p>
+                    <p>{e.number}</p>
+                  </div>
+                  <button
+                    type='button'
+                    onClick={() => handleContactDelete(i)}
+                  >
+                    <img
+                      src={closeIcon}
+                      alt='Delete'
+                      width='24'
+                      height='24'
+                    />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        <div className={styles.inputWrapper}>
-          <label htmlFor='jobDesc'>Job Description</label>
-          <RichTextEditor
-            id='jobDesc'
-            initialContent={jobDescription}
-            setContent={setJobDescription}
-          />
+        <div className={styles.formSection}>
+          <div className={styles.inputWrapper}>
+            <label htmlFor='jobDesc'>Job Description</label>
+            <RichTextEditor
+              id='jobDesc'
+              initialContent={jobDescription}
+              setContent={setJobDescription}
+            />
+          </div>
+          <div className={styles.inputWrapper}>
+            <label htmlFor='notes'>Notes</label>
+            <RichTextEditor
+              id='notes'
+              initialContent={notes}
+              setContent={setNotes}
+            />
+          </div>
         </div>
       </div>
       <button

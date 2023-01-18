@@ -28,16 +28,44 @@ const JobInfo = ({
         <section className={styles.interviews}>
           <h4>Interviews:</h4>
           <ul>
-            {job.interviews.map((date) => (
-              <li key={date}>{date.substring(0, 10)}</li>
-            ))}
+            {job.interviews.length > 0 ? (
+              job.interviews.map((date) => (
+                <li key={date}>{date.substring(0, 10)}</li>
+              ))
+            ) : (
+              <p>None yet</p>
+            )}
+          </ul>
+        </section>
+        <section className={styles.contacts}>
+          <h4>Contacts:</h4>
+          <ul>
+            {job.contacts.length > 0 ? (
+              job.contacts.map((contact, index) => (
+                <li key={index}>
+                  <p>{contact.name}</p>
+                  <p>{contact.email}</p>
+                  <p>{contact.number}</p>
+                </li>
+              ))
+            ) : (
+              <p>None yet</p>
+            )}
           </ul>
         </section>
       </div>
-      <section className={styles.jobDesc}>
-        <h4>Job Description:</h4>
-        <ReadOnlyRichText content={job.jobDescription} />
-      </section>
+      {job.notes && (
+        <section className={styles.jobDesc}>
+          <h4>Notes:</h4>
+          <ReadOnlyRichText content={job.notes} />
+        </section>
+      )}
+      {job.jobDescription && (
+        <section className={styles.jobDesc}>
+          <h4>Job Description:</h4>
+          <ReadOnlyRichText content={job.jobDescription} />
+        </section>
+      )}
       <div className={styles.buttons}>
         <Link
           to={`/jobs/${job.id}/edit`}
