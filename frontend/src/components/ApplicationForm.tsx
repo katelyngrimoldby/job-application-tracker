@@ -240,6 +240,7 @@ const ApplicationForm = ({
                 <div
                   key={i}
                   className={styles.contact}
+                  data-testid={`contact${i}`}
                 >
                   <div>
                     <p>{e.name}</p>
