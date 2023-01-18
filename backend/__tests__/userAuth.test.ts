@@ -77,10 +77,10 @@ describe('User authentication', () => {
       });
     });
 
-    it('Returns 204 if invalid id is given', async () => {
+    it('Returns 404 if invalid id is given', async () => {
       const response = await api.get('/api/auth/1');
 
-      expect(response.status).toBe(204);
+      expect(response.status).toBe(404);
     });
   });
 
