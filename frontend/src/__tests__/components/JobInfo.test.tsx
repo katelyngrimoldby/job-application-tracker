@@ -52,6 +52,18 @@ describe('JobInfo component', () => {
     expect(screen.getByText(job.location)).toBeInTheDocument();
     expect(screen.getByText(job.compensation)).toBeInTheDocument();
     expect(screen.getByText(job.status)).toBeInTheDocument();
+
+    for (const contact of job.contacts) {
+      expect(screen.getByText(contact.name)).toBeInTheDocument();
+
+      if (contact.email) {
+        expect(screen.getByText(contact.email)).toBeInTheDocument();
+      }
+
+      if (contact.number) {
+        expect(screen.getByText(contact.number)).toBeInTheDocument();
+      }
+    }
   });
 
   it('Links to correct edit page', () => {

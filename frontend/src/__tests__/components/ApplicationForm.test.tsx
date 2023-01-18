@@ -23,6 +23,23 @@ describe('ApplicationForm component', () => {
 
   describe('New application', () => {
     const interviewDates = ['2022-12-08', '2022-11-08', '2022-10-08'];
+    const contacts = [
+      {
+        name: 'Katelyn Grimoldby',
+        email: 'katelyng@gmail.com',
+        number: '1234567890',
+      },
+      {
+        name: 'Sample Name',
+        email: 'sample@example.com',
+        number: '0987654321',
+      },
+      {
+        name: 'Example Name',
+        email: 'example@example.com',
+        number: '2468013579',
+      },
+    ];
 
     beforeEach(() => {
       render(
@@ -138,6 +155,192 @@ describe('ApplicationForm component', () => {
           expect(interview1.textContent).toContain('2022-10-08');
           expect(interview2).not.toBeInTheDocument();
         }
+      });
+    });
+
+    describe('Contact input', () => {
+      it('Displays a list of added contacts', async () => {
+        const user = userEvent.setup();
+        const nameInput = screen.getByPlaceholderText('Name');
+        const emailInput = screen.getByPlaceholderText('Email');
+        const numberInput = screen.getByPlaceholderText('Number');
+        const button = document.getElementById('addContactButton');
+
+        expect(button).toBeInTheDocument();
+
+        if (button) {
+          await user.type(nameInput, contacts[0].name);
+          await user.type(emailInput, contacts[0].email);
+          await user.type(numberInput, contacts[0].number);
+          await user.click(button);
+
+          expect(screen.getByTestId('contact0').textContent).toContain(
+            `${contacts[0].name}${contacts[0].email}${contacts[0].number}`
+          );
+        }
+      });
+
+      it('deletes date on button click', async () => {
+        const user = userEvent.setup();
+        const nameInput = screen.getByPlaceholderText('Name');
+        const emailInput = screen.getByPlaceholderText('Email');
+        const numberInput = screen.getByPlaceholderText('Number');
+        const addButton = document.getElementById('addContactButton');
+
+        expect(addButton).toBeInTheDocument();
+
+        if (addButton) {
+          await user.type(nameInput, contacts[0].name);
+          await user.type(emailInput, contacts[0].email);
+          await user.type(numberInput, contacts[0].number);
+          await user.click(addButton);
+
+          const contact = screen.getByTestId('contact0');
+          const deleteButton = within(contact).getByRole('button');
+          await user.click(deleteButton);
+
+          expect(contact).not.toBeInTheDocument();
+        }
+      });
+
+      it('Appends further submissions to bottom of list', async () => {
+        const user = userEvent.setup();
+        const nameInput = screen.getByPlaceholderText('Name');
+        const emailInput = screen.getByPlaceholderText('Email');
+        const numberInput = screen.getByPlaceholderText('Number');
+        const button = document.getElementById('addContactButton');
+
+        expect(button).toBeInTheDocument();
+
+        if (button) {
+          for (const contact of contacts) {
+            await user.type(nameInput, contact.name);
+            await user.type(emailInput, contact.email);
+            await user.type(numberInput, contact.number);
+            await user.click(button);
+          }
+
+          expect(screen.getByTestId('contact0').textContent).toContain(
+            `${contacts[0].name}${contacts[0].email}${contacts[0].number}`
+          );
+          expect(screen.getByTestId('contact1').textContent).toContain(
+            `${contacts[1].name}${contacts[1].email}${contacts[1].number}`
+          );
+
+          expect(screen.getByTestId('contact2').textContent).toContain(
+            `${contacts[2].name}${contacts[2].email}${contacts[2].number}`
+          );
+        }
+      });
+
+      it('Successfully preserves lower entries on deletion', async () => {
+        const user = userEvent.setup();
+        const nameInput = screen.getByPlaceholderText('Name');
+        const emailInput = screen.getByPlaceholderText('Email');
+        const numberInput = screen.getByPlaceholderText('Number');
+        const button = document.getElementById('addContactButton');
+
+        expect(button).toBeInTheDocument();
+
+        if (button) {
+          for (const contact of contacts) {
+            await user.type(nameInput, contact.name);
+            await user.type(emailInput, contact.email);
+            await user.type(numberInput, contact.number);
+            await user.click(button);
+          }
+
+          const contact0 = screen.getByTestId('contact0');
+          const contact1 = screen.getByTestId('contact1');
+          const contact2 = screen.getByTestId('contact2');
+
+          const deleteButton = within(contact1).getByRole('button');
+          await user.click(deleteButton);
+
+          expect(contact0.textContent).toContain(
+            `${contacts[0].name}${contacts[0].email}${contacts[0].number}`
+          );
+          expect(contact1.textContent).toContain(
+            `${contacts[2].name}${contacts[2].email}${contacts[2].number}`
+          );
+          expect(contact2).not.toBeInTheDocument();
+        }
+      });
+
+      describe('Partial submissions', () => {
+        it('Allows submission without email', async () => {
+          const user = userEvent.setup();
+          const nameInput = screen.getByPlaceholderText('Name');
+          const numberInput = screen.getByPlaceholderText('Number');
+          const button = document.getElementById('addContactButton');
+
+          expect(button).toBeInTheDocument();
+
+          if (button) {
+            await user.type(nameInput, contacts[0].name);
+            await user.type(numberInput, contacts[0].number);
+            await user.click(button);
+
+            expect(screen.getByTestId('contact0').textContent).toContain(
+              `${contacts[0].name}${contacts[0].number}`
+            );
+          }
+        });
+
+        it('Allows submission without number', async () => {
+          const user = userEvent.setup();
+          const nameInput = screen.getByPlaceholderText('Name');
+          const emailInput = screen.getByPlaceholderText('Email');
+          const button = document.getElementById('addContactButton');
+
+          expect(button).toBeInTheDocument();
+
+          if (button) {
+            await user.type(nameInput, contacts[0].name);
+            await user.type(emailInput, contacts[0].email);
+            await user.click(button);
+
+            expect(screen.getByTestId('contact0').textContent).toContain(
+              `${contacts[0].name}${contacts[0].email}`
+            );
+          }
+        });
+
+        it('Allows submission without email and number', async () => {
+          const user = userEvent.setup();
+          const nameInput = screen.getByPlaceholderText('Name');
+          const button = document.getElementById('addContactButton');
+
+          expect(button).toBeInTheDocument();
+
+          if (button) {
+            await user.type(nameInput, contacts[0].name);
+            await user.click(button);
+
+            expect(screen.getByTestId('contact0').textContent).toContain(
+              `${contacts[0].name}`
+            );
+          }
+        });
+
+        it('Disallows submission without name', async () => {
+          const user = userEvent.setup();
+          const emailInput = screen.getByPlaceholderText('Email');
+          const numberInput = screen.getByPlaceholderText('Number');
+          const button = document.getElementById('addContactButton');
+
+          expect(button).toBeInTheDocument();
+
+          if (button) {
+            await user.type(emailInput, contacts[0].email);
+            await user.type(numberInput, contacts[0].number);
+            await user.click(button);
+
+            expect(
+              document.querySelector('[data-testid="conatct0"')
+            ).not.toBeInTheDocument();
+          }
+        });
       });
     });
 
