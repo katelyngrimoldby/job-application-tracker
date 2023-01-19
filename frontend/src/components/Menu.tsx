@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useStateValue, clearCurrentUser } from '../state';
 import { logout } from '../services/userAuth';
-import menuIcon from '../assets/menu.svg';
-import closeIcon from '../assets/close.svg';
 import sunIcon from '../assets/sun.svg';
 import moonIcon from '../assets/moon.svg';
 import styles from '../styles/components/Menu.module.css';
@@ -38,24 +36,14 @@ const Menu = () => {
         onClick={() => setVisible(true)}
         className={styles.menuButton}
       >
-        <img
-          src={menuIcon}
-          alt='Open menu'
-          height='36'
-          width='36'
-        />
+        Open Menu
       </button>
       <nav className={visible ? styles.navVisible : styles.nav}>
         <button
           onClick={() => setVisible(false)}
-          className={styles.menuButton}
+          className={styles.closeButton}
         >
-          <img
-            src={closeIcon}
-            alt='Close menu'
-            height='36'
-            width='36'
-          />
+          Close Menu
         </button>
         <ul>
           <li>
