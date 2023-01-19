@@ -365,7 +365,6 @@ describe('ApplicationForm component', () => {
         const locationInput = screen.getByPlaceholderText('Location');
         const compensationInput = screen.getByPlaceholderText('Compensation');
         const appliedInput = screen.getByLabelText('Applied');
-        const statusSelect = screen.getByLabelText('Status');
         const interviewInput = screen.getByLabelText('Interview Dates');
         const addButton = document.getElementById('addInterviewButton');
         const submitButton = screen.getByText('Submit');
@@ -380,7 +379,7 @@ describe('ApplicationForm component', () => {
           target: { value: submission.applied },
         });
 
-        await user.selectOptions(statusSelect, submission.status);
+        await user.click(screen.getByTestId('offered'));
 
         for (const interview of interviewDates) {
           await user.clear(interviewInput);
@@ -542,13 +541,13 @@ describe('ApplicationForm component', () => {
         content.applied.substring(0, 10)
       );
       expect(interview0.textContent).toBe(
-        content.interviews[0].substring(0, 10) + ' '
+        content.interviews[0].substring(0, 10) + ' Delete Interview'
       );
       expect(interview1.textContent).toBe(
-        content.interviews[1].substring(0, 10) + ' '
+        content.interviews[1].substring(0, 10) + ' Delete Interview'
       );
       expect(interview2.textContent).toBe(
-        content.interviews[2].substring(0, 10) + ' '
+        content.interviews[2].substring(0, 10) + ' Delete Interview'
       );
     });
 
@@ -559,7 +558,6 @@ describe('ApplicationForm component', () => {
       const locationInput = screen.getByPlaceholderText('Location');
       const compensationInput = screen.getByPlaceholderText('Compensation');
       const appliedInput = screen.getByLabelText('Applied');
-      const statusSelect = screen.getByLabelText('Status');
       const interview2 = screen.getByTestId('interview2');
       const submitButton = screen.getByText('Submit');
 
@@ -578,7 +576,7 @@ describe('ApplicationForm component', () => {
         target: { value: submission.applied },
       });
 
-      await user.selectOptions(statusSelect, submission.status);
+      await user.click(screen.getByTestId('rejected'));
 
       await user.click(within(interview2).getByRole('button'));
 

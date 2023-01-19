@@ -46,6 +46,7 @@ const Dropdown = ({
               e.label === selected ? styles.activeOption : styles.option
             }
             type='button'
+            data-testid={e.value}
           >
             {e.label}
           </button>
