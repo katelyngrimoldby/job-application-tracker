@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Job, NewJob } from '../types';
+import Dropdown from './Dropdown';
 import RichTextEditor from './RichTextEditor';
 import styles from '../styles/components/ApplicationForm.module.css';
 import closeIcon from '../assets/close.svg';
@@ -54,6 +55,10 @@ const ApplicationForm = ({
     email: '',
     number: '',
   });
+
+  const handleStatusChange = (status: string) => {
+    setStatus(status as Status);
+  };
 
   const handleInterviewDelete = (interview: number) => {
     const newInterviews = interviews.filter((_, index) => index != interview);
@@ -140,16 +145,20 @@ const ApplicationForm = ({
           </div>
           <div className={styles.inputWrapper}>
             <label htmlFor='status'>Status</label>
-            <select
+            <Dropdown
               id='status'
-              onChange={(event) => setStatus(event.target.value as Status)}
-              value={status}
-            >
-              <option value='applied'>Applied</option>
-              <option value='interviewing'>Interviewing</option>
-              <option value='offered'>Offered</option>
-              <option value='rejected'>Rejected</option>
-            </select>
+              values={[
+                { value: 'applied', label: 'Applied' },
+                { value: 'interviewing', label: 'Interviewing' },
+                { value: 'offered', label: 'Offered' },
+                { value: 'rejected', label: 'Rejected' },
+              ]}
+              startValue={{
+                label: `${status[0].toUpperCase()}${status.substring(1)}`,
+                value: status,
+              }}
+              handleChange={handleStatusChange}
+            />
           </div>
           <div className={styles.inputWrapper}>
             <label htmlFor='interviewDate'>Interview Dates</label>
