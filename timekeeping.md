@@ -27,3 +27,4 @@
 | Jan. 9       | 1hr 54min  | CI/CD Pipeline                                      |
 | Jan. 13 - 14 | 4hr 2min   | Add refresh token to authorization flow             |
 | Jan. 16 - 17 | 4hr 46min  | Add new fields for job applications                 |
+| Jan. 19      | 4hr        | Implement dark mode                                 |
