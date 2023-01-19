@@ -5,30 +5,35 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 0.125rem;
-  img,
-  button {
+  margin-bottom: 0.25rem;
+}
+
+.button,
+.active {
+  padding: 0.25rem;
+  border: 1px solid transparent;
+  transition: border 200ms ease-in-out;
+  border-radius: 5px;
+
+  svg {
+    width: 24px;
+    height: 24px;
     vertical-align: middle;
+    fill: var(--text-main);
   }
 
-  button {
-    padding: 0.25rem;
-    border: 1px solid transparent;
-    transition: border 200ms ease-in-out;
-    border-radius: 5px;
+  &:hover {
+    border-color: var(--accent-tertiary);
+  }
 
-    &:hover {
-      border-color: var(--accent-tertiary);
+  &:disabled {
+    cursor: auto;
+    img {
+      opacity: 0.5;
     }
 
-    &:disabled {
-      cursor: auto;
-      img {
-        opacity: 0.5;
-      }
-
-      &:hover {
-        border-color: transparent;
-      }
+    &:hover {
+      border-color: transparent;
     }
   }
 }
