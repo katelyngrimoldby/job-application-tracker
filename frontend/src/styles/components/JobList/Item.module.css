@@ -34,11 +34,16 @@
 
 .expandBtn,
 .collapseBtn {
-  vertical-align: middle;
-  transition: transform 400ms ease-in-out;
+  svg {
+    height: 24px;
+    width: 24px;
+    vertical-align: middle;
+    fill: var(--text-main);
+    transition: transform 400ms ease-in-out;
+  }
 }
 
-.collapseBtn {
+.collapseBtn svg {
   transform: rotate(180deg);
 }
 
