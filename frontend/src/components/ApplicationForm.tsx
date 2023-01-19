@@ -3,7 +3,6 @@ import { Job, NewJob } from '../types';
 import Dropdown from './Dropdown';
 import RichTextEditor from './RichTextEditor';
 import styles from '../styles/components/ApplicationForm.module.css';
-import closeIcon from '../assets/close.svg';
 
 type Status = 'applied' | 'interviewing' | 'offered' | 'rejected';
 
@@ -190,12 +189,7 @@ const ApplicationForm = ({
                   type='button'
                   onClick={() => handleInterviewDelete(i)}
                 >
-                  <img
-                    src={closeIcon}
-                    alt='Delete'
-                    width='24'
-                    height='24'
-                  />
+                  Delete Interview
                 </button>
               </p>
             ))}
@@ -262,12 +256,7 @@ const ApplicationForm = ({
                     type='button'
                     onClick={() => handleContactDelete(i)}
                   >
-                    <img
-                      src={closeIcon}
-                      alt='Delete'
-                      width='24'
-                      height='24'
-                    />
+                    Delete Contact
                   </button>
                 </div>
               ))}

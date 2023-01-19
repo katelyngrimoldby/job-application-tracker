@@ -97,8 +97,12 @@
     border-radius: 5px;
 
     button {
+      width: 24px;
+      height: 24px;
       margin-left: 0.125rem;
       vertical-align: middle;
+      background-color: var(--text-main);
+      mask-image: url('../../assets/close.svg');
     }
   }
 
@@ -152,8 +156,12 @@
     }
 
     button {
-      vertical-align: middle;
       align-self: center;
+      width: 24px;
+      height: 24px;
+      vertical-align: middle;
+      background-color: var(--text-main);
+      mask-image: url('../../assets/close.svg');
     }
   }
 }
