@@ -1,15 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useStateValue, clearCurrentUser } from '../state';
 import { logout } from '../services/userAuth';
 import menuIcon from '../assets/menu.svg';
 import closeIcon from '../assets/close.svg';
+import sunIcon from '../assets/sun.svg';
+import moonIcon from '../assets/moon.svg';
 import styles from '../styles/components/Menu.module.css';
 
 const Menu = () => {
   const [{ user }, dispatch] = useStateValue();
   const [visible, setVisible] = useState(false);
+  const [theme, setTheme] = useState<'light' | 'dark'>(
+    window.matchMedia('(prefers-color-scheme: dark') ? 'dark' : 'light'
+  );
   const navigate = useNavigate();
 
   const handleClick = async () => {
@@ -22,6 +27,10 @@ const Menu = () => {
       navigate('/');
     }
   };
+
+  useEffect(() => {
+    document.getElementById('root')?.setAttribute('data-theme', theme);
+  }, [theme]);
 
   return (
     <div>
@@ -106,6 +115,28 @@ const Menu = () => {
               </li>
             </>
           )}
+          <li>
+            <button
+              type='button'
+              onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+            >
+              {theme === 'light' ? (
+                <img
+                  src={moonIcon}
+                  alt='Dark Mode'
+                  width='24'
+                  height='24'
+                />
+              ) : (
+                <img
+                  src={sunIcon}
+                  alt='Light Mode'
+                  width='24'
+                  height='24'
+                />
+              )}
+            </button>
+          </li>
         </ul>
       </nav>
     </div>
