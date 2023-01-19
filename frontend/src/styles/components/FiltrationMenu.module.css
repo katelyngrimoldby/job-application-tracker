@@ -75,22 +75,25 @@
   .button,
   .buttonVisible {
     margin-top: 2rem;
-    background-color: var(--background-secondary);
+    background-color: var(--accent-main);
     padding-block: 0.5rem;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 
-    img {
+    svg {
+      height: 24px;
+      width: 24px;
       transition: transform 200ms ease-in-out;
       z-index: 9999;
+      vertical-align: middle;
     }
   }
 
-  .button img {
+  .button svg {
     transform: rotate(90deg);
   }
 
-  .buttonVisible img {
+  .buttonVisible svg {
     transform: rotate(270deg);
   }
 }

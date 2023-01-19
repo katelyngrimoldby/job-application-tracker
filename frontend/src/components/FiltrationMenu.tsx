@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import toggleArrow from '../assets/menu-down.svg';
+import ArrowIcon from './icons/ArrowIcon';
 import styles from '../styles/components/FiltrationMenu.module.css';
 
 const sort = [
@@ -28,13 +28,9 @@ const FiltrationMenu = ({
       <button
         onClick={() => setVisible(!visible)}
         className={visible ? styles.buttonVisible : styles.button}
+        aria-label={visible ? 'Close sidebar' : 'Open sidebar'}
       >
-        <img
-          src={toggleArrow}
-          alt={visible ? 'Close sidebar' : 'Open sidebar'}
-          width='24'
-          height='24'
-        />
+        <ArrowIcon />
       </button>
       <div className={styles.content}>
         <fieldset>

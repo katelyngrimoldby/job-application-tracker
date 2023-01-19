@@ -10,7 +10,8 @@
       padding: 0.25rem 0.5rem;
       border: 1px solid transparent;
       border-bottom: 1px solid var(--accent-tertiary);
-      color: var(---text-primary);
+      background-color: var(--background-main);
+      color: var(---text-main);
       font-size: 1rem;
       transition: all 200ms ease-in-out;
       width: 100%;

@@ -7,16 +7,19 @@
   .heading {
     padding: 1rem;
     padding-top: 1.5rem;
-    background-color: var(--accent-main);
-    background-image: url('../../assets/svg-background.svg'),
-      linear-gradient(
-        180deg,
-        rgba(85, 85, 241, 1) 0%,
-        rgba(58, 58, 138, 1) 100%
-      );
+    background-color: var(--background-main);
+    mask-image: url('../../assets/svg-background.svg');
+    background-image: linear-gradient(
+      180deg,
+      var(--accent-main) 0%,
+      var(--accent-secondary) 100%
+    );
     background-repeat: no-repeat;
-    background-size: 100% 80%;
-    background-position: bottom left;
+    mask-repeat: no-repeat;
+    mask-size: 120% 100%;
+    background-size: cover;
+    mask-position: top left;
+    background-position: top;
     width: 100%;
     height: 10rem;
     transition: all 300ms ease-in-out;
@@ -52,7 +55,7 @@
 @media screen and (min-width: 768px) {
   .heading {
     padding: 2rem;
-    background-size: 100% 100%;
+    mask-size: 100% 100%;
     height: 12rem;
   }
 

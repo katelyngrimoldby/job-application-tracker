@@ -14,3 +14,18 @@
 
   --font: 'Inter', sans-serif;
 }
+
+[data-theme='dark'] {
+  --background-main: #1f1f22;
+  --background-secondary: #242831;
+  --text-main: #fafbff;
+  --text-secondary: #f2f6fc;
+  --accent-main: #6ab0ff;
+  --accent-secondary: #639aff;
+  --accent-tertiary: #b9babe;
+
+  --error-background: #f2d5d9;
+  --error-foreground: #c73f3f;
+
+  --font: 'Inter', sans-serif;
+}

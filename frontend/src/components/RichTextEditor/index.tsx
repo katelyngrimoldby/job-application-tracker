@@ -1,13 +1,24 @@
 import { useEffect } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import Undo from '../../assets/undo.svg';
-import Redo from '../../assets/redo.svg';
-import BulletList from '../../assets/format-list-bulleted.svg';
-import NumberList from '../../assets/format-list-numbered.svg';
-import Bold from '../../assets/format-bold.svg';
-import Italic from '../../assets/format-italic.svg';
+import Dropdown from '../Dropdown';
+import UndoIcon from '../icons/UndoIcon';
+import RedoIcon from '../icons/RedoIcon';
+import BulletListIcon from '../icons/BulletListIcon';
+import NumberListIcon from '../icons/NumberListIcon';
+import BoldIcon from '../icons/BoldIcon';
+import ItalicIcon from '../icons/ItalicIcon';
 import styles from '../../styles/components/RichTextEditor.module.css';
+
+const selectValues = [
+  { label: 'Paragraph', value: 'paragraph' },
+  { label: 'Header 1', value: 'h1' },
+  { label: 'Header 2', value: 'h2' },
+  { label: 'Header 3', value: 'h3' },
+  { label: 'Header 4', value: 'h4' },
+  { label: 'Header 5', value: 'h5' },
+  { label: 'Header 6', value: 'h6' },
+];
 
 const RichTextEditor = ({
   initialContent,
@@ -33,8 +44,8 @@ const RichTextEditor = ({
     }
   }, [initialContent]);
 
-  const handleTextChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    switch (event.target.value) {
+  const handleTextChange = (value: string) => {
+    switch (value) {
       case 'paragraph':
         editor?.chain().focus().setParagraph().run();
         break;
@@ -68,83 +79,61 @@ const RichTextEditor = ({
           onClick={() => editor?.chain().focus().toggleBold().run()}
           disabled={!editor?.can().chain().focus().toggleBold().run()}
           type='button'
-          className={editor?.isActive('bold') ? styles.active : undefined}
+          className={editor?.isActive('bold') ? styles.active : styles.button}
           aria-label='Toggle Bold'
         >
-          <img
-            src={Bold}
-            width='24'
-          />
+          <BoldIcon />
         </button>
         <button
           onClick={() => editor?.chain().focus().toggleItalic().run()}
           disabled={!editor?.can().chain().focus().toggleItalic().run()}
           type='button'
-          className={editor?.isActive('italic') ? styles.active : undefined}
-          aria-label='Toggle Italic'
+          className={editor?.isActive('italic') ? styles.active : styles.button}
         >
-          <img
-            src={Italic}
-            width='24'
-          />
+          <ItalicIcon />
         </button>
-        <select
-          name='textType'
-          onChange={handleTextChange}
-        >
-          <option value='paragraph'>Paragraph</option>
-          <option value='h1'>Header 1</option>
-          <option value='h2'>Header 2</option>
-          <option value='h3'>Header 3</option>
-          <option value='h4'>Header 4</option>
-          <option value='h5'>Header 5</option>
-          <option value='h6'>Header 6</option>
-        </select>
+        <Dropdown
+          values={selectValues}
+          id='Text type select'
+          handleChange={handleTextChange}
+        />
         <button
           onClick={() => editor?.chain().focus().toggleBulletList().run()}
           type='button'
-          className={editor?.isActive('bulletList') ? styles.active : undefined}
+          className={
+            editor?.isActive('bulletList') ? styles.active : styles.button
+          }
           aria-label='Toggle Bulleted List'
         >
-          <img
-            src={BulletList}
-            width='24'
-          />
+          <BulletListIcon />
         </button>
         <button
           onClick={() => editor?.chain().focus().toggleOrderedList().run()}
           type='button'
           className={
-            editor?.isActive('orderedList') ? styles.active : undefined
+            editor?.isActive('orderedList') ? styles.active : styles.button
           }
           aria-label='Toggle Ordered List'
         >
-          <img
-            src={NumberList}
-            width='24'
-          />
+          <NumberListIcon />
         </button>
         <button
           onClick={() => editor?.chain().focus().undo().run()}
           disabled={!editor?.can().chain().focus().undo().run()}
           type='button'
           aria-label='Undo'
+          className={styles.button}
         >
-          <img
-            src={Undo}
-            width='24'
-          />
+          <UndoIcon />
         </button>
         <button
           onClick={() => editor?.chain().focus().redo().run()}
           disabled={!editor?.can().chain().focus().redo().run()}
           type='button'
           aria-label='Redo'
+          className={styles.button}
         >
-          <img
-            src={Redo}
-            width='24'
-          />
+          <RedoIcon />
         </button>
       </div>
       <EditorContent editor={editor} />
