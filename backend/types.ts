@@ -18,17 +18,22 @@ export enum Status {
   Rejected = 'rejected',
 }
 
-export interface NewJob {
+export interface NewApplication {
   positionTitle: string;
   company: string;
   location: string;
-  applied: string;
-  compensation: string;
   status: Status;
-  interviews: string[];
-  jobDescription: string;
+  files: File[];
   notes: string;
-  contacts: { name: string; email: string; number: string }[];
+}
+
+export interface NewInterview {
+  applicationId: number;
+  contact: string;
+  time: string;
+  website: string;
+  files: File[];
+  notes: string;
 }
 
 export interface NewUser {
