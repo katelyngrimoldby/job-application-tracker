@@ -7,21 +7,30 @@ import {
 } from 'sequelize';
 import { sequelize } from '../util/db';
 
-class Job extends Model<InferAttributes<Job>, InferCreationAttributes<Job>> {
+class Application extends Model<
+  InferAttributes<Application>,
+  InferCreationAttributes<Application>
+> {
   declare id: CreationOptional<number>;
   declare positionTitle: string;
   declare company: string;
   declare location: string;
-  declare applied: string;
-  declare compensation: string;
-  declare status: 'applied' | 'interviewing' | 'offered' | 'rejected';
-  declare interviews: string[];
-  declare jobDescription: string;
+  declare assessmentDate: string;
+  declare interviewDate: string;
+  declare offerDate: string;
+  declare rejectionDate: string;
+  declare jobId: string;
+  declare status:
+    | 'applied'
+    | 'assessments'
+    | 'interviewing'
+    | 'offered'
+    | 'rejected';
+  declare files: string[];
   declare userId: number;
   declare notes: string;
-  declare contacts: string[];
 }
-Job.init(
+Application.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -40,25 +49,33 @@ Job.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    applied: {
+    assessmentDate: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
     },
-    compensation: {
+    interviewDate: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    offerDate: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    rejectionDate: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    jobId: {
       type: DataTypes.TEXT,
-      defaultValue: 'N/A',
+      defaultValue: 'None',
     },
     status: {
       type: DataTypes.TEXT,
       defaultValue: 'applied',
     },
-    interviews: {
-      type: DataTypes.ARRAY(DataTypes.DATE),
+    files: {
+      type: DataTypes.ARRAY(DataTypes.TEXT),
       defaultValue: [],
-    },
-    jobDescription: {
-      type: DataTypes.TEXT,
-      allowNull: true,
     },
     userId: {
       type: DataTypes.INTEGER,
@@ -69,17 +86,15 @@ Job.init(
       type: DataTypes.TEXT,
       allowNull: true,
     },
-    contacts: {
-      type: DataTypes.ARRAY(DataTypes.TEXT),
-      defaultValue: [],
-    },
   },
   {
     sequelize,
     underscored: true,
-    timestamps: false,
-    modelName: 'job',
+    timestamps: true,
+    createdAt: 'applyDate',
+    updatedAt: false,
+    modelName: 'application',
   }
 );
 
-export default Job;
+export default Application;
