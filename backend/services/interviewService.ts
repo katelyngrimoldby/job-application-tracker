@@ -24,7 +24,7 @@ const getOne = async (id: number, userId: number) => {
   return interview;
 };
 
-const getAllForJob = async (
+const getAllForApplication = async (
   applicationId: number,
   order: string | undefined
 ) => {
@@ -71,7 +71,7 @@ const remove = async (id: number, userId: number) => {
   }
 
   await interview.destroy();
-  return { message: 'Job deleted' };
+  return { message: 'Interview deleted' };
 };
 
-export default { getAll, getOne, getAllForJob, addNew, update, remove };
+export default { getAll, getOne, getAllForApplication, addNew, update, remove };
