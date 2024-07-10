@@ -9,7 +9,8 @@ import tokenExtractor from './middleware/tokenExtractor';
 import errorHandler from './middleware/errorHandler';
 import authRouter from './routes/auth';
 import userRouter from './routes/users';
-import jobRouter from './routes/jobs';
+import applicationRouter from './routes/applications';
+import interviewRouter from './routes/interviews';
 
 app.use(express.json());
 
@@ -23,7 +24,8 @@ app.get('/api/ping', (_req, res) => {
 
 app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
-app.use('/api/jobs', tokenExtractor, jobRouter);
+app.use('/api/jobs', tokenExtractor, applicationRouter);
+app.use('/api/interviews', tokenExtractor, interviewRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.get('*', (_req, res) => {
