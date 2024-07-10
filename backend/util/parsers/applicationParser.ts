@@ -10,6 +10,7 @@ const toNewApplication = (obj: any): NewApplication => {
     status: parseStatus(obj.status),
     files: parseFiles(obj.files),
     notes: parseOptionalString(obj.notes, 'Notes'),
+    jobId: parseOptionalString(obj.jobId, 'Job ID'),
   };
 };
 

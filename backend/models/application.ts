@@ -7,6 +7,8 @@ import {
 } from 'sequelize';
 import { sequelize } from '../util/db';
 
+import { Status } from '../types';
+
 class Application extends Model<
   InferAttributes<Application>,
   InferCreationAttributes<Application>
@@ -20,12 +22,7 @@ class Application extends Model<
   declare offerDate: string;
   declare rejectionDate: string;
   declare jobId: string;
-  declare status:
-    | 'applied'
-    | 'assessments'
-    | 'interviewing'
-    | 'offered'
-    | 'rejected';
+  declare status: Status;
   declare files: string[];
   declare userId: number;
   declare notes: string;

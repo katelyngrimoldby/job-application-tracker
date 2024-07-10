@@ -13,6 +13,7 @@ export interface RequestUserAuth extends Request {
 
 export enum Status {
   Applied = 'applied',
+  Assessments = 'assesments',
   Interviewing = 'interviewing',
   Offered = 'offered',
   Rejected = 'rejected',
@@ -25,6 +26,7 @@ export interface NewApplication {
   status: Status;
   files: File[];
   notes: string;
+  jobId: string;
 }
 
 export interface NewInterview {
