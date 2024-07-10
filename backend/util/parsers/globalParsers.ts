@@ -1,3 +1,5 @@
+import { Status } from '../../types';
+
 export const parseOptionalString = (text: unknown, key: string): string => {
   if (!isString(text)) {
     throw new Error(`Incorrect parameter: ${key}`);
@@ -38,6 +40,11 @@ export const parseFiles = (files: unknown): File[] => {
 
 export const isString = (string: unknown): string is string => {
   return typeof string === 'string' || string instanceof String;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const isStatus = (string: any): string is Status => {
+  return Object.values(Status).includes(string);
 };
 
 const isFile = (file: unknown): file is File => {

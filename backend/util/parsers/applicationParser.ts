@@ -1,5 +1,10 @@
 import { NewApplication, Status } from '../../types';
-import { parseOptionalString, parseString, parseFiles } from './globalParsers';
+import {
+  parseOptionalString,
+  parseString,
+  parseFiles,
+  isStatus,
+} from './globalParsers';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const toNewApplication = (obj: any): NewApplication => {
@@ -20,11 +25,6 @@ const parseStatus = (status: unknown): Status => {
   }
 
   return status;
-};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const isStatus = (string: any): string is Status => {
-  return Object.values(Status).includes(string);
 };
 
 export default toNewApplication;
