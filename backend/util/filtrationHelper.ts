@@ -29,4 +29,23 @@ const getApplicationFilter = (
 
   return {};
 };
-export { getApplicationOrder, getApplicationFilter };
+
+const getInterviewOrder = (sort: string | undefined): Order => {
+  switch (sort) {
+    case 'company-asc':
+      return [['company', 'ASC']];
+    case 'company-desc':
+      return [['company', 'DESC']];
+    case 'position-asc':
+      return [['positionTitle', 'ASC']];
+    case 'position-desc':
+      return [['positionTitle', 'DESC']];
+    case 'soonest':
+      return [['time', 'DESC']];
+    case 'furthest':
+      return [['time', 'ASC']];
+    default:
+      return [['time', 'DESC']];
+  }
+};
+export { getApplicationOrder, getApplicationFilter, getInterviewOrder };
