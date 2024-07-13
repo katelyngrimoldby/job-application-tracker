@@ -1,9 +1,20 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize } from '@sequelize/core';
+import { PostgresDialect } from '@sequelize/postgres';
 import { createClient } from 'redis';
 import { Umzug, SequelizeStorage } from 'umzug';
-import { POSTGRES_URL, REDIS_URL } from './config';
+import { POSTGRES_DB, POSTGRES_USER, POSTGRES_PASS, REDIS_URL } from './config';
+import { Application, User, Interview } from '../models';
 
-const sequelize = new Sequelize(POSTGRES_URL ? POSTGRES_URL : 'nodb:');
+const sequelize = new Sequelize({
+  dialect: PostgresDialect,
+  database: POSTGRES_DB,
+  user: POSTGRES_USER,
+  password: POSTGRES_PASS,
+  define: {
+    underscored: true,
+  },
+  models: [Application, User, Interview],
+});
 const redis = createClient({
   url: REDIS_URL,
 });
