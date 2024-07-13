@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const { DataTypes } = require('sequelize');
+const { DataTypes } = require('@sequelize/core');
 
 module.exports = {
   up: async ({ context: queryInterface }) => {
@@ -10,15 +10,19 @@ module.exports = {
         autoIncrement: true,
       },
       position_title: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       company: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       location: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      apply_date: {
+        type: DataTypes.DATE,
         allowNull: false,
       },
       assessment_date: {
@@ -38,25 +42,31 @@ module.exports = {
         allowNull: true,
       },
       job_id: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
         defaultValue: 'None',
       },
       status: {
-        type: DataTypes.TEXT,
+        type: DataTypes.ENUM(
+          'applied',
+          'assessments',
+          'interviewing',
+          'offered',
+          'rejected'
+        ),
         defaultValue: 'applied',
       },
       files: {
         type: DataTypes.ARRAY(DataTypes.TEXT),
-        defaultValue: [],
+        allowNull: false,
+      },
+      notes: {
+        type: DataTypes.TEXT,
+        allowNull: false,
       },
       user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: { model: 'users', key: 'id' },
-      },
-      notes: {
-        type: DataTypes.TEXT,
-        allowNull: true,
       },
     });
   },

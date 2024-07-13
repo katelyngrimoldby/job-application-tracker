@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const { DataTypes } = require('sequelize');
+const { DataTypes } = require('@sequelize/core');
 
 module.exports = {
   up: async ({ context: queryInterface }) => {
@@ -9,13 +9,8 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true,
       },
-      application_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: { model: 'applications', key: 'id' },
-      },
       contact: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
         defaultValue: 'Unknown',
       },
       time: {
@@ -24,15 +19,20 @@ module.exports = {
       },
       website: {
         type: DataTypes.TEXT,
-        allowNull: true,
+        DefaultValue: '',
       },
       files: {
         type: DataTypes.ARRAY(DataTypes.TEXT),
-        defaultValue: [],
+        allowNull: false,
       },
       notes: {
         type: DataTypes.TEXT,
-        allowNull: true,
+        allowNull: false,
+      },
+      application_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: { model: 'applications', key: 'id' },
       },
       user_id: {
         type: DataTypes.INTEGER,
