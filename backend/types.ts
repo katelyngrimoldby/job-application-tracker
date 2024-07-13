@@ -32,7 +32,7 @@ export interface NewApplication {
 export interface NewInterview {
   applicationId: number;
   contact: string;
-  time: string;
+  time: Date;
   website: string;
   files: File[];
   notes: string;

@@ -5,7 +5,6 @@ import {
   getApplicationOrder,
 } from '../util/filtrationHelper';
 import { encodeFiles } from '../util/fileHelpers';
-import { sequelize } from '../util/db';
 
 const getAll = async (
   id: number,
@@ -36,10 +35,6 @@ const getOne = async (id: number, userId: number) => {
 const addNew = async (obj: NewApplication, id: number) => {
   const job = await Application.create({
     ...obj,
-    assessmentDate: '',
-    interviewDate: '',
-    offerDate: '',
-    rejectionDate: '',
     files: await encodeFiles(obj.files),
     userId: id,
   });
@@ -66,13 +61,13 @@ const update = async (id: number, userId: number, obj: NewApplication) => {
 
     switch (alteredStatus) {
       case Status.Assessments:
-        return { assessmentDate: sequelize.literal('CURRENT_TIMESTAMP') };
+        return { assessmentDate: new Date() };
       case Status.Interviewing:
-        return { interviewDate: sequelize.literal('CURRENT_TIMESTAMP') };
+        return { interviewDate: new Date() };
       case Status.Offered:
-        return { offerDate: sequelize.literal('CURRENT_TIMESTAMP') };
+        return { offerDate: new Date() };
       case Status.Rejected:
-        return { offerDate: sequelize.literal('CURRENT_TIMESTAMP') };
+        return { offerDate: new Date() };
       default:
         return null;
     }
