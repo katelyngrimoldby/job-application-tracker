@@ -4,94 +4,103 @@ import {
   InferAttributes,
   InferCreationAttributes,
   CreationOptional,
-} from 'sequelize';
-import { sequelize } from '../util/db';
+  NonAttribute,
+  HasManyGetAssociationsMixin,
+  HasManyAddAssociationMixin,
+} from '@sequelize/core';
+import {
+  Attribute,
+  AutoIncrement,
+  NotNull,
+  PrimaryKey,
+  Table,
+  CreatedAt,
+  Default,
+  HasMany,
+} from '@sequelize/core/decorators-legacy';
 
 import { Status } from '../types';
+import Interview from './interview';
 
+@Table({
+  updatedAt: false,
+})
 class Application extends Model<
   InferAttributes<Application>,
   InferCreationAttributes<Application>
 > {
+  @Attribute(DataTypes.INTEGER)
+  @PrimaryKey
+  @AutoIncrement
   declare id: CreationOptional<number>;
+
+  @Attribute(DataTypes.STRING)
+  @NotNull
   declare positionTitle: string;
+
+  @Attribute(DataTypes.STRING)
+  @NotNull
   declare company: string;
+
+  @Attribute(DataTypes.STRING)
+  @NotNull
   declare location: string;
-  declare assessmentDate: string;
-  declare interviewDate: string;
-  declare offerDate: string;
-  declare rejectionDate: string;
-  declare jobId: string;
-  declare status: Status;
+
+  @CreatedAt
+  declare applyDate: CreationOptional<Date>;
+
+  @Attribute(DataTypes.DATE)
+  @Default(null)
+  declare assessmentDate: Date | null;
+
+  @Attribute(DataTypes.DATE)
+  @Default(null)
+  declare interviewDate: Date | null;
+
+  @Attribute(DataTypes.DATE)
+  @Default(null)
+  declare offerDate: Date | null;
+
+  @Attribute(DataTypes.DATE)
+  @Default(null)
+  declare rejectionDate: Date | null;
+
+  @Attribute(DataTypes.STRING)
+  @Default('None')
+  declare jobId: CreationOptional<string>;
+
+  @Attribute(
+    DataTypes.ENUM(
+      'appled',
+      'assessments',
+      'interviewing',
+      'offered',
+      'rejected'
+    )
+  )
+  @Default('applied')
+  declare status: CreationOptional<Status>;
+
+  @Attribute(DataTypes.ARRAY(DataTypes.TEXT))
+  @NotNull
   declare files: string[];
-  declare userId: number;
+
+  @Attribute(DataTypes.TEXT)
+  @NotNull
   declare notes: string;
+
+  // Foreign key
+  @Attribute(DataTypes.INTEGER)
+  @NotNull
+  declare userId: number;
+
+  // One-to-Many association
+  @HasMany(() => Interview, 'applicationId')
+  declare interviews?: NonAttribute<Interview[]>;
+
+  //Interview methods
+  declare getInterviews: HasManyGetAssociationsMixin<Interview>;
+  declare addInterview: HasManyAddAssociationMixin<Interview, Interview['id']>;
 }
-Application.init(
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    positionTitle: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    company: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    location: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    assessmentDate: {
-      type: DataTypes.DATE,
-      allowNull: true,
-    },
-    interviewDate: {
-      type: DataTypes.DATE,
-      allowNull: true,
-    },
-    offerDate: {
-      type: DataTypes.DATE,
-      allowNull: true,
-    },
-    rejectionDate: {
-      type: DataTypes.DATE,
-      allowNull: true,
-    },
-    jobId: {
-      type: DataTypes.TEXT,
-      defaultValue: 'None',
-    },
-    status: {
-      type: DataTypes.TEXT,
-      defaultValue: 'applied',
-    },
-    files: {
-      type: DataTypes.ARRAY(DataTypes.TEXT),
-      defaultValue: [],
-    },
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: { model: 'users', key: 'id' },
-    },
-    notes: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-  },
-  {
-    sequelize,
-    underscored: true,
-    timestamps: true,
-    createdAt: 'applyDate',
-    updatedAt: false,
-    modelName: 'application',
-  }
-);
 
 export default Application;
