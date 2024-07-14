@@ -41,15 +41,33 @@ export const parseFiles = (files: unknown): string[] => {
 };
 
 export const parseDate = (date: unknown, key: string): Date => {
-  if (!date || !isDate(date)) {
-    throw new Error(`Incorrect or missing date for ${key}`);
+  if (!date) {
+    throw new Error(`Missing date for ${key}`);
   }
 
-  return date;
+  if (isDate(date)) {
+    return date;
+  }
+
+  if (!isString(date)) {
+    throw new Error(`Invalid date for ${key}`);
+  }
+
+  return checkDateString(date, key);
 };
 
 const isDate = (date: unknown): date is Date => {
   return date instanceof Date;
+};
+
+const checkDateString = (date: string, key: string): Date => {
+  const dateObj = new Date(date);
+
+  if (dateObj.toString() == 'Invalid Date') {
+    throw new Error(`Invalid date for ${key}`);
+  }
+
+  return dateObj;
 };
 
 export const isString = (string: unknown): string is string => {
