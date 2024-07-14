@@ -58,6 +58,12 @@ applicationRouter.get('/:id/interviews', async (req: RequestUserAuth, res) => {
 
   const id = req.params.id;
 
+  const job = await applicationService.getOne(Number(id), req.decodedToken?.id);
+
+  if (!job) {
+    return res.status(404).end();
+  }
+
   const result = await interviewService.getAllForApplication(
     Number(id),
     'soonest'
