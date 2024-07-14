@@ -1,8 +1,6 @@
 import { Interview } from '../models';
 import { NewInterview } from '../types';
 import { getInterviewOrder } from '../util/filtrationHelper';
-import { encodeFiles } from '../util/fileHelpers';
-
 const getAll = async (userId: number, order: string | undefined) => {
   const sort = getInterviewOrder(order);
 
@@ -41,7 +39,6 @@ const getAllForApplication = async (
 const addNew = async (obj: NewInterview, userId: number) => {
   const interview = await Interview.create({
     ...obj,
-    files: await encodeFiles(obj.files),
     userId: userId,
   });
 
@@ -57,7 +54,6 @@ const update = async (id: number, userId: number, obj: NewInterview) => {
 
   const updatedInterview = await interview.update({
     ...obj,
-    files: await encodeFiles(obj.files),
   });
 
   return updatedInterview;

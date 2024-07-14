@@ -24,7 +24,7 @@ export interface NewApplication {
   company: string;
   location: string;
   status: Status;
-  files: File[];
+  files: string[];
   notes: string;
   jobId: string;
 }
@@ -34,7 +34,7 @@ export interface NewInterview {
   contact: string;
   time: Date;
   website: string;
-  files: File[];
+  files: string[];
   notes: string;
 }
 

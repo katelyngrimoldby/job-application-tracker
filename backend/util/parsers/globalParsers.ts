@@ -20,21 +20,23 @@ export const parseString = (string: unknown, key: string): string => {
   return string;
 };
 
-const parseFile = (file: unknown, key: string): File => {
-  if (!file || !isFile(file)) {
+const parseFile = (file: unknown, key: string): string => {
+  if (!file || !isString(file)) {
     throw new Error(`Incorrect or missing file: ${key}`);
+  } else if (!isFile(file)) {
+    throw new Error(`Invalid encoding for file: ${key}`);
   }
 
   return file;
 };
 
-export const parseFiles = (files: unknown): File[] => {
+export const parseFiles = (files: unknown): string[] => {
   if (!files || !Array.isArray(files)) {
     throw new Error('Missing file array');
   }
 
-  return files.map(
-    (file: unknown, key: number): File => parseFile(file, `File #${key + 1}`)
+  return files.map((file: unknown, key: number): string =>
+    parseFile(file, `File #${key + 1}`)
   );
 };
 
@@ -59,6 +61,6 @@ export const isStatus = (string: any): string is Status => {
   return Object.values(Status).includes(string);
 };
 
-const isFile = (file: unknown): file is File => {
-  return file instanceof File;
+const isFile = (file: string): boolean => {
+  return file.startsWith('data:application/pdf;base64,');
 };

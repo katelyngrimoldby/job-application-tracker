@@ -4,7 +4,6 @@ import {
   getApplicationFilter,
   getApplicationOrder,
 } from '../util/filtrationHelper';
-import { encodeFiles } from '../util/fileHelpers';
 
 const getAll = async (
   id: number,
@@ -35,7 +34,6 @@ const getOne = async (id: number, userId: number) => {
 const addNew = async (obj: NewApplication, id: number) => {
   const job = await Application.create({
     ...obj,
-    files: await encodeFiles(obj.files),
     userId: id,
   });
 
@@ -75,7 +73,6 @@ const update = async (id: number, userId: number, obj: NewApplication) => {
 
   const updatedJob = await job.update({
     ...obj,
-    files: await encodeFiles(obj.files),
     ...addStatusDate(job, obj),
   });
   return updatedJob;
