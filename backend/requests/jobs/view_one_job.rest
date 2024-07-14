@@ -1,3 +1,0 @@
-GET http://localhost:8080/api/jobs/2
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImthdGVseW5ncmltb2xkYnkiLCJpZCI6MSwiaWF0IjoxNjcxNzQxMjc1fQ.2ZrbTKOz-xa30ZaK9QLBXJ7ww2a3jNlFKQ41VT_Jimc
-Userid: 906

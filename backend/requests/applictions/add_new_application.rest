@@ -1,0 +1,15 @@
+POST http://localhost:8080/api/applications
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImthdGVseW5ncmltb2xkYnkiLCJuYW1lIjoiS2F0ZWx5biIsImlkIjoxLCJpYXQiOjE3MjA5MTYwNzksImV4cCI6MTcyMDkxNzI3OX0.3ojFcODZgE8pBvCjFFyauiMbj6L6MCPT-CZP5Cxu2Nc
+Userid: 1
+
+{
+    "company": "A Company",
+    "jobId": "",
+    "notes":
+      "<h2>Lalalala</h2><p></p><p>Dododo</p><p></p><ul><li><p>Test</p></li><li><p>Test</p></li></ul><p></p><p><strong>Time of my liiife</strong></p><p><strong><em>Ha.</em></strong></p>",
+    "location": "Remote",
+    "positionTitle": "Sample Job",
+    "files": [],
+    "status": "applied"
+  }
