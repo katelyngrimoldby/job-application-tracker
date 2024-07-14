@@ -1,4 +1,4 @@
-import { Order } from 'sequelize';
+import { Order } from '@sequelize/core';
 import { Status } from '../types';
 
 const getApplicationOrder = (sort: string | undefined): Order => {
