@@ -65,7 +65,7 @@ const update = async (id: number, userId: number, obj: NewApplication) => {
       case Status.Offered:
         return { offerDate: new Date() };
       case Status.Rejected:
-        return { offerDate: new Date() };
+        return { rejectionDate: new Date() };
       default:
         return null;
     }
