@@ -50,19 +50,15 @@ class Application extends Model<
   declare applyDate: CreationOptional<Date>;
 
   @Attribute(DataTypes.DATE)
-  @Default(null)
   declare assessmentDate: Date | null;
 
   @Attribute(DataTypes.DATE)
-  @Default(null)
   declare interviewDate: Date | null;
 
   @Attribute(DataTypes.DATE)
-  @Default(null)
   declare offerDate: Date | null;
 
   @Attribute(DataTypes.DATE)
-  @Default(null)
   declare rejectionDate: Date | null;
 
   @Attribute(DataTypes.STRING)
@@ -71,7 +67,7 @@ class Application extends Model<
 
   @Attribute(
     DataTypes.ENUM(
-      'appled',
+      'applied',
       'assessments',
       'interviewing',
       'offered',
