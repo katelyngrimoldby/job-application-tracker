@@ -1,6 +1,6 @@
 import express from 'express';
 import userService from '../services/userService';
-import { toNewUser } from '../util/parsers';
+import toNewUser from '../util/parsers/userParser';
 
 const userRouter = express.Router();
 
