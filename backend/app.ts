@@ -1,6 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('dotenv').config();
-
+import 'dotenv/config';
 import express from 'express';
 const app = express();
 import 'express-async-errors';
@@ -24,7 +22,7 @@ app.get('/api/ping', (_req, res) => {
 
 app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
-app.use('/api/jobs', tokenExtractor, applicationRouter);
+app.use('/api/applications', tokenExtractor, applicationRouter);
 app.use('/api/interviews', tokenExtractor, interviewRouter);
 
 if (process.env.NODE_ENV === 'production') {
