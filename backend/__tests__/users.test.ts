@@ -1,7 +1,7 @@
 import supertest from 'supertest';
 import app from '../app';
 import { redis, sequelize, connectToDatabase } from '../util/db';
-import { User, Job } from '../models';
+import { User, Application, Interview } from '../models';
 import helper from '../util/testHelper';
 import userService from '../services/userService';
 
@@ -14,7 +14,8 @@ describe('User management', () => {
 
   beforeEach(async () => {
     await redis.FLUSHALL();
-    await Job.truncate({ cascade: true });
+    await Application.truncate({ cascade: true });
+    await Interview.truncate({ cascade: true });
     await User.truncate({ cascade: true });
 
     await userService.addNew(helper.initialUsers[0]);
