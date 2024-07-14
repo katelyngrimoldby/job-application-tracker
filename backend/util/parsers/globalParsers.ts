@@ -38,6 +38,18 @@ export const parseFiles = (files: unknown): File[] => {
   );
 };
 
+export const parseDate = (date: unknown, key: string): Date => {
+  if (!date || !isDate(date)) {
+    throw new Error(`Incorrect or missing date for ${key}`);
+  }
+
+  return date;
+};
+
+const isDate = (date: unknown): date is Date => {
+  return date instanceof Date;
+};
+
 export const isString = (string: unknown): string is string => {
   return typeof string === 'string' || string instanceof String;
 };

@@ -1,5 +1,5 @@
 import { NewInterview } from '../../types';
-import { parseOptionalString, parseFiles, isString } from './globalParsers';
+import { parseOptionalString, parseFiles, parseDate } from './globalParsers';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const toNewInterview = (obj: any): NewInterview => {
@@ -21,20 +21,8 @@ const parseNumber = (num: unknown): number => {
   return num;
 };
 
-const parseDate = (date: unknown, key: string): string => {
-  if (!date || !isString(date) || !isDate(date)) {
-    throw new Error(`Incorrect or missing date for ${key}`);
-  }
-
-  return date;
-};
-
 const isNumber = (num: unknown): num is number => {
   return typeof num == 'number' || num instanceof Number;
-};
-
-const isDate = (date: string): boolean => {
-  return !isNaN(Date.parse(date));
 };
 
 export default toNewInterview;
