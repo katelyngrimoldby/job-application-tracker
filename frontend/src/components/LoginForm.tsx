@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import useInput from '../hooks/useInput';
 import styles from '../styles/components/LoginForm.module.css';
 
 const LoginForm = ({
@@ -6,15 +6,15 @@ const LoginForm = ({
 }: {
   handleLogin: (authPayload: { username: string; password: string }) => void;
 }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const username = useInput('text');
+  const password = useInput('password');
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const authPayload = {
-      username,
-      password,
+      username: username.value,
+      password: password.value,
     };
 
     handleLogin(authPayload);
@@ -26,18 +26,14 @@ const LoginForm = ({
       className={styles.form}
     >
       <input
-        type='text'
         placeholder='Username'
         required
-        value={username}
-        onChange={(event) => setUsername(event.target.value)}
+        {...username}
       />
       <input
-        type='password'
         placeholder='Password'
         required
-        value={password}
-        onChange={(event) => setPassword(event.target.value)}
+        {...username}
       />
       <button
         disabled={!username || !password}
