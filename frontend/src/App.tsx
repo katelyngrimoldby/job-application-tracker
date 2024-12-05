@@ -1,10 +1,7 @@
-import { Routes, Route, useMatch, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { isAxiosError } from 'axios';
-import { getAll } from './services/jobs';
-import { getSession } from './services/userAuth';
-import { useStateValue, setCurrentUser, setJobList } from './state';
-import useErrorHandler from './hooks/useErrorHandler';
+import useFetch from './hooks/useFetch';
+import useFind from './hooks/useFind';
 import { Header, Footer } from './components/Layout';
 import Error from './components/Error';
 import Jobs from './pages/jobs';
@@ -17,65 +14,32 @@ import SingleJob from './pages/singleJob';
 import Edit from './pages/singleJob/edit';
 
 function App() {
-  const [{ jobs }, dispatch] = useStateValue();
-  const [error, handleError] = useErrorHandler();
+  const data = useFetch();
   const navigate = useNavigate();
-
-  const fetchData = async (id: number) => {
-    try {
-      const userAuth = await getSession(id);
-      dispatch(
-        setCurrentUser({ token: userAuth.accessToken, name: userAuth.name })
-      );
-
-      if (location.pathname === '/jobs') {
-        const params = location.search.toString();
-        const jobs = await getAll(userAuth.accessToken, id, params);
-        dispatch(setJobList(jobs));
-      } else {
-        const jobs = await getAll(userAuth.accessToken, id);
-        dispatch(setJobList(jobs));
-      }
-    } catch (err) {
-      if (isAxiosError(err)) {
-        handleError(err.response?.data.error);
-      }
-    }
-  };
+  const { findJob, findInterview } = useFind();
 
   useEffect(() => {
     const userId = window.localStorage.getItem('id');
     if (userId) {
-      fetchData(Number(userId));
+      data.fetchData(Number(userId));
     } else {
       navigate('/');
     }
   }, []);
 
-  const findJob = (id: number) => {
-    const job = Object.values(jobs).find((job) => job.id === id);
-    if (job) {
-      return job;
-    }
-    return null;
-  };
-
-  const matchJob = useMatch('/jobs/:id');
-  const job = matchJob ? findJob(Number(matchJob.params.id)) : undefined;
-
-  const matchJobEdit = useMatch('/jobs/:id/edit');
-  const jobEdit = matchJobEdit
-    ? findJob(Number(matchJobEdit.params.id))
-    : undefined;
+  const job = findJob('/jobs/:id');
+  const jobEdit = findJob('/jobs/:id/edit');
+  const interview = findInterview('/interviews/:id');
+  const interviewEdit = findInterview('/interviews/:id/edit');
 
   return (
     <>
       <Header />
-      {error && <Error err={error} />}
+      {data.error && <Error err={data.error} />}
       <Routes>
         <Route
           path='/'
-          element={<Landing />}
+          element={data.user ? <Landing /> : <Login />}
         />
         <Route
           path='/jobs'
@@ -90,16 +54,28 @@ function App() {
           element={jobEdit ? <Edit job={jobEdit} /> : <Custom404 />}
         />
         <Route
-          path='/login'
-          element={<Login />}
+          path='/jobs/new'
+          element={<NewApplication />}
+        />
+        <Route
+          path='/interviews'
+          element={<> </>}
+        />
+        <Route
+          path='/interviews/:id'
+          element={<> </>}
+        />
+        <Route
+          path='/interviews/:id/edit'
+          element={<> </>}
+        />
+        <Route
+          path='/interviews/new'
+          element={<> </>}
         />
         <Route
           path='/register'
           element={<Register />}
-        />
-        <Route
-          path='/new'
-          element={<NewApplication />}
         />
         <Route
           path='*'
