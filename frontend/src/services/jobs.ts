@@ -33,7 +33,7 @@ const addNew = async (token: string, userid: number, payload: NewJob) => {
 
 const editJob = async (
   token: string,
-  payload: Omit<Job, 'id' | 'userId'>,
+  payload: NewJob,
   userid: number,
   id: number
 ) => {
