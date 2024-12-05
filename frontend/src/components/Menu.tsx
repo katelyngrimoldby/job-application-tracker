@@ -55,24 +55,14 @@ const Menu = () => {
             </Link>
           </li>
           {!user && (
-            <>
-              <li className={styles.cta}>
-                <Link
-                  to='/login'
-                  onClick={() => setVisible(false)}
-                >
-                  Log In
-                </Link>
-              </li>
-              <li className={styles.cta}>
-                <Link
-                  to='/register'
-                  onClick={() => setVisible(false)}
-                >
-                  Register
-                </Link>
-              </li>
-            </>
+            <li className={styles.cta}>
+              <Link
+                to='/register'
+                onClick={() => setVisible(false)}
+              >
+                Register
+              </Link>
+            </li>
           )}
           {user && (
             <>
@@ -86,10 +76,26 @@ const Menu = () => {
               </li>
               <li>
                 <Link
-                  to='/new'
+                  to='/jobs/new'
                   onClick={() => setVisible(false)}
                 >
                   New Application
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to='/interviews'
+                  onClick={() => setVisible(false)}
+                >
+                  Your Interviews
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to='/interviews/new'
+                  onClick={() => setVisible(false)}
+                >
+                  New Interview
                 </Link>
               </li>
               <li>
