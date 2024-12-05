@@ -1,6 +1,7 @@
 import { Interview } from '../models';
 import { NewInterview } from '../types';
 import { getInterviewOrder } from '../util/filtrationHelper';
+
 const getAll = async (userId: number, order: string | undefined) => {
   const sort = getInterviewOrder(order);
 
