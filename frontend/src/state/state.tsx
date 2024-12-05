@@ -1,14 +1,16 @@
 import { createContext, useContext, useReducer } from 'react';
 import { Action } from './reducer';
-import { Job, User } from '../types';
+import { Job, Interview, User } from '../types';
 
 export type State = {
   jobs: Job[];
+  interviews: Interview[];
   user: User | null;
 };
 
 const initialState: State = {
   jobs: [],
+  interviews: [],
   user: null,
 };
 

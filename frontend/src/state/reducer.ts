@@ -1,5 +1,5 @@
 import { State } from './state';
-import { Job, User } from '../types';
+import { Job, Interview, User } from '../types';
 
 export type Action =
   | {
@@ -23,6 +23,22 @@ export type Action =
       payload: User;
     }
   | {
+      type: 'SET_INTERVIEW_LIST';
+      payload: Interview[];
+    }
+  | {
+      type: 'ADD_INTERVIEW';
+      payload: Interview;
+    }
+  | {
+      type: 'UPDATE_INTERVIEW';
+      payload: Interview;
+    }
+  | {
+      type: 'REMOVE_INTERVIEW';
+      payload: number;
+    }
+  | {
       type: 'CLEAR_CURRENT_USER';
       payload: null;
     };
@@ -41,6 +57,22 @@ export const updateJob = (payload: Job): Action => {
 
 export const removeJob = (id: number): Action => {
   return { type: 'REMOVE_JOB', payload: id };
+};
+
+export const setInterviewList = (payload: Interview[]): Action => {
+  return { type: 'SET_INTERVIEW_LIST', payload: payload };
+};
+
+export const addInterview = (payload: Interview): Action => {
+  return { type: 'ADD_INTERVIEW', payload: payload };
+};
+
+export const updateInterview = (payload: Interview): Action => {
+  return { type: 'UPDATE_INTERVIEW', payload: payload };
+};
+
+export const removeInterview = (id: number): Action => {
+  return { type: 'REMOVE_INTERVIEW', payload: id };
 };
 
 export const setCurrentUser = (payload: User): Action => {
@@ -76,6 +108,34 @@ export const reducer = (state: State, action: Action): State => {
       return {
         ...state,
         jobs: [...state.jobs.filter((job) => job.id !== action.payload)],
+      };
+    case 'SET_INTERVIEW_LIST':
+      return {
+        ...state,
+        interviews: action.payload,
+      };
+    case 'ADD_INTERVIEW':
+      return {
+        ...state,
+        interviews: [action.payload, ...state.interviews],
+      };
+    case 'UPDATE_INTERVIEW':
+      return {
+        ...state,
+        interviews: [
+          ...state.interviews.map((interviews) =>
+            interviews.id !== action.payload.id ? interviews : action.payload
+          ),
+        ],
+      };
+    case 'REMOVE_INTERVIEW':
+      return {
+        ...state,
+        interviews: [
+          ...state.interviews.filter(
+            (interview) => interview.id !== action.payload
+          ),
+        ],
       };
     case 'SET_CURRENT_USER':
       return {
