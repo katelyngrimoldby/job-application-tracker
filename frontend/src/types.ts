@@ -2,15 +2,29 @@ export interface Job {
   positionTitle: string;
   company: string;
   location: string;
-  applied: string;
   compensation: string;
   status: 'applied' | 'interviewing' | 'offered' | 'rejected';
-  interviews: string[];
+  applyDate: Date;
+  assessmentDate: Date | null;
+  interviewDate: Date | null;
+  offerDate: Date | null;
+  rejectionDate: Date | null;
   id: number;
+  files: string[];
   jobDescription: string;
   userId: number;
   notes: string;
-  contacts: { name: string; email: string; number: string }[];
+}
+
+export interface Interview {
+  id: number;
+  contact: string;
+  time: Date;
+  website: string;
+  files: string[];
+  notes: string;
+  applicationId: number;
+  userId: number;
 }
 
 export interface User {
@@ -18,4 +32,5 @@ export interface User {
   token: string;
 }
 
-export type NewJob = Omit<Job, 'id' | 'userId'>;
+export type NewJob = Omit<Job, 'id' | 'userId' | 'applyDate'>;
+export type NewInterview = Omit<Interview, 'id' | 'contact' | 'website' | 'applicationId' | 'userId'>;
