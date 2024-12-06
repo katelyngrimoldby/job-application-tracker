@@ -3,7 +3,7 @@ export interface Job {
   company: string;
   location: string;
   compensation: string;
-  status: 'applied' | 'interviewing' | 'offered' | 'rejected';
+  status: 'applied' | 'assessments' | 'interviewing' | 'offered' | 'rejected';
   applyDate: Date;
   assessmentDate: Date | null;
   interviewDate: Date | null;
@@ -14,6 +14,7 @@ export interface Job {
   jobDescription: string;
   userId: number;
   notes: string;
+  jobId: string;
 }
 
 export interface Interview {
@@ -33,4 +34,7 @@ export interface User {
 }
 
 export type NewJob = Omit<Job, 'id' | 'userId' | 'applyDate'>;
-export type NewInterview = Omit<Interview, 'id' | 'contact' | 'website' | 'applicationId' | 'userId'>;
+export type NewInterview = Omit<
+  Interview,
+  'id' | 'contact' | 'website' | 'applicationId' | 'userId'
+>;
