@@ -94,7 +94,6 @@ const RichTextEditor = ({
         </button>
         <Dropdown
           values={selectValues}
-          id='Text type select'
           handleChange={handleTextChange}
         />
         <button
