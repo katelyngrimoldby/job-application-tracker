@@ -10,13 +10,22 @@ const sort = [
   { value: 'newest', label: 'Newest' },
   { value: 'oldest', label: 'Oldest' },
 ];
-const filter = ['applied', 'interviewing', 'offered', 'rejected'];
+const filter = [
+  'applied',
+  'assessments',
+  'interviewing',
+  'offered',
+  'rejected',
+];
 
-const FiltrationMenu = ({
-  handleChange,
-}: {
-  handleChange: (name: string, value: string) => void;
-}) => {
+const FiltrationMenu = (
+  {
+    handleChange,
+  }: {
+    handleChange: (name: string, value: string) => void;
+  },
+  toFilter: boolean
+) => {
   const [visible, setVisible] = useState(false);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,31 +42,33 @@ const FiltrationMenu = ({
         <ArrowIcon />
       </button>
       <div className={styles.content}>
-        <fieldset>
-          <legend>Filter</legend>
-          <div>
-            <input
-              type='radio'
-              name='filter'
-              id='none'
-              value=''
-              onChange={onChange}
-            />
-            <label htmlFor='none'>No Filter</label>
-          </div>
-          {filter.map((e) => (
-            <div key={e}>
+        {toFilter ? (
+          <fieldset>
+            <legend>Filter</legend>
+            <div>
               <input
                 type='radio'
                 name='filter'
-                id={e}
-                value={e}
+                id='none'
+                value=''
                 onChange={onChange}
               />
-              <label htmlFor={e}>{e}</label>
+              <label htmlFor='none'>No Filter</label>
             </div>
-          ))}
-        </fieldset>
+            {filter.map((e) => (
+              <div key={e}>
+                <input
+                  type='radio'
+                  name='filter'
+                  id={e}
+                  value={e}
+                  onChange={onChange}
+                />
+                <label htmlFor={e}>{e}</label>
+              </div>
+            ))}
+          </fieldset>
+        ) : null}
         <fieldset>
           <legend>Sort</legend>
           {sort.map((e) => (
