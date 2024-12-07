@@ -1,85 +1,98 @@
 import { Link } from 'react-router-dom';
-import { Job } from '../types';
+import useDateFormat from '../hooks/useDateFormat';
+import useFind from '../hooks/useFind';
+import useFileConversion from '../hooks/useFileConversion';
+import { Application } from '../types';
 import ReadOnlyRichText from './RichTextEditor/ReadOnly';
 import PencilIcon from './icons/PencilIcon';
 import TrashIcon from './icons/TrashIcon';
-import styles from '../styles/components/JobInfo.module.css';
 
-const JobInfo = ({
-  job,
+const ApplicationInfo = ({
+  application,
   handleDelete,
 }: {
-  job: Job;
+  application: Application;
   handleDelete: () => void;
 }) => {
+  const { getLongDate, getDateTime } = useDateFormat();
+  const { findInterviewsForApplication } = useFind();
+  const { filesToFile } = useFileConversion();
+
+  const interviews = findInterviewsForApplication(application.id);
+  const files = filesToFile(application.files);
+
   return (
     <>
-      <section className={styles.topInfo}>
-        <h2>{job.positionTitle}</h2>
-        <h3>{job.company}</h3>
-        <p>Applied on {job.applied.substring(0, 10)}</p>
-      </section>
-      <div className={styles.infoWrapper}>
-        <div className={styles.basicInfo}>
-          <p>{job.location}</p>
-          <p>{job.compensation}</p>
-          <p>{job.status}</p>
+      <section>
+        <h1>{application.positionTitle}</h1>
+        <div>
+          <span>{application.company}</span>
+          <span>{application.status}</span>
         </div>
-        <section className={styles.interviews}>
-          <h4>Interviews:</h4>
+        <div>
+          <span>Job ID: {application.jobId}</span>
+          <span>Location: {application.location}</span>
+        </div>
+      </section>
+      <div>
+        <section>
+          <h2>Timeline</h2>
           <ul>
-            {job.interviews.length > 0 ? (
-              job.interviews.map((date) => (
-                <li key={date}>{date.substring(0, 10)}</li>
-              ))
-            ) : (
-              <p>None yet</p>
+            <li>Applied on {getLongDate(application.applyDate)}</li>
+            {application.assessmentDate && (
+              <li>
+                Assessments began {getLongDate(application.assessmentDate)}
+              </li>
+            )}
+            {application.interviewDate && (
+              <li>
+                Interviewss began {getLongDate(application.interviewDate)}
+              </li>
+            )}
+            {application.rejectionDate && (
+              <li>Rejected on {getLongDate(application.rejectionDate)}</li>
+            )}
+            {application.offerDate && (
+              <li>Offer extended on {getLongDate(application.offerDate)}</li>
             )}
           </ul>
         </section>
-        <section className={styles.contacts}>
-          <h4>Contacts:</h4>
+        <section>
+          <h2>Interviews</h2>
           <ul>
-            {job.contacts.length > 0 ? (
-              job.contacts.map((contact, index) => (
-                <li key={index}>
-                  <p>{contact.name}</p>
-                  <p>{contact.email}</p>
-                  <p>{contact.number}</p>
-                </li>
-              ))
-            ) : (
-              <p>None yet</p>
-            )}
+            {interviews.map((interview) => (
+              <li>
+                {getDateTime(interview.time)} with {interview.contact}
+              </li>
+            ))}
           </ul>
         </section>
       </div>
-      {job.notes && (
-        <section className={styles.jobDesc}>
-          <h4>Notes:</h4>
-          <ReadOnlyRichText content={job.notes} />
-        </section>
-      )}
-      {job.jobDescription && (
-        <section className={styles.jobDesc}>
-          <h4>Job Description:</h4>
-          <ReadOnlyRichText content={job.jobDescription} />
-        </section>
-      )}
-      <div className={styles.buttons}>
-        <Link
-          to={`/jobs/${job.id}/edit`}
-          className='primary'
-          aria-label='Edit Application'
-        >
+      <section>
+        <h2>Files and Notes</h2>
+        <ul>
+          {files.map((file) => (
+            <li>
+              <button
+                onClick={() => {
+                  const pdfWindow = window.open('');
+                  pdfWindow?.document.write(
+                    `<iframe width="100%" height="100%" src="${URL.createObjectURL(file as Blob)}"></iframe>`
+                  );
+                }}
+              >
+                {file.name}
+              </button>
+            </li>
+          ))}
+        </ul>
+        <ReadOnlyRichText content={application.notes} />
+      </section>
+      <div>
+        <Link to={`/applications/${application.id}/edit`}>
           <PencilIcon />
         </Link>
-        <button
-          type='button'
-          onClick={handleDelete}
-          className='secondary'
-          aria-label='Delete Application'
-        >
+        <button onClick={handleDelete}>
           <TrashIcon />
         </button>
       </div>
@@ -87,4 +100,4 @@ const JobInfo = ({
   );
 };
 
-export default JobInfo;
+export default ApplicationInfo;
