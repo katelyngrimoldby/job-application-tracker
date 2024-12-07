@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import useDateFormat from '../hooks/useDateFormat';
 import useFind from '../hooks/useFind';
 import useFileConversion from '../hooks/useFileConversion';
@@ -17,9 +18,15 @@ const ApplicationInfo = ({
   const { getLongDate, getDateTime } = useDateFormat();
   const { findInterviewsForApplication } = useFind();
   const { filesToFile } = useFileConversion();
+  const [interviews, setInterviews] = useState(
+    findInterviewsForApplication(application.id)
+  );
+  const [files, setFiles] = useState(filesToFile(application.files));
 
-  const interviews = findInterviewsForApplication(application.id);
-  const files = filesToFile(application.files);
+  useEffect(() => {
+    setInterviews(findInterviewsForApplication(application.id));
+    setFiles(filesToFile(application.files));
+  }, [application]);
 
   return (
     <>
