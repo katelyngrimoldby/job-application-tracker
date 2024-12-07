@@ -18,14 +18,13 @@ const filter = [
   'rejected',
 ];
 
-const FiltrationMenu = (
-  {
-    handleChange,
-  }: {
-    handleChange: (name: string, value: string) => void;
-  },
-  toFilter: boolean
-) => {
+const FiltrationMenu = ({
+  handleChange,
+  toFilter = true,
+}: {
+  handleChange: (name: string, value: string) => void;
+  toFilter?: boolean;
+}) => {
   const [visible, setVisible] = useState(false);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
