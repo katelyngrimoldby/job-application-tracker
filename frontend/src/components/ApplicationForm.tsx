@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import useInput from '../hooks/useInput';
 import { NewJob } from '../types';
+import FileUploader from './FileUploader';
 import RichTextEditor from './RichTextEditor';
 import Dropdown from './Dropdown';
 
@@ -17,16 +18,7 @@ const ApplicationForm = () => {
   const company = useInput('text');
   const jobId = useInput('text');
   const location = useInput('text');
-  const [files, setFiles] = useState<FileList>();
   const [notes, setNotes] = useState('');
-
-  const handleFileChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const target = event.target as HTMLInputElement & {
-      file: FileList;
-    };
-
-    setFiles(target.files ? target.files : undefined);
-  };
 
   return (
     <form>
@@ -79,12 +71,7 @@ const ApplicationForm = () => {
       </div>
       <div>
         <label htmlFor='files'>Files</label>
-        <input
-          name='files'
-          type='file'
-          multiple
-          onChange={handleFileChange}
-        />
+        <FileUploader />
       </div>
       <div>
         <p
