@@ -1,11 +1,11 @@
-import { useStateValue, setInterviewList } from '../state';
+import { useStateValue, setInterviewList } from '../../state';
 import { useSearchParams } from 'react-router-dom';
-import useErrorHandler from '../hooks/useErrorHandler';
+import useErrorHandler from '../../hooks/useErrorHandler';
 import { isAxiosError } from 'axios';
-import { getAll } from '../services/interviews';
-import Error from '../components/Error';
-import List from '../components/List';
-import FiltrationMenu from '../components/FiltrationMenu';
+import { getAll } from '../../services/interviews';
+import Error from '../../components/Error';
+import List from '../../components/List';
+import FiltrationMenu from '../../components/FiltrationMenu';
 
 const Interviews = () => {
   const [{ interviews, user }, dispatch] = useStateValue();

@@ -1,11 +1,11 @@
 import { isAxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Job } from '../../types';
-import { deleteJob } from '../../services/jobs';
-import { useStateValue, removeJob } from '../../state';
-import useErrorHandler from '../../hooks/useErrorHandler';
-import Error from '../../components/Error';
-import JobInfo from '../../components/JobInfo';
+import { Job } from '../../../types';
+import { deleteJob } from '../../../services/applications';
+import { useStateValue, removeJob } from '../../../state';
+import useErrorHandler from '../../../hooks/useErrorHandler';
+import Error from '../../../components/Error';
+import JobInfo from '../../../components/ApplicationInfo';
 
 const SingleJob = ({ job }: { job: Job }) => {
   const navigate = useNavigate();

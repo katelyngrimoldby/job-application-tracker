@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { useStateValue, updateJob } from '../../state';
-import useErrorHandler from '../../hooks/useErrorHandler';
+import { useStateValue, updateJob } from '../../../state';
+import useErrorHandler from '../../../hooks/useErrorHandler';
 import { isAxiosError } from 'axios';
-import { editJob } from '../../services/jobs';
-import ApplicationForm from '../../components/ApplicationForm';
-import { Job, NewJob } from '../../types';
-import Error from '../../components/Error';
+import { editJob } from '../../../services/applications';
+import ApplicationForm from '../../../components/ApplicationForm';
+import { Job, NewJob } from '../../../types';
+import Error from '../../../components/Error';
 
 const Edit = ({ job }: { job: Job }) => {
   const navigate = useNavigate();

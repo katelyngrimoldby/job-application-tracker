@@ -1,15 +1,15 @@
-import { useStateValue, setJobList } from '../state';
+import { useStateValue, setApplicationList } from '../../state';
 import { useSearchParams } from 'react-router-dom';
-import useErrorHandler from '../hooks/useErrorHandler';
+import useErrorHandler from '../../hooks/useErrorHandler';
 import { isAxiosError } from 'axios';
-import { getAll } from '../services/jobs';
-import Error from '../components/Error';
-import List from '../components/List';
-import FiltrationMenu from '../components/FiltrationMenu';
+import { getAll } from '../../services/applications';
+import Error from '../../components/Error';
+import List from '../../components/List';
+import FiltrationMenu from '../../components/FiltrationMenu';
 import styles from '../styles/pages/jobs.module.css';
 
-const Jobs = () => {
-  const [{ jobs, user }, dispatch] = useStateValue();
+const Applications = () => {
+  const [{ applications, user }, dispatch] = useStateValue();
   const [searchParams, setSearchParams] = useSearchParams();
   const [error, handleError] = useErrorHandler();
 
@@ -32,8 +32,8 @@ const Jobs = () => {
     try {
       const userId = window.localStorage.getItem('id');
 
-      const jobs = await getAll(user.token, Number(userId), params);
-      dispatch(setJobList(jobs));
+      const applications = await getAll(user.token, Number(userId), params);
+      dispatch(setApplicationList(applications));
     } catch (err) {
       if (isAxiosError(err)) {
         handleError(err.response?.data.error);
@@ -46,11 +46,11 @@ const Jobs = () => {
       {error && <Error err={error} />}
       <FiltrationMenu handleChange={handleChange} />
       <List
-        type='jobs'
-        jobs={jobs}
+        type='applications'
+        applications={applications}
       />
     </main>
   );
 };
 
-export default Jobs;
+export default Applications;
