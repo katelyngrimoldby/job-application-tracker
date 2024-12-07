@@ -1,17 +1,17 @@
 import { isAxiosError } from 'axios';
-import { getAll as getAllJobs } from '../services/jobs';
+import { getAll as getAllApplications } from '../services/applications';
 import { getAll as getAllInterviews } from '../services/interviews';
 import { getSession } from '../services/userAuth';
 import {
   useStateValue,
   setCurrentUser,
-  setJobList,
+  setApplicationList,
   setInterviewList,
 } from '../state';
 import useErrorHandler from './useErrorHandler';
 
 const useFetch = () => {
-  const [{ jobs, user, interviews }, dispatch] = useStateValue();
+  const [{ applications, user, interviews }, dispatch] = useStateValue();
   const [error, handleError] = useErrorHandler();
 
   const fetchData = async (id: number) => {
@@ -21,13 +21,17 @@ const useFetch = () => {
         setCurrentUser({ token: userAuth.accessToken, name: userAuth.name })
       );
 
-      if (location.pathname === '/jobs') {
+      if (location.pathname === '/applications') {
         const params = location.search.toString();
-        const jobs = await getAllJobs(userAuth.accessToken, id, params);
-        dispatch(setJobList(jobs));
+        const applications = await getAllApplications(
+          userAuth.accessToken,
+          id,
+          params
+        );
+        dispatch(setApplicationList(applications));
       } else {
-        const jobs = await getAllJobs(userAuth.accessToken, id);
-        dispatch(setJobList(jobs));
+        const applications = await getAllApplications(userAuth.accessToken, id);
+        dispatch(setApplicationList(applications));
       }
 
       if (location.pathname === '/interviews') {
@@ -49,7 +53,7 @@ const useFetch = () => {
     }
   };
 
-  return { jobs, user, interviews, error, fetchData };
+  return { applications, user, interviews, error, fetchData };
 };
 
 export default useFetch;
