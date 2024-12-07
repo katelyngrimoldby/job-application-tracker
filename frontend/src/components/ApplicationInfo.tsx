@@ -62,7 +62,9 @@ const ApplicationInfo = ({
           <ul>
             {interviews.map((interview) => (
               <li>
-                {getDateTime(interview.time)} with {interview.contact}
+                <Link to={`/interviews/${interview.id}`}>
+                  {getDateTime(interview.time)} with {interview.contact}
+                </Link>
               </li>
             ))}
           </ul>
