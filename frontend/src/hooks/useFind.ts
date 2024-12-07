@@ -1,3 +1,4 @@
+import { Job, Interview } from '../types';
 import { useMatch } from 'react-router-dom';
 import { useStateValue } from '../state';
 
@@ -34,7 +35,31 @@ const useFind = () => {
     return interview;
   };
 
-  return { findJob, findInterview };
+  const findJobForInterview = (interview: Interview) => {
+    const foundJob = jobs.find((job) => job.id === interview.applicationId);
+
+    if (foundJob) return foundJob;
+    else
+      return {
+        positionTitle: 'Error',
+        company: 'Error',
+        location: 'Error',
+        status: 'applied',
+        applyDate: new Date(),
+        assessmentDate: null,
+        interviewDate: null,
+        offerDate: null,
+        rejectionDate: null,
+        id: 0,
+        files: [],
+        jobDescription: 'Error',
+        userId: 0,
+        notes: '',
+        jobId: 'Err',
+      } as Job;
+  };
+
+  return { findJob, findInterview, findJobForInterview };
 };
 
 export default useFind;
