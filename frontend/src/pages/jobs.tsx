@@ -4,7 +4,7 @@ import useErrorHandler from '../hooks/useErrorHandler';
 import { isAxiosError } from 'axios';
 import { getAll } from '../services/jobs';
 import Error from '../components/Error';
-import JobList from '../components/JobList';
+import List from '../components/List';
 import FiltrationMenu from '../components/FiltrationMenu';
 import styles from '../styles/pages/jobs.module.css';
 
@@ -45,7 +45,10 @@ const Jobs = () => {
     <main className={styles.main}>
       {error && <Error err={error} />}
       <FiltrationMenu handleChange={handleChange} />
-      <JobList jobs={jobs} />
+      <List
+        type='jobs'
+        jobs={jobs}
+      />
     </main>
   );
 };
