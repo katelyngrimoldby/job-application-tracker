@@ -11,7 +11,7 @@ import {
 import useErrorHandler from './useErrorHandler';
 
 const useFetch = () => {
-  const [{ applications, user, interviews }, dispatch] = useStateValue();
+  const [{ user }, dispatch] = useStateValue();
   const [error, handleError] = useErrorHandler();
 
   const fetchData = async (id: number) => {
@@ -53,7 +53,7 @@ const useFetch = () => {
     }
   };
 
-  return { applications, user, interviews, error, fetchData };
+  return { user, error, fetchData };
 };
 
 export default useFetch;
