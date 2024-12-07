@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { NewJob, Job } from '../types';
-const baseUrl = '/api/jobs';
+import { NewApplication, Application } from '../types';
+const baseUrl = '/api/applications';
 
 const getAll = async (token: string, userid: number, params?: string) => {
   const config = {
@@ -10,7 +10,7 @@ const getAll = async (token: string, userid: number, params?: string) => {
     },
   };
 
-  const response = await axios.get<Job[]>(
+  const response = await axios.get<Application[]>(
     `${baseUrl}/${params ? params : ''}`,
     config
   );
@@ -18,7 +18,11 @@ const getAll = async (token: string, userid: number, params?: string) => {
   return response.data;
 };
 
-const addNew = async (token: string, userid: number, payload: NewJob) => {
+const addNew = async (
+  token: string,
+  userid: number,
+  payload: NewApplication
+) => {
   const config = {
     headers: {
       Authorization: `bearer ${token}`,
@@ -26,14 +30,14 @@ const addNew = async (token: string, userid: number, payload: NewJob) => {
     },
   };
 
-  const response = await axios.post<Job>(`${baseUrl}`, payload, config);
+  const response = await axios.post<Application>(`${baseUrl}`, payload, config);
 
   return response.data;
 };
 
-const editJob = async (
+const edit = async (
   token: string,
-  payload: NewJob,
+  payload: NewApplication,
   userid: number,
   id: number
 ) => {
@@ -44,12 +48,16 @@ const editJob = async (
     },
   };
 
-  const response = await axios.put<Job>(`${baseUrl}/${id}`, payload, config);
+  const response = await axios.put<Application>(
+    `${baseUrl}/${id}`,
+    payload,
+    config
+  );
 
   return response.data;
 };
 
-const deleteJob = async (token: string, userid: number, id: number) => {
+const remove = async (token: string, userid: number, id: number) => {
   const config = {
     headers: {
       Authorization: `bearer ${token}`,
@@ -62,4 +70,4 @@ const deleteJob = async (token: string, userid: number, id: number) => {
   return response.data;
 };
 
-export { getAll, addNew, editJob, deleteJob };
+export { getAll, addNew, edit, remove };

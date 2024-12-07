@@ -1,4 +1,4 @@
-export interface Job {
+export interface Application {
   positionTitle: string;
   company: string;
   location: string;
@@ -32,7 +32,7 @@ export interface User {
   token: string;
 }
 
-export type NewJob = Omit<Job, 'id' | 'userId' | 'applyDate'>;
+export type NewApplication = Omit<Application, 'id' | 'userId' | 'applyDate'>;
 export type NewInterview = Omit<
   Interview,
   'id' | 'contact' | 'website' | 'applicationId' | 'userId'

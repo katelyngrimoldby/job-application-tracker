@@ -1,21 +1,21 @@
 import { State } from './state';
-import { Job, Interview, User } from '../types';
+import { Application, Interview, User } from '../types';
 
 export type Action =
   | {
-      type: 'SET_JOB_LIST';
-      payload: Job[];
+      type: 'SET_APPLICATION_LIST';
+      payload: Application[];
     }
   | {
-      type: 'ADD_JOB';
-      payload: Job;
+      type: 'ADD_APPLICATION';
+      payload: Application;
     }
   | {
-      type: 'UPDATE_JOB';
-      payload: Job;
+      type: 'UPDATE_APPLICATION';
+      payload: Application;
     }
   | {
-      type: 'REMOVE_JOB';
+      type: 'REMOVE_APPLICATION';
       payload: number;
     }
   | {
@@ -43,20 +43,20 @@ export type Action =
       payload: null;
     };
 
-export const setJobList = (payload: Job[]): Action => {
-  return { type: 'SET_JOB_LIST', payload: payload };
+export const setApplicationList = (payload: Application[]): Action => {
+  return { type: 'SET_APPLICATION_LIST', payload: payload };
 };
 
-export const addJob = (payload: Job): Action => {
-  return { type: 'ADD_JOB', payload: payload };
+export const addApplication = (payload: Application): Action => {
+  return { type: 'ADD_APPLICATION', payload: payload };
 };
 
-export const updateJob = (payload: Job): Action => {
-  return { type: 'UPDATE_JOB', payload: payload };
+export const updateApplication = (payload: Application): Action => {
+  return { type: 'UPDATE_APPLICATION', payload: payload };
 };
 
-export const removeJob = (id: number): Action => {
-  return { type: 'REMOVE_JOB', payload: id };
+export const removeApplication = (id: number): Action => {
+  return { type: 'REMOVE_APPLICATION', payload: id };
 };
 
 export const setInterviewList = (payload: Interview[]): Action => {
@@ -85,29 +85,33 @@ export const clearCurrentUser = (): Action => {
 
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case 'SET_JOB_LIST':
+    case 'SET_APPLICATION_LIST':
       return {
         ...state,
-        jobs: action.payload,
+        applications: action.payload,
       };
-    case 'ADD_JOB':
+    case 'ADD_APPLICATION':
       return {
         ...state,
-        jobs: [action.payload, ...state.jobs],
+        applications: [action.payload, ...state.applications],
       };
-    case 'UPDATE_JOB':
+    case 'UPDATE_APPLICATION':
       return {
         ...state,
-        jobs: [
-          ...state.jobs.map((job) =>
-            job.id !== action.payload.id ? job : action.payload
+        applications: [
+          ...state.applications.map((application) =>
+            application.id !== action.payload.id ? application : action.payload
           ),
         ],
       };
-    case 'REMOVE_JOB':
+    case 'REMOVE_APPLICATION':
       return {
         ...state,
-        jobs: [...state.jobs.filter((job) => job.id !== action.payload)],
+        applications: [
+          ...state.applications.filter(
+            (application) => application.id !== action.payload
+          ),
+        ],
       };
     case 'SET_INTERVIEW_LIST':
       return {

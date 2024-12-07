@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import useInput from '../hooks/useInput';
-import { NewJob } from '../types';
+import { NewApplication } from '../types';
 import FileUploader from './FileUploader';
 import RichTextEditor from './RichTextEditor';
 import Dropdown from './Dropdown';

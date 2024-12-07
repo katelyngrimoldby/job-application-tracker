@@ -1,21 +1,21 @@
 import { Link } from 'react-router-dom';
 import { useStateValue } from '../../state';
 import useFind from '../../hooks/useFind';
-import { Job, Interview } from '../../types';
-import ListJobItem from './JobItem';
+import { Application, Interview } from '../../types';
+import ListApplicationItem from './ApplicationItem';
 import ListInterviewItem from './InterviewItem';
 
 const List = ({
   type,
-  jobs,
+  applications,
   interviews,
 }: {
-  type: 'interviews' | 'jobs';
-  jobs?: Job[];
+  type: 'interviews' | 'applications';
+  applications?: Application[];
   interviews?: Interview[];
 }) => {
   const [{ user }] = useStateValue();
-  const { findJobForInterview } = useFind();
+  const { findApplicationForInterview } = useFind();
 
   if (!user) {
     return null;
@@ -36,25 +36,25 @@ const List = ({
         {interviews.map((interview) => (
           <ListInterviewItem
             interview={interview}
-            job={findJobForInterview(interview)}
+            application={findApplicationForInterview(interview.applicationId)}
           />
         ))}
       </ul>
     );
   } else {
-    if (!jobs || jobs.length <= 0) {
+    if (!applications || applications.length <= 0) {
       return (
         <div>
           <p>No applications available</p>
-          <Link to='/jobs/new'>Add one now</Link>
+          <Link to='/applications/new'>Add one now</Link>
         </div>
       );
     }
 
     return (
       <ul>
-        {jobs.map((job) => (
-          <ListJobItem job={job} />
+        {applications.map((application) => (
+          <ListApplicationItem application={application} />
         ))}
       </ul>
     );

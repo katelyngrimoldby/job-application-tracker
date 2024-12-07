@@ -4,19 +4,19 @@ import useFetch from './hooks/useFetch';
 import useFind from './hooks/useFind';
 import { Header, Footer } from './components/Layout';
 import Error from './components/Error';
-import Jobs from './pages/jobs';
+import Applications from './pages/applications/index';
 import Landing from './pages/landing';
 import Login from './pages/login';
 import Register from './pages/register';
-import NewApplication from './pages/newApplication';
+import NewApplication from './pages/applications/newApplication';
 import Custom404 from './pages/custom404';
-import SingleJob from './pages/singleJob';
-import Edit from './pages/singleJob/edit';
+import SingleJob from './pages/applications/single';
+import Edit from './pages/applications/single/edit';
 
 function App() {
   const data = useFetch();
   const navigate = useNavigate();
-  const { findJob, findInterview } = useFind();
+  const { findApplication, findInterview } = useFind();
 
   useEffect(() => {
     const userId = window.localStorage.getItem('id');
@@ -27,8 +27,8 @@ function App() {
     }
   }, []);
 
-  const job = findJob('/jobs/:id');
-  const jobEdit = findJob('/jobs/:id/edit');
+  const application = findApplication('/applications/:id');
+  const applicationEdit = findApplication('/applications/:id/edit');
   const interview = findInterview('/interviews/:id');
   const interviewEdit = findInterview('/interviews/:id/edit');
 
@@ -42,19 +42,23 @@ function App() {
           element={data.user ? <Landing /> : <Login />}
         />
         <Route
-          path='/jobs'
-          element={<Jobs />}
+          path='/applications'
+          element={<Applications />}
         />
         <Route
-          path='/jobs/:id'
-          element={job ? <SingleJob job={job} /> : <Custom404 />}
+          path='/applications/:id'
+          element={
+            application ? <SingleJob job={application} /> : <Custom404 />
+          }
         />
         <Route
-          path='/jobs/:id/edit'
-          element={jobEdit ? <Edit job={jobEdit} /> : <Custom404 />}
+          path='/applications/:id/edit'
+          element={
+            applicationEdit ? <Edit job={applicationEdit} /> : <Custom404 />
+          }
         />
         <Route
-          path='/jobs/new'
+          path='/applications/new'
           element={<NewApplication />}
         />
         <Route

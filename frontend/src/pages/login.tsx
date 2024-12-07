@@ -1,8 +1,8 @@
 import { isAxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/userAuth';
-import { getAll } from '../services/jobs';
-import { useStateValue, setCurrentUser, setJobList } from '../state';
+import { getAll } from '../services/applications';
+import { useStateValue, setCurrentUser, setApplicationList } from '../state';
 import useErrorHandler from '../hooks/useErrorHandler';
 import LoginForm from '../components/LoginForm';
 import Error from '../components/Error';
@@ -27,10 +27,13 @@ const Login = () => {
       );
       window.localStorage.setItem('id', authResponse.id.toString());
 
-      const jobs = await getAll(authResponse.accessToken, authResponse.id);
-      dispatch(setJobList(jobs));
+      const applications = await getAll(
+        authResponse.accessToken,
+        authResponse.id
+      );
+      dispatch(setApplicationList(applications));
 
-      navigate('/jobs');
+      navigate('/applications');
     } catch (err) {
       if (isAxiosError(err)) {
         handleError(err.response?.data.error);

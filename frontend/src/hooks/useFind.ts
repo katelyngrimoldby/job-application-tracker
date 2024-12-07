@@ -1,14 +1,16 @@
-import { Job, Interview } from '../types';
+import { Application } from '../types';
 import { useMatch } from 'react-router-dom';
 import { useStateValue } from '../state';
 
 const useFind = () => {
-  const [{ jobs, interviews }] = useStateValue();
+  const [{ applications, interviews }] = useStateValue();
 
-  const searchJobs = (id: number) => {
-    const job = Object.values(jobs).find((job) => job.id === id);
+  const searchApplications = (id: number) => {
+    const application = Object.values(applications).find(
+      (application) => application.id === id
+    );
 
-    if (job) return job;
+    if (application) return application;
     return null;
   };
 
@@ -21,10 +23,12 @@ const useFind = () => {
     return null;
   };
 
-  const findJob = (path: string) => {
-    const matchJob = useMatch(path);
-    const job = matchJob ? searchJobs(Number(matchJob.params.id)) : undefined;
-    return job;
+  const findApplication = (path: string) => {
+    const matchApplication = useMatch(path);
+    const application = matchApplication
+      ? searchApplications(Number(matchApplication.params.id))
+      : undefined;
+    return application;
   };
 
   const findInterview = (path: string) => {
@@ -35,10 +39,12 @@ const useFind = () => {
     return interview;
   };
 
-  const findJobForInterview = (interview: Interview) => {
-    const foundJob = jobs.find((job) => job.id === interview.applicationId);
+  const findApplicationForInterview = (id: Number) => {
+    const foundApplication = applications.find(
+      (application) => application.id === id
+    );
 
-    if (foundJob) return foundJob;
+    if (foundApplication) return foundApplication;
     else
       return {
         positionTitle: 'Error',
@@ -56,10 +62,19 @@ const useFind = () => {
         userId: 0,
         notes: '',
         jobId: 'Err',
-      } as Job;
+      } as Application;
   };
 
-  return { findJob, findInterview, findJobForInterview };
+  const findInterviewsForApplication = (id: Number) => {
+    return interviews.filter((interview) => interview.applicationId === id);
+  };
+
+  return {
+    findApplication,
+    findInterview,
+    findApplicationForInterview,
+    findInterviewsForApplication,
+  };
 };
 
 export default useFind;

@@ -6,7 +6,7 @@ import RichTextEditor from './RichTextEditor';
 import Dropdown from './Dropdown';
 
 const InterviewForm = () => {
-  const [{ jobs }] = useStateValue();
+  const [{ applications }] = useStateValue();
   const contact = useInput('text');
   const website = useInput('text');
   const dateTime = useInput('datetime-local');
@@ -23,10 +23,10 @@ const InterviewForm = () => {
           Application
         </p>
         <Dropdown
-          values={jobs.map((job) => {
+          values={applications.map((application) => {
             return {
-              label: `${job.positionTitle} @ ${job.company}`,
-              value: String(job.id),
+              label: `${application.positionTitle} @ ${application.company}`,
+              value: String(application.id),
             };
           })}
           handleChange={() => null}
@@ -76,3 +76,5 @@ const InterviewForm = () => {
     </form>
   );
 };
+
+export default InterviewForm;
