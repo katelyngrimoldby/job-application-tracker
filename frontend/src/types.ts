@@ -2,7 +2,6 @@ export interface Job {
   positionTitle: string;
   company: string;
   location: string;
-  compensation: string;
   status: 'applied' | 'assessments' | 'interviewing' | 'offered' | 'rejected';
   applyDate: Date;
   assessmentDate: Date | null;
