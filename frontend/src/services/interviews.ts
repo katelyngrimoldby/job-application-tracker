@@ -31,7 +31,7 @@ const addNew = async (token: string, userid: number, payload: NewInterview) => {
   return response.data;
 };
 
-const editInterview = async (
+const edit = async (
   token: string,
   payload: NewInterview,
   userid: number,
@@ -53,7 +53,7 @@ const editInterview = async (
   return response.data;
 };
 
-const deleteInterview = async (token: string, userid: number, id: number) => {
+const remove = async (token: string, userid: number, id: number) => {
   const config = {
     headers: {
       Authorization: `bearer ${token}`,
@@ -66,4 +66,4 @@ const deleteInterview = async (token: string, userid: number, id: number) => {
   return response.data;
 };
 
-export { getAll, addNew, editInterview, deleteInterview };
+export { getAll, addNew, edit, remove };
