@@ -1,13 +1,13 @@
 import { isAxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Job } from '../../../types';
-import { deleteJob } from '../../../services/applications';
-import { useStateValue, removeJob } from '../../../state';
+import { Application } from '../../../types';
+import { remove } from '../../../services/applications';
+import { useStateValue, removeApplication } from '../../../state';
 import useErrorHandler from '../../../hooks/useErrorHandler';
 import Error from '../../../components/Error';
-import JobInfo from '../../../components/ApplicationInfo';
+import ApplicationInfo from '../../../components/ApplicationInfo';
 
-const SingleJob = ({ job }: { job: Job }) => {
+const ApplicationSingle = ({ application }: { application: Application }) => {
   const navigate = useNavigate();
   const [{ user }, dispatch] = useStateValue();
   const [error, handleError] = useErrorHandler();
@@ -25,9 +25,9 @@ const SingleJob = ({ job }: { job: Job }) => {
         return null;
       }
 
-      await deleteJob(user.token, Number(userId), job.id);
-      dispatch(removeJob(job.id));
-      navigate('/jobs');
+      await remove(user.token, Number(userId), application.id);
+      dispatch(removeApplication(application.id));
+      navigate('/applications');
     } catch (err) {
       if (isAxiosError(err)) {
         handleError(err.response?.data);
@@ -38,12 +38,12 @@ const SingleJob = ({ job }: { job: Job }) => {
   return (
     <main>
       {error && <Error err={error} />}
-      <JobInfo
-        job={job}
+      <ApplicationInfo
+        application={application}
         handleDelete={handleDelete}
       />
     </main>
   );
 };
 
-export default SingleJob;
+export default ApplicationSingle;
