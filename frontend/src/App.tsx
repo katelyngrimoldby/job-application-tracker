@@ -4,14 +4,18 @@ import useFetch from './hooks/useFetch';
 import useFind from './hooks/useFind';
 import { Header, Footer } from './components/Layout';
 import Error from './components/Error';
-import Applications from './pages/applications/index';
 import Landing from './pages/landing';
 import Login from './pages/login';
 import Register from './pages/register';
-import NewApplication from './pages/applications/newApplication';
 import Custom404 from './pages/custom404';
-import SingleJob from './pages/applications/single';
-import Edit from './pages/applications/single/edit';
+import Applications from './pages/applications/index';
+import NewApplication from './pages/applications/newApplication';
+import ApplicationSingle from './pages/applications/single';
+import EditApplication from './pages/applications/single/edit';
+import Interviews from './pages/interviews/interviews';
+import NewInterview from './pages/interviews/newInterview';
+import InterviewSingle from './pages/interviews/single';
+import EditInterview from './pages/interviews/single/edit';
 
 function App() {
   const data = useFetch();
@@ -48,13 +52,21 @@ function App() {
         <Route
           path='/applications/:id'
           element={
-            application ? <SingleJob job={application} /> : <Custom404 />
+            application ? (
+              <ApplicationSingle application={application} />
+            ) : (
+              <Custom404 />
+            )
           }
         />
         <Route
           path='/applications/:id/edit'
           element={
-            applicationEdit ? <Edit job={applicationEdit} /> : <Custom404 />
+            applicationEdit ? (
+              <EditApplication application={applicationEdit} />
+            ) : (
+              <Custom404 />
+            )
           }
         />
         <Route
@@ -63,19 +75,31 @@ function App() {
         />
         <Route
           path='/interviews'
-          element={<> </>}
+          element={<Interviews />}
         />
         <Route
           path='/interviews/:id'
-          element={<> </>}
+          element={
+            interview ? (
+              <InterviewSingle interview={interview} />
+            ) : (
+              <Custom404 />
+            )
+          }
         />
         <Route
           path='/interviews/:id/edit'
-          element={<> </>}
+          element={
+            interviewEdit ? (
+              <EditInterview interview={interviewEdit} />
+            ) : (
+              <Custom404 />
+            )
+          }
         />
         <Route
           path='/interviews/new'
-          element={<> </>}
+          element={<NewInterview />}
         />
         <Route
           path='/register'
