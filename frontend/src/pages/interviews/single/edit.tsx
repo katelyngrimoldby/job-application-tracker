@@ -1,10 +1,10 @@
 import { useStateValue } from '../../../state';
 import useErrorHandler from '../../../hooks/useErrorHandler';
-import ApplicationForm from '../../../components/ApplicationForm';
+import { Interview } from '../../../types';
+import InterviewForm from '../../../components/InterviewForm';
 import Error from '../../../components/Error';
-import { Application } from '../../../types';
 
-const EditApplication = ({ application }: { application: Application }) => {
+const EditInterview = ({ interview }: { interview: Interview }) => {
   // const navigate = useNavigate();
   const [{ user }] = useStateValue();
   const [error] = useErrorHandler();
@@ -30,9 +30,9 @@ const EditApplication = ({ application }: { application: Application }) => {
   return (
     <main>
       {error && <Error err={error} />}
-      <ApplicationForm content={application} />
+      <InterviewForm content={interview} />
     </main>
   );
 };
 
-export default EditApplication;
+export default EditInterview;
