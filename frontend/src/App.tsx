@@ -4,7 +4,7 @@ import useFetch from './hooks/useFetch';
 import useFind from './hooks/useFind';
 import { Header, Footer } from './components/Layout';
 import Error from './components/Error';
-import Landing from './pages/landing';
+import Dashboard from './pages/dashboard';
 import Login from './pages/login';
 import Register from './pages/register';
 import Custom404 from './pages/custom404';
@@ -43,7 +43,7 @@ function App() {
       <Routes>
         <Route
           path='/'
-          element={data.user ? <Landing /> : <Login />}
+          element={data.user ? <Dashboard /> : <Login />}
         />
         <Route
           path='/applications'
