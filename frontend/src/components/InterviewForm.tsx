@@ -1,16 +1,22 @@
 import { useState } from 'react';
 import useInput from '../hooks/useInput';
 import { useStateValue } from '../state';
+import { Interview } from '../types';
 import FileUploader from './FileUploader';
 import RichTextEditor from './RichTextEditor';
 import Dropdown from './Dropdown';
 
-const InterviewForm = () => {
+const InterviewForm = ({ content }: { content?: Interview }) => {
   const [{ applications }] = useStateValue();
-  const contact = useInput('text');
-  const website = useInput('text');
-  const dateTime = useInput('datetime-local');
-  const [notes, setNotes] = useState('');
+  const contact = useInput('text', content ? content.contact : '');
+  const website = useInput('text', content ? content.website : '');
+  const dateTime = useInput(
+    'datetime-local',
+    content
+      ? `${content.time.getFullYear()}-${content.time.getMonth() + 1}-${content.time.getDate()}T${content.time.getHours()}:${content.time.getMinutes()}`
+      : ''
+  );
+  const [notes, setNotes] = useState(content ? content.notes : '');
 
   return (
     <form>

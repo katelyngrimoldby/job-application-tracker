@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import useInput from '../hooks/useInput';
-import { NewApplication } from '../types';
+import { Application } from '../types';
 import FileUploader from './FileUploader';
 import RichTextEditor from './RichTextEditor';
 import Dropdown from './Dropdown';
@@ -13,12 +13,12 @@ const statusOptions = [
   { label: 'Rejected', value: 'rejected' },
 ];
 
-const ApplicationForm = () => {
-  const position = useInput('text');
-  const company = useInput('text');
-  const jobId = useInput('text');
-  const location = useInput('text');
-  const [notes, setNotes] = useState('');
+const ApplicationForm = ({ content }: { content?: Application }) => {
+  const position = useInput('text', content ? content.positionTitle : '');
+  const company = useInput('text', content ? content.company : '');
+  const jobId = useInput('text', content ? content.jobId : '');
+  const location = useInput('text', content ? content.location : '');
+  const [notes, setNotes] = useState(content ? content.notes : '');
 
   return (
     <form>
