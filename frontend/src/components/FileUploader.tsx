@@ -1,14 +1,25 @@
 import { useState } from 'react';
+import useFileConversion from '../hooks/useFileConversion';
 
-const FileUploader = () => {
-  const [files, setFiles] = useState<FileList>();
+const FileUploader = ({
+  handleChange,
+  initFiles,
+}: {
+  handleChange: (files: string[]) => void;
+  initFiles: string[];
+}) => {
+  const { filesToBase64, filesToFile } = useFileConversion();
+  const [files, setFiles] = useState<File[]>(filesToFile(initFiles));
 
-  const handleFileChange = (event: React.FormEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: React.FormEvent<HTMLInputElement>) => {
     const target = event.target as HTMLInputElement & {
       file: FileList;
     };
 
-    setFiles(target.files ? target.files : undefined);
+    setFiles(Array.from(target.file || []));
+
+    const base64Files = await filesToBase64(files);
+    handleChange(base64Files);
   };
 
   return (
