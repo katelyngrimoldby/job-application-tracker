@@ -10,7 +10,6 @@ export interface Application {
   rejectionDate: Date | null;
   id: number;
   files: string[];
-  jobDescription: string;
   userId: number;
   notes: string;
   jobId: string;
@@ -18,9 +17,9 @@ export interface Application {
 
 export interface Interview {
   id: number;
-  contact: string;
+  contact?: string;
   time: Date;
-  website: string;
+  website?: string;
   files: string[];
   notes: string;
   applicationId: number;
@@ -33,7 +32,4 @@ export interface User {
 }
 
 export type NewApplication = Omit<Application, 'id' | 'userId' | 'applyDate'>;
-export type NewInterview = Omit<
-  Interview,
-  'id' | 'contact' | 'website' | 'applicationId' | 'userId'
->;
+export type NewInterview = Omit<Interview, 'id' | 'userId'>;
