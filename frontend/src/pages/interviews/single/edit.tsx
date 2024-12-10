@@ -1,36 +1,42 @@
-import { useStateValue } from '../../../state';
+import { useNavigate } from 'react-router-dom';
+import { isAxiosError } from 'axios';
+import { useStateValue, updateInterview } from '../../../state';
 import useErrorHandler from '../../../hooks/useErrorHandler';
-import { Interview } from '../../../types';
+import { Interview, NewInterview } from '../../../types';
+import { edit } from '../../../services/interviews';
 import InterviewForm from '../../../components/InterviewForm';
 import Error from '../../../components/Error';
 
 const EditInterview = ({ interview }: { interview: Interview }) => {
-  // const navigate = useNavigate();
-  const [{ user }] = useStateValue();
-  const [error] = useErrorHandler();
+  const navigate = useNavigate();
+  const [{ user }, dispatch] = useStateValue();
+  const [error, handleError] = useErrorHandler();
 
   if (!user) {
     return null;
   }
 
-  // const handleUpdate = async (submission: NewJob, id: number) => {
-  //   try {
-  //     const userId = window.localStorage.getItem('id');
+  const handleUpdate = async (submission: NewInterview, id: number) => {
+    try {
+      const userId = window.localStorage.getItem('id');
 
-  //     const job = await editJob(user.token, submission, Number(userId), id);
-  //     dispatch(updateJob(job));
-  //     navigate(`/jobs/${job.id}`);
-  //   } catch (err) {
-  //     if (isAxiosError(err)) {
-  //       handleError(err.response?.data.error);
-  //     }
-  //   }
-  // };
+      const interview = await edit(user.token, submission, Number(userId), id);
+      dispatch(updateInterview(interview));
+      navigate(`/interviews/${interview.id}`);
+    } catch (err) {
+      if (isAxiosError(err)) {
+        handleError(err.response?.data.error);
+      }
+    }
+  };
 
   return (
     <main>
       {error && <Error err={error} />}
-      <InterviewForm content={interview} />
+      <InterviewForm
+        content={interview}
+        handleUpdate={handleUpdate}
+      />
     </main>
   );
 };
