@@ -9,11 +9,11 @@ import Login from './pages/login';
 import Register from './pages/register';
 import Custom404 from './pages/custom404';
 import Applications from './pages/applications/index';
-import NewApplication from './pages/applications/newApplication';
+import NewApplication from './pages/applications/addApplication';
 import ApplicationSingle from './pages/applications/single';
 import EditApplication from './pages/applications/single/edit';
 import Interviews from './pages/interviews/interviews';
-import NewInterview from './pages/interviews/newInterview';
+import NewInterview from './pages/interviews/addInterview';
 import InterviewSingle from './pages/interviews/single';
 import EditInterview from './pages/interviews/single/edit';
 
