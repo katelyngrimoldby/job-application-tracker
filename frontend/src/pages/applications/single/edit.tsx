@@ -1,36 +1,47 @@
-import { useStateValue } from '../../../state';
+import { useNavigate } from 'react-router-dom';
+import { isAxiosError } from 'axios';
+import { useStateValue, updateApplication } from '../../../state';
 import useErrorHandler from '../../../hooks/useErrorHandler';
+import { edit } from '../../../services/applications';
+import { Application, NewApplication } from '../../../types';
 import ApplicationForm from '../../../components/ApplicationForm';
 import Error from '../../../components/Error';
-import { Application } from '../../../types';
 
 const EditApplication = ({ application }: { application: Application }) => {
-  // const navigate = useNavigate();
-  const [{ user }] = useStateValue();
-  const [error] = useErrorHandler();
+  const navigate = useNavigate();
+  const [{ user }, dispatch] = useStateValue();
+  const [error, handleError] = useErrorHandler();
 
   if (!user) {
     return null;
   }
 
-  // const handleUpdate = async (submission: NewJob, id: number) => {
-  //   try {
-  //     const userId = window.localStorage.getItem('id');
+  const handleUpdate = async (submission: NewApplication, id: number) => {
+    try {
+      const userId = window.localStorage.getItem('id');
 
-  //     const job = await editJob(user.token, submission, Number(userId), id);
-  //     dispatch(updateJob(job));
-  //     navigate(`/jobs/${job.id}`);
-  //   } catch (err) {
-  //     if (isAxiosError(err)) {
-  //       handleError(err.response?.data.error);
-  //     }
-  //   }
-  // };
+      const application = await edit(
+        user.token,
+        submission,
+        Number(userId),
+        id
+      );
+      dispatch(updateApplication(application));
+      navigate(`/applications/${application.id}`);
+    } catch (err) {
+      if (isAxiosError(err)) {
+        handleError(err.response?.data.error);
+      }
+    }
+  };
 
   return (
     <main>
       {error && <Error err={error} />}
-      <ApplicationForm content={application} />
+      <ApplicationForm
+        content={application}
+        handleUpdate={handleUpdate}
+      />
     </main>
   );
 };
