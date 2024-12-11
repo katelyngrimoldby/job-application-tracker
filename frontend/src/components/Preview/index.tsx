@@ -9,18 +9,32 @@ const Preview = ({ type }: { type: 'applications' | 'interviews' }) => {
   if (type === 'applications')
     return (
       <div>
-        <ApplicationCell application={applications[-1]} />
-        <ApplicationCell application={applications[-2]} />
-        <ApplicationCell application={applications[-3]} />
+        {applications.length <= 3 ? (
+          applications.map((application) => (
+            <ApplicationCell application={application} />
+          ))
+        ) : (
+          <>
+            <ApplicationCell application={applications[-1]} />
+            <ApplicationCell application={applications[-2]} />
+            <ApplicationCell application={applications[-3]} />
+          </>
+        )}
         <Link to='/applications'>View All</Link>
       </div>
     );
   else
     return (
       <div>
-        <InterviewCell interview={interviews[-1]} />
-        <InterviewCell interview={interviews[-2]} />
-        <InterviewCell interview={interviews[-3]} />
+        {interviews.length <= 3 ? (
+          interviews.map((interview) => <InterviewCell interview={interview} />)
+        ) : (
+          <>
+            <InterviewCell interview={interviews[-1]} />
+            <InterviewCell interview={interviews[-2]} />
+            <InterviewCell interview={interviews[-3]} />
+          </>
+        )}
         <Link to='/interviews'>View All</Link>
       </div>
     );
