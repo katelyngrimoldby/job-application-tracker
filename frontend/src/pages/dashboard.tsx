@@ -2,9 +2,10 @@ import { useStateValue } from '../state';
 import ApplicationStatus from '../components/ApplicationStatus';
 import Preview from '../components/Preview';
 import styles from '../styles/pages/landing.module.css';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
-  const [{ user, applications }] = useStateValue();
+  const [{ user, applications, interviews }] = useStateValue();
 
   if (!user) return null;
 
@@ -24,18 +25,37 @@ const Dashboard = () => {
           jobs today!
         </span>
       </header>
-      <section>
-        <h2>Application Status</h2>
-        <ApplicationStatus />
-      </section>
-      <section>
-        <h2>My Applications</h2>
-        <Preview type='applications' />
-      </section>
-      <section>
-        <h2>My Interviews</h2>
-        <Preview type='interviews' />
-      </section>
+      {applications.length > 0 ? (
+        <>
+          <section>
+            <h2>Application Status</h2>
+            <ApplicationStatus />
+          </section>
+          <section>
+            <h2>My Applications</h2>
+            <Preview type='applications' />
+          </section>
+          <section>
+            <h2>My Interviews</h2>
+            {interviews.length > 0 ? (
+              <Preview type='interviews' />
+            ) : (
+              <p>
+                You don't have any interviews.{' '}
+                <Link to='/interviews/new'>Add one now.</Link>
+              </p>
+            )}
+          </section>
+        </>
+      ) : (
+        <section>
+          <h2>Applications</h2>
+          <p>
+            You don't have any applications.{' '}
+            <Link to='/appications/new'>Add one now.</Link>
+          </p>
+        </section>
+      )}
     </main>
   );
 };
