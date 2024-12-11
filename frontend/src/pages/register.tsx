@@ -17,7 +17,7 @@ const Register = () => {
   }) => {
     try {
       await register(newUser);
-      navigate('/login');
+      navigate('/');
     } catch (err: unknown) {
       if (isAxiosError(err)) {
         handleError(err.response?.data.error);
