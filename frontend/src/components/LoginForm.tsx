@@ -33,10 +33,10 @@ const LoginForm = ({
       <input
         placeholder='Password'
         required
-        {...username}
+        {...password}
       />
       <button
-        disabled={!username || !password}
+        disabled={!username.value || !password.value}
         className='primary'
       >
         Log In
