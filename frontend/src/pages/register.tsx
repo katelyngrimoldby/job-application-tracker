@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { register } from '../services/userAuth';
+import { useNavigate, Link } from 'react-router-dom';
 import { isAxiosError } from 'axios';
+import { register } from '../services/userAuth';
+import useErrorHandler from '../hooks/useErrorHandler';
 import RegistrationForm from '../components/RegistrationForm';
 import Error from '../components/Error';
 
 const Register = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState('');
+  const [error, handleError] = useErrorHandler();
 
   const handleSubmit = async (newUser: {
     username: string;
@@ -19,17 +19,19 @@ const Register = () => {
       navigate('/login');
     } catch (err: unknown) {
       if (isAxiosError(err)) {
-        setError(err.response?.data.error);
-        setTimeout(() => setError(''), 5000);
+        handleError(err.response?.data.error);
       }
     }
   };
 
   return (
     <main>
-      <h2>Register</h2>
+      <h1>Register</h1>
       {error && <Error err={error} />}
       <RegistrationForm handleRegistration={handleSubmit} />
+      <p>
+        Already have an account? <Link to='/'>Log in</Link>
+      </p>
     </main>
   );
 };
