@@ -67,7 +67,7 @@ const Menu = () => {
           <>
             <li>
               <Link
-                to='/jobs'
+                to='/applications'
                 onClick={() => setVisible(false)}
               >
                 Your Applications
@@ -75,7 +75,7 @@ const Menu = () => {
             </li>
             <li>
               <Link
-                to='/jobs/new'
+                to='/applications/new'
                 onClick={() => setVisible(false)}
               >
                 New Application
