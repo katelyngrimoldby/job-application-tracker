@@ -31,109 +31,109 @@ const Menu = () => {
   }, [theme]);
 
   return (
-    <div>
+    <nav className={styles.menuBar}>
       <button
         onClick={() => setVisible(true)}
         className={styles.menuButton}
       >
         Open Menu
       </button>
-      <nav className={visible ? styles.navVisible : styles.nav}>
+      <ul className={visible ? styles.navVisible : styles.nav}>
         <button
           onClick={() => setVisible(false)}
           className={styles.closeButton}
         >
           Close Menu
         </button>
-        <ul>
+        <li>
+          <Link
+            to='/'
+            onClick={() => setVisible(false)}
+          >
+            Home
+          </Link>
+        </li>
+        {!user && (
           <li>
             <Link
-              to='/'
+              to='/register'
               onClick={() => setVisible(false)}
             >
-              Home
+              Register
             </Link>
           </li>
-          {!user && (
-            <li className={styles.cta}>
+        )}
+        {user && (
+          <>
+            <li>
               <Link
-                to='/register'
+                to='/jobs'
                 onClick={() => setVisible(false)}
               >
-                Register
+                Your Applications
               </Link>
             </li>
-          )}
-          {user && (
-            <>
-              <li>
-                <Link
-                  to='/jobs'
-                  onClick={() => setVisible(false)}
-                >
-                  Your Applications
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to='/jobs/new'
-                  onClick={() => setVisible(false)}
-                >
-                  New Application
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to='/interviews'
-                  onClick={() => setVisible(false)}
-                >
-                  Your Interviews
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to='/interviews/new'
-                  onClick={() => setVisible(false)}
-                >
-                  New Interview
-                </Link>
-              </li>
-              <li>
-                <button
-                  type='button'
-                  onClick={handleClick}
-                  className='secondary'
-                >
-                  Log out
-                </button>
-              </li>
-            </>
-          )}
-          <li>
-            <button
-              type='button'
-              onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-            >
-              {theme === 'light' ? (
-                <img
-                  src={moonIcon}
-                  alt='Dark Mode'
-                  width='24'
-                  height='24'
-                />
-              ) : (
-                <img
-                  src={sunIcon}
-                  alt='Light Mode'
-                  width='24'
-                  height='24'
-                />
-              )}
-            </button>
-          </li>
-        </ul>
-      </nav>
-    </div>
+            <li>
+              <Link
+                to='/jobs/new'
+                onClick={() => setVisible(false)}
+              >
+                New Application
+              </Link>
+            </li>
+            <li>
+              <Link
+                to='/interviews'
+                onClick={() => setVisible(false)}
+              >
+                Your Interviews
+              </Link>
+            </li>
+            <li>
+              <Link
+                to='/interviews/new'
+                onClick={() => setVisible(false)}
+              >
+                New Interview
+              </Link>
+            </li>
+            <li>
+              <button
+                type='button'
+                onClick={handleClick}
+                className='secondary'
+              >
+                Log out
+              </button>
+            </li>
+          </>
+        )}
+      </ul>
+      <div
+        className={visible ? styles.backdropVisible : styles.backdrop}
+        onClick={() => setVisible(false)}
+      ></div>
+      <button
+        type='button'
+        onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+      >
+        {theme === 'light' ? (
+          <img
+            src={moonIcon}
+            alt='Dark Mode'
+            width='36'
+            height='36'
+          />
+        ) : (
+          <img
+            src={sunIcon}
+            alt='Light Mode'
+            width='36'
+            height='36'
+          />
+        )}
+      </button>
+    </nav>
   );
 };
 
