@@ -4,6 +4,7 @@ import { register } from '../services/userAuth';
 import useErrorHandler from '../hooks/useErrorHandler';
 import RegistrationForm from '../components/RegistrationForm';
 import Error from '../components/Error';
+import styles from '../styles/pages/register.module.css';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const Register = () => {
   };
 
   return (
-    <main>
+    <main className={styles.main}>
       <h1>Register</h1>
       {error && <Error err={error} />}
       <RegistrationForm handleRegistration={handleSubmit} />

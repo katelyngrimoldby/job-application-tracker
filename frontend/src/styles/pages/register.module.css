@@ -1,0 +1,27 @@
+@import '../variables.css';
+
+@media screen and (min-width: 0px) {
+  .main {
+    max-width: 700px;
+
+    h1 {
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+
+    a {
+      font-weight: 600;
+      color: var(--accent-main);
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .main {
+    max-width: 1000px;
+  }
+}
