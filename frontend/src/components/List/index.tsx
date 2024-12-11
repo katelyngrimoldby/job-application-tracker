@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { useStateValue } from '../../state';
 import useFind from '../../hooks/useFind';
 import { Application, Interview } from '../../types';
@@ -22,15 +21,7 @@ const List = ({
   }
 
   if (type === 'interviews') {
-    if (!interviews || interviews.length <= 0) {
-      return (
-        <div>
-          <p>No interviews available</p>
-          <Link to='/interviews/new'>Add one now</Link>
-        </div>
-      );
-    }
-
+    if (!interviews) return null;
     return (
       <ul>
         {interviews.map((interview) => (
@@ -42,14 +33,7 @@ const List = ({
       </ul>
     );
   } else {
-    if (!applications || applications.length <= 0) {
-      return (
-        <div>
-          <p>No applications available</p>
-          <Link to='/applications/new'>Add one now</Link>
-        </div>
-      );
-    }
+    if (!applications) return null;
 
     return (
       <ul>
