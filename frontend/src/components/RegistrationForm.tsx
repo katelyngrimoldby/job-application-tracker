@@ -54,7 +54,7 @@ const RegistrationForm = ({
         <input
           placeholder='Confirm Password'
           required
-          {...password}
+          {...confirmPass}
         />
       </div>
       <button
