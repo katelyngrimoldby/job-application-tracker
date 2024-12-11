@@ -9,8 +9,17 @@
   --accent-secondary: #3a3a8a;
   --accent-tertiary: #b9babe;
 
+  --success-background: #d8f3dd;
+  --success-forground: #007516;
+
+  --warning-background: #fdeed3;
+  --warning-foreground: #946000;
+
   --error-background: #f2d5d9;
-  --error-foreground: #c73f3f;
+  --error-foreground: #c70000;
+
+  --info-background: #d3ebfd;
+  --info-foreground: #005bd1;
 
   --font: 'Inter', sans-serif;
 }
@@ -24,8 +33,17 @@
   --accent-secondary: #639aff;
   --accent-tertiary: #b9babe;
 
+  --success-background: #d8f3dd;
+  --success-forground: #007516;
+
+  --warning-background: #fdeed3;
+  --warning-foreground: #946000;
+
   --error-background: #f2d5d9;
-  --error-foreground: #c73f3f;
+  --error-foreground: #c70000;
+
+  --info-background: #d3ebfd;
+  --info-foreground: #005bd1;
 
   --font: 'Inter', sans-serif;
 }
