@@ -1,19 +1,11 @@
+import { Link } from 'react-router-dom';
 import { useStateValue } from '../../state';
 import useFind from '../../hooks/useFind';
-import { Application, Interview } from '../../types';
 import ListApplicationItem from './ApplicationItem';
 import ListInterviewItem from './InterviewItem';
 
-const List = ({
-  type,
-  applications,
-  interviews,
-}: {
-  type: 'interviews' | 'applications';
-  applications?: Application[];
-  interviews?: Interview[];
-}) => {
-  const [{ user }] = useStateValue();
+const List = ({ type }: { type: 'interviews' | 'applications' }) => {
+  const [{ user, applications, interviews }] = useStateValue();
   const { findApplicationForInterview } = useFind();
 
   if (!user) {
@@ -21,7 +13,12 @@ const List = ({
   }
 
   if (type === 'interviews') {
-    if (!interviews) return null;
+    if (interviews.length <= 0)
+      return (
+        <p>
+          You have no interviews. <Link to='/interviews/new'>Add one now.</Link>
+        </p>
+      );
     return (
       <ul>
         {interviews.map((interview) => (
@@ -33,8 +30,13 @@ const List = ({
       </ul>
     );
   } else {
-    if (!applications) return null;
-
+    if (applications.length <= 0)
+      return (
+        <p>
+          You have no applications.{' '}
+          <Link to='/applications/new'>Add one now.</Link>
+        </p>
+      );
     return (
       <ul>
         {applications.map((application) => (

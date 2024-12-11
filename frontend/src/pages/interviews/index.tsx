@@ -1,5 +1,5 @@
 import { useStateValue, setInterviewList } from '../../state';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import { isAxiosError } from 'axios';
 import { getAll } from '../../services/interviews';
@@ -8,7 +8,7 @@ import List from '../../components/List';
 import FiltrationMenu from '../../components/FiltrationMenu';
 
 const Interviews = () => {
-  const [{ interviews, user }, dispatch] = useStateValue();
+  const [{ user }, dispatch] = useStateValue();
   const [searchParams, setSearchParams] = useSearchParams();
   const [error, handleError] = useErrorHandler();
 
@@ -41,19 +41,7 @@ const Interviews = () => {
         handleChange={handleChange}
         toFilter={false}
       />
-      {interviews.length > 0 ? (
-        <List
-          type='interviews'
-          interviews={interviews}
-        />
-      ) : (
-        <>
-          <p>
-            You have no interviews.{' '}
-            <Link to='/interviews/new'>Add one now.</Link>
-          </p>
-        </>
-      )}
+      <List type='interviews' />
     </main>
   );
 };

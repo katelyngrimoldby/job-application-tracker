@@ -1,5 +1,5 @@
 import { useStateValue, setApplicationList } from '../../state';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import { isAxiosError } from 'axios';
 import { getAll } from '../../services/applications';
@@ -9,7 +9,7 @@ import FiltrationMenu from '../../components/FiltrationMenu';
 import styles from '../../styles/pages/jobs.module.css';
 
 const Applications = () => {
-  const [{ applications, user }, dispatch] = useStateValue();
+  const [{ user }, dispatch] = useStateValue();
   const [searchParams, setSearchParams] = useSearchParams();
   const [error, handleError] = useErrorHandler();
 
@@ -45,19 +45,7 @@ const Applications = () => {
     <main className={styles.main}>
       {error && <Error err={error} />}
       <FiltrationMenu handleChange={handleChange} />
-      {applications.length > 0 ? (
-        <List
-          type='applications'
-          applications={applications}
-        />
-      ) : (
-        <>
-          <p>
-            You have no applications.{' '}
-            <Link to='/applications/new'>Add one now.</Link>
-          </p>
-        </>
-      )}
+      <List type='applications' />
     </main>
   );
 };
