@@ -32,6 +32,7 @@ const EditInterview = ({ interview }: { interview: Interview }) => {
 
   return (
     <main>
+      <h1>Edit Interview</h1>
       {error && <Error err={error} />}
       <InterviewForm
         content={interview}

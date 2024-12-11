@@ -37,6 +37,7 @@ const EditApplication = ({ application }: { application: Application }) => {
 
   return (
     <main>
+      <h1>Edit Application</h1>
       {error && <Error err={error} />}
       <ApplicationForm
         content={application}
