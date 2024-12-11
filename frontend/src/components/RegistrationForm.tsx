@@ -59,11 +59,11 @@ const RegistrationForm = ({
       </div>
       <button
         disabled={
-          !username ||
-          !name ||
+          !username.value ||
+          !name.value ||
           password.value.length < 3 ||
-          !confirmPass ||
-          password !== confirmPass
+          !confirmPass.value ||
+          password.value !== confirmPass.value
         }
         className='primary'
       >
