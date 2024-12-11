@@ -41,9 +41,11 @@ const Dropdown = ({
         aria-labelledby={labelledBy}
       >
         {values.map((e) => (
-          <li role='option'>
+          <li
+            role='option'
+            key={e.value}
+          >
             <button
-              key={e.value}
               id={e.value}
               onClick={handleSelection}
               className={
