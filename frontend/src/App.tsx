@@ -12,7 +12,7 @@ import Applications from './pages/applications/index';
 import NewApplication from './pages/applications/addApplication';
 import ApplicationSingle from './pages/applications/single';
 import EditApplication from './pages/applications/single/edit';
-import Interviews from './pages/interviews/interviews';
+import Interviews from './pages/interviews';
 import NewInterview from './pages/interviews/addInterview';
 import InterviewSingle from './pages/interviews/single';
 import EditInterview from './pages/interviews/single/edit';

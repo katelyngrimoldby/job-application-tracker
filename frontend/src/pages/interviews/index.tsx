@@ -1,5 +1,5 @@
 import { useStateValue, setInterviewList } from '../../state';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import { isAxiosError } from 'axios';
 import { getAll } from '../../services/interviews';
@@ -41,10 +41,19 @@ const Interviews = () => {
         handleChange={handleChange}
         toFilter={false}
       />
-      <List
-        type='interviews'
-        interviews={interviews}
-      />
+      {interviews.length > 0 ? (
+        <List
+          type='interviews'
+          interviews={interviews}
+        />
+      ) : (
+        <>
+          <p>
+            You have no interviews.{' '}
+            <Link to='/interviews/new'>Add one now.</Link>
+          </p>
+        </>
+      )}
     </main>
   );
 };
