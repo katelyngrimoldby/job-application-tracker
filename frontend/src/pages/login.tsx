@@ -1,5 +1,5 @@
 import { isAxiosError } from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { login } from '../services/userAuth';
 import { getAll } from '../services/applications';
 import { useStateValue, setCurrentUser, setApplicationList } from '../state';
@@ -42,9 +42,13 @@ const Login = () => {
   };
   return (
     <main className={styles.main}>
-      <h2>Login</h2>
+      <h1>Login</h1>
       {error && <Error err={error} />}
       <LoginForm handleLogin={handleSubmit} />
+
+      <p>
+        Don't have an account? <Link to='/register'>Create one now</Link>
+      </p>
     </main>
   );
 };
