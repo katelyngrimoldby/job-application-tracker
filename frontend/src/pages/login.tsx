@@ -33,7 +33,7 @@ const Login = () => {
       );
       dispatch(setApplicationList(applications));
 
-      navigate('/applications');
+      navigate('/');
     } catch (err) {
       if (isAxiosError(err)) {
         handleError(err.response?.data.error);
