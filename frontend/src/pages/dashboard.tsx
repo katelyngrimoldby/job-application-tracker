@@ -1,7 +1,7 @@
 import { useStateValue } from '../state';
 import ApplicationStatus from '../components/ApplicationStatus';
 import Preview from '../components/Preview';
-import styles from '../styles/pages/landing.module.css';
+import styles from '../styles/pages/dashboard.module.css';
 import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
@@ -11,7 +11,7 @@ const Dashboard = () => {
 
   return (
     <main className={styles.main}>
-      <header className={styles.heading}>
+      <header>
         <h1>Hello, {user.name}</h1>
         <span>
           You have applied to{' '}
@@ -52,7 +52,7 @@ const Dashboard = () => {
           <h2>Applications</h2>
           <p>
             You don't have any applications.{' '}
-            <Link to='/appications/new'>Add one now.</Link>
+            <Link to='/applications/new'>Add one now.</Link>
           </p>
         </section>
       )}
