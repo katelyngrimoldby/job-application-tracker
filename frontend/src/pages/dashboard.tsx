@@ -9,20 +9,18 @@ const Dashboard = () => {
 
   if (!user) return null;
 
+  const applicationCount = applications.filter(
+    (application) =>
+      application.applyDate.toDateString() === new Date().toDateString()
+  ).length;
+
   return (
     <main className={styles.main}>
       <header>
         <h1>Hello, {user.name}</h1>
         <span>
-          You have applied to{' '}
-          {
-            applications.filter(
-              (application) =>
-                application.applyDate.toDateString() ===
-                new Date().toDateString()
-            ).length
-          }{' '}
-          jobs today!
+          You have applied to {applicationCount} job
+          {applicationCount != 1 ? 's' : null} today!
         </span>
       </header>
       {applications.length > 0 ? (
