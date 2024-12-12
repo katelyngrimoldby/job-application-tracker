@@ -13,7 +13,9 @@
   border-bottom: 1px solid var(--accent-tertiary);
   color: var(---text-main);
   font-size: 1rem;
-  transition: all 200ms ease-in-out;
+  transition:
+    border-color 200ms ease-in-out,
+    border-radius 200ms ease-in-out;
   cursor: pointer;
 
   svg {
@@ -46,6 +48,7 @@
   background-color: var(--background-secondary);
   width: 100%;
   min-width: fit-content;
+  list-style: none;
 
   button {
     display: block;
