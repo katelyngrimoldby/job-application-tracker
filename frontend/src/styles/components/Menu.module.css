@@ -32,7 +32,8 @@
       align-self: flex-start;
     }
 
-    a {
+    a,
+    .btn {
       color: var(--accent-secondary);
       font-weight: 500;
       transition: color 200ms ease-in-out;

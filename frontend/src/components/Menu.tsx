@@ -101,7 +101,7 @@ const Menu = () => {
               <button
                 type='button'
                 onClick={handleClick}
-                className='secondary'
+                className={styles.btn}
               >
                 Log out
               </button>
