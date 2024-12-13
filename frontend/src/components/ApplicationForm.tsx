@@ -4,6 +4,7 @@ import { Application, NewApplication } from '../types';
 import FileUploader from './FileUploader';
 import RichTextEditor from './RichTextEditor';
 import Dropdown from './Dropdown';
+import styles from '../styles/components/ApplicationForm.module.css';
 
 const statusOptions = [
   { label: 'Applied', value: 'applied' },
@@ -107,62 +108,74 @@ const ApplicationForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor='position'>Position</label>
-        <input
-          name='position'
-          required
-          {...positionTitle}
-        />
+    <form
+      onSubmit={handleSubmit}
+      className={styles.form}
+    >
+      <div className={styles.inputGroup}>
+        <div className={styles.inputWrapper}>
+          <label htmlFor='position'>Position</label>
+          <input
+            id='position'
+            name='position'
+            required
+            {...positionTitle}
+          />
+        </div>
+        <div className={styles.inputWrapper}>
+          <label htmlFor='company'>Company</label>
+          <input
+            id='company'
+            name='company'
+            required
+            {...company}
+          />
+        </div>
       </div>
-      <div>
-        <label htmlFor='company'>Company</label>
-        <input
-          name='company'
-          required
-          {...company}
-        />
+      <div className={styles.inputGroup}>
+        <div className={styles.inputWrapper}>
+          <label htmlFor='jobId'>Job ID</label>
+          <input
+            id='jobId'
+            name='jobId'
+            required
+            {...jobId}
+          />
+        </div>
+        <div className={styles.inputWrapper}>
+          <label htmlFor='location'>Location</label>
+          <input
+            id='location'
+            name='location'
+            required
+            {...location}
+          />
+        </div>
       </div>
-      <div>
-        <label htmlFor='jobId'>Job ID</label>
-        <input
-          name='jobId'
-          required
-          {...jobId}
-        />
+      <div className={styles.smallInputGroup}>
+        <div className={styles.inputWrapper}>
+          <p
+            id='status'
+            aria-label='Status'
+            role='label'
+          >
+            Status
+          </p>
+          <Dropdown
+            values={statusOptions}
+            startValue={statusOptions[0]}
+            labelledBy='status'
+            handleChange={getStatus}
+          />
+        </div>
+        <div className={styles.inputWrapper}>
+          <FileUploader
+            handleChange={getConvertedFiles}
+            initFiles={files}
+          />
+        </div>
       </div>
-      <div>
-        <label htmlFor='location'>Location</label>
-        <input
-          name='location'
-          required
-          {...location}
-        />
-      </div>
-      <div>
-        <p
-          id='status'
-          aria-label='Status'
-          role='label'
-        >
-          Status
-        </p>
-        <Dropdown
-          values={statusOptions}
-          startValue={statusOptions[0]}
-          labelledBy='status'
-          handleChange={getStatus}
-        />
-      </div>
-      <div>
-        <label htmlFor='files'>Files</label>
-        <FileUploader
-          handleChange={getConvertedFiles}
-          initFiles={files}
-        />
-      </div>
-      <div>
+      <div className={styles.inputWrapper}>
         <p
           aria-label='Notes'
           role='label'
@@ -175,7 +188,12 @@ const ApplicationForm = ({
           setContent={setNotes}
         />
       </div>
-      <button type='submit'>Save</button>
+      <button
+        type='submit'
+        className='primary'
+      >
+        Save
+      </button>
     </form>
   );
 };
