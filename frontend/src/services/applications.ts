@@ -15,7 +15,22 @@ const getAll = async (token: string, userid: number, params?: string) => {
     config
   );
 
-  return response.data;
+  return response.data.map((application) => {
+    return {
+      ...application,
+      applyDate: new Date(application.applyDate),
+      interviewDate: application.interviewDate
+        ? new Date(application.interviewDate)
+        : null,
+      assessmentDate: application.assessmentDate
+        ? new Date(application.assessmentDate)
+        : null,
+      rejectionDate: application.rejectionDate
+        ? new Date(application.rejectionDate)
+        : null,
+      offerDate: application.offerDate ? new Date(application.offerDate) : null,
+    } as Application;
+  });
 };
 
 const addNew = async (
@@ -32,7 +47,22 @@ const addNew = async (
 
   const response = await axios.post<Application>(`${baseUrl}`, payload, config);
 
-  return response.data;
+  return {
+    ...response.data,
+    applyDate: new Date(response.data.applyDate),
+    interviewDate: response.data.interviewDate
+      ? new Date(response.data.interviewDate)
+      : null,
+    assessmentDate: response.data.assessmentDate
+      ? new Date(response.data.assessmentDate)
+      : null,
+    rejectionDate: response.data.rejectionDate
+      ? new Date(response.data.rejectionDate)
+      : null,
+    offerDate: response.data.offerDate
+      ? new Date(response.data.offerDate)
+      : null,
+  } as Application;
 };
 
 const edit = async (
@@ -54,7 +84,22 @@ const edit = async (
     config
   );
 
-  return response.data;
+  return {
+    ...response.data,
+    applyDate: new Date(response.data.applyDate),
+    interviewDate: response.data.interviewDate
+      ? new Date(response.data.interviewDate)
+      : null,
+    assessmentDate: response.data.assessmentDate
+      ? new Date(response.data.assessmentDate)
+      : null,
+    rejectionDate: response.data.rejectionDate
+      ? new Date(response.data.rejectionDate)
+      : null,
+    offerDate: response.data.offerDate
+      ? new Date(response.data.offerDate)
+      : null,
+  } as Application;
 };
 
 const remove = async (token: string, userid: number, id: number) => {
