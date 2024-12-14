@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Interview, NewInterview } from '../types';
-const baseUrl = 'api/interviews';
+const baseUrl = '/api/interviews';
 
 const getAll = async (token: string, userid: number, params?: string) => {
   const config = {
