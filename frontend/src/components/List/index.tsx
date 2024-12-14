@@ -25,6 +25,7 @@ const List = ({ type }: { type: 'interviews' | 'applications' }) => {
           <ListInterviewItem
             interview={interview}
             application={findApplicationForInterview(interview.applicationId)}
+            key={interview.id}
           />
         ))}
       </ul>
@@ -40,7 +41,10 @@ const List = ({ type }: { type: 'interviews' | 'applications' }) => {
     return (
       <ul>
         {applications.map((application) => (
-          <ListApplicationItem application={application} />
+          <ListApplicationItem
+            application={application}
+            key={application.id}
+          />
         ))}
       </ul>
     );
