@@ -19,7 +19,7 @@
     section {
       a {
         font-weight: 600;
-        color: var(--accent-main);
+        color: var(--accent-secondary);
       }
     }
   }
