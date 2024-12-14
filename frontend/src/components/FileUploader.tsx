@@ -13,14 +13,24 @@ const FileUploader = ({
   const [files, setFiles] = useState<File[]>(filesToFile(initFiles));
   const fileInput = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = async (event: React.FormEvent<HTMLInputElement>) => {
+  const handleFileAdd = async (event: React.FormEvent<HTMLInputElement>) => {
     const target = event.target as HTMLInputElement & {
       files: FileList;
     };
+    const fileArr = [...files, ...Array.from(target.files || [])];
 
-    setFiles([...files, ...Array.from(target.files || [])]);
+    setFiles(fileArr);
 
-    const base64Files = await filesToBase64(files);
+    const base64Files = await filesToBase64(fileArr);
+    handleChange(base64Files);
+  };
+
+  const handleFileRemove = async (fileName: string) => {
+    const fileArr = files.filter((curFile) => curFile.name != fileName);
+
+    setFiles(fileArr);
+
+    const base64Files = await filesToBase64(fileArr);
     handleChange(base64Files);
   };
 
@@ -40,18 +50,14 @@ const FileUploader = ({
         type='file'
         accept='application/pdf'
         multiple
-        onChange={handleFileChange}
+        onChange={handleFileAdd}
         className={styles.input}
         ref={fileInput}
       />
       <ul className={styles.fileList}>
         {files.map((file) => (
           <li key={file.name}>
-            <button
-              onClick={() =>
-                setFiles(files.filter((curFile) => curFile.name != file.name))
-              }
-            >
+            <button onClick={() => handleFileRemove(file.name)}>
               {file.name}
             </button>
           </li>
