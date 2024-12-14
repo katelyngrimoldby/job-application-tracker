@@ -2,6 +2,7 @@
 
 .wrapper {
   position: relative;
+  list-style: none;
 }
 
 .wrapper::after {
@@ -18,22 +19,13 @@
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
-  > * {
-    flex: 1;
-  }
-  b {
-    text-align: left;
-  }
-  span {
-    text-align: center;
-  }
-  button {
-    text-align: right;
-  }
+  text-align: center;
 }
 
 .expandBtn,
 .collapseBtn {
+  height: 24px;
+  width: 24px;
   svg {
     height: 24px;
     width: 24px;
@@ -50,29 +42,12 @@
 .extraInfo,
 .extraVisible {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 1rem;
-  transition: max-height 400ms, padding 400ms;
-
-  div {
-    display: flex;
-    gap: 0.5rem;
-  }
-  span {
-    flex: 1;
-
-    &:nth-of-type(odd) {
-      text-align: left;
-    }
-
-    &:nth-of-type(even) {
-      text-align: right;
-    }
-
-    &:last-of-type {
-      text-transform: capitalize;
-    }
-  }
+  justify-content: space-between;
+  transition:
+    max-height 400ms,
+    padding 400ms;
 }
 
 .extraInfo {
@@ -84,26 +59,5 @@
 .extraVisible {
   max-height: 1000px;
   overflow: hidden;
-  padding: 0.5rem 1rem;
-}
-
-.buttons {
-  display: flex;
-  align-items: flex-end;
-
-  svg {
-    width: 24px;
-    height: 24px;
-    vertical-align: middle;
-    transition: fill 200ms ease-in-out;
-  }
-
-  a,
-  button {
-    fill: var(--accent-main);
-
-    &:hover {
-      fill: var(--accent-secondary);
-    }
-  }
+  padding: 1rem;
 }

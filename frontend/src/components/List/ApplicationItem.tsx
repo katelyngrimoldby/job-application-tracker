@@ -1,25 +1,32 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import useDateCalc from '../../hooks/useDateCalc';
+import useDateFormat from '../../hooks/useDateFormat';
 import { Application } from '../../types';
 import ArrowIcon from '../icons/ArrowIcon';
+import styles from '../../styles/components/List/ApplicationItem.module.css';
 
 const ListApplicationItem = ({ application }: { application: Application }) => {
   const [visible, setVisible] = useState(false);
-  const dateDiff = useDateCalc(application.applyDate);
+  const { getShortDate } = useDateFormat();
 
   return (
-    <li>
-      <div>
+    <li className={styles.wrapper}>
+      <div className={styles.primaryInfo}>
         <span>{application.positionTitle}</span>
         <span>{application.company}</span>
-        <span>{application.status}</span>
-        <button onClick={() => setVisible(!visible)}>
+        <span>
+          {application.status.charAt(0).toUpperCase() +
+            application.status.substring(1)}
+        </span>
+        <button
+          className={visible ? styles.collapseBtn : styles.expandBtn}
+          onClick={() => setVisible(!visible)}
+        >
           <ArrowIcon />
         </button>
       </div>
-      <div>
-        <span>{dateDiff ? `${dateDiff[0]} ${dateDiff[1]} ago` : 'today'}</span>
+      <div className={visible ? styles.extraVisible : styles.extraInfo}>
+        <span>{getShortDate(application.applyDate)}</span>
         <Link to={`/applications/${application.id}`}>View Application</Link>
       </div>
     </li>
