@@ -158,6 +158,7 @@ const ApplicationForm = ({
             id='status'
             aria-label='Status'
             role='label'
+            className={styles.pLabel}
           >
             Status
           </p>
@@ -179,6 +180,7 @@ const ApplicationForm = ({
         <p
           aria-label='Notes'
           role='label'
+          className={styles.pLabel}
         >
           Notes
         </p>
