@@ -90,11 +90,11 @@
   }
 
   .button svg {
-    transform: rotate(90deg);
+    transform: rotate(270deg);
   }
 
   .buttonVisible svg {
-    transform: rotate(270deg);
+    transform: rotate(90deg);
   }
 }
 
