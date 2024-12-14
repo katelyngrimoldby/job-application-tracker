@@ -34,7 +34,7 @@ const useFileConversion = () => {
   };
 
   const filesToFile = (files: string[]) => {
-    return files.map((file, index) => toFile(file, `File ${index}`));
+    return files.map((file, index) => toFile(file, `File ${index + 1}`));
   };
 
   return { filesToBase64, filesToFile };
