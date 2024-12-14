@@ -6,6 +6,7 @@ import { getAll } from '../../services/interviews';
 import Error from '../../components/Error';
 import List from '../../components/List';
 import FiltrationMenu from '../../components/FiltrationMenu';
+import styles from '../../styles/pages/interviews.module.css';
 
 const Interviews = () => {
   const [{ user }, dispatch] = useStateValue();
@@ -35,7 +36,7 @@ const Interviews = () => {
   };
 
   return (
-    <main>
+    <main className={styles.main}>
       {error && <Error err={error} />}
       <FiltrationMenu
         handleChange={handleChange}
