@@ -6,7 +6,7 @@ import { getAll } from '../../services/interviews';
 import Error from '../../components/Error';
 import List from '../../components/List';
 import FiltrationMenu from '../../components/FiltrationMenu';
-import styles from '../../styles/pages/interviews.module.css';
+import styles from '../../styles/pages/content.module.css';
 
 const Interviews = () => {
   const [{ user }, dispatch] = useStateValue();

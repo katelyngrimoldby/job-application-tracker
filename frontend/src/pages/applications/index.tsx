@@ -6,7 +6,7 @@ import { getAll } from '../../services/applications';
 import Error from '../../components/Error';
 import List from '../../components/List';
 import FiltrationMenu from '../../components/FiltrationMenu';
-import styles from '../../styles/pages/applications.module.css';
+import styles from '../../styles/pages/content.module.css';
 
 const Applications = () => {
   const [{ user }, dispatch] = useStateValue();
