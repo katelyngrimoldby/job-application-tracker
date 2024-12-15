@@ -11,7 +11,10 @@ const Preview = ({ type }: { type: 'applications' | 'interviews' }) => {
       <div>
         {applications.length <= 3 ? (
           applications.map((application) => (
-            <ApplicationCell application={application} />
+            <ApplicationCell
+              application={application}
+              key={application.id}
+            />
           ))
         ) : (
           <>
@@ -27,7 +30,12 @@ const Preview = ({ type }: { type: 'applications' | 'interviews' }) => {
     return (
       <div>
         {interviews.length <= 3 ? (
-          interviews.map((interview) => <InterviewCell interview={interview} />)
+          interviews.map((interview) => (
+            <InterviewCell
+              interview={interview}
+              key={interview.id}
+            />
+          ))
         ) : (
           <>
             <InterviewCell interview={interviews[-1]} />
