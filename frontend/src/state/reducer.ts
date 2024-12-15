@@ -41,6 +41,10 @@ export type Action =
   | {
       type: 'CLEAR_CURRENT_USER';
       payload: null;
+    }
+  | {
+      type: 'UPDATE_THEME';
+      payload: null;
     };
 
 export const setApplicationList = (payload: Application[]): Action => {
@@ -81,6 +85,10 @@ export const setCurrentUser = (payload: User): Action => {
 
 export const clearCurrentUser = (): Action => {
   return { type: 'CLEAR_CURRENT_USER', payload: null };
+};
+
+export const updateTheme = (): Action => {
+  return { type: 'UPDATE_THEME', payload: null };
 };
 
 export const reducer = (state: State, action: Action): State => {
@@ -151,6 +159,8 @@ export const reducer = (state: State, action: Action): State => {
         ...state,
         user: null,
       };
+    case 'UPDATE_THEME':
+      return { ...state, theme: state.theme == 'dark' ? 'light' : 'dark' };
     default:
       return state;
   }

@@ -6,12 +6,14 @@ export type State = {
   applications: Application[];
   interviews: Interview[];
   user: User | null;
+  theme: 'light' | 'dark';
 };
 
 const initialState: State = {
   applications: [],
   interviews: [],
   user: null,
+  theme: window.matchMedia('(prefers-color-scheme: dark') ? 'dark' : 'light',
 };
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([
