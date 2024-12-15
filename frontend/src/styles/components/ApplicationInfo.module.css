@@ -55,16 +55,22 @@
 
   .assets {
     display: flex;
+    flex-direction: column;
     gap: 1rem;
     margin-bottom: 1rem;
 
-    ul,
-    div {
-      width: 50%;
-    }
-
     ul {
+      width: 100%;
+      display: flex;
       list-style: none;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: space-evenly;
+
+      button {
+        font-weight: 600;
+        color: var(--accent-main);
+      }
     }
   }
 
