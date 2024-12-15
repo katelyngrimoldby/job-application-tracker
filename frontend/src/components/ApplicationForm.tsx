@@ -4,7 +4,7 @@ import { Application, NewApplication } from '../types';
 import FileUploader from './FileUploader';
 import RichTextEditor from './RichTextEditor';
 import Dropdown from './Dropdown';
-import styles from '../styles/components/ApplicationForm.module.css';
+import styles from '../styles/components/ContentForm.module.css';
 
 const statusOptions = [
   { label: 'Applied', value: 'applied' },
@@ -170,6 +170,7 @@ const ApplicationForm = ({
           />
         </div>
         <div className={styles.inputWrapper}>
+          <label htmlFor='files'>Files</label>
           <FileUploader
             handleChange={getConvertedFiles}
             initFiles={files}
