@@ -1,45 +1,51 @@
 const useDateFormat = () => {
-  const getShortDate = (date: Date) => {
-    let month = '';
-    switch (date.getMonth()) {
-      case 0:
-        month = 'Jan.';
-        break;
-      case 1:
-        month = 'Feb.';
-        break;
-      case 2:
-        month = 'Mar.';
-        break;
-      case 3:
-        month = 'Apr.';
-        break;
-      case 4:
-        month = 'May';
-        break;
-      case 5:
-        month = 'Jun.';
-        break;
-      case 6:
-        month = 'Jul.';
-        break;
-      case 7:
-        month = 'Aug.';
-        break;
-      case 8:
-        month = 'Sep.';
-        break;
-      case 9:
-        month = 'Oct.';
-        break;
-      case 10:
-        month = 'Nov.';
-        break;
-      case 11:
-        month = 'Dec.';
-        break;
-    }
+  const formatNumber = (number: number) => {
+    if (number < 10) return `0${number}`;
+    return `${number}`;
+  };
 
+  const getMonthStr = (month: number, format: 'short' | 'long') => {
+    switch (month) {
+      case 0:
+        if (format == 'short') return 'Jan.';
+        return 'January';
+      case 1:
+        if (format == 'short') return 'Feb.';
+        return 'February';
+      case 2:
+        if (format == 'short') return 'Mar.';
+        return 'March';
+      case 3:
+        if (format == 'short') return 'Apr.';
+        return 'April';
+      case 4:
+        if (format == 'short') return 'May';
+        return 'May';
+      case 5:
+        if (format == 'short') return 'Jun.';
+        return 'June';
+      case 6:
+        if (format == 'short') return 'Jul.';
+        return 'July';
+      case 7:
+        if (format == 'short') return 'Aug.';
+        return 'August';
+      case 8:
+        if (format == 'short') return 'Sep.';
+        return 'September';
+      case 9:
+        if (format == 'short') return 'Oct.';
+        return 'October';
+      case 10:
+        if (format == 'short') return 'Nov.';
+        return 'November';
+      case 11:
+        if (format == 'short') return 'Dec.';
+        return 'December';
+    }
+  };
+
+  const getShortDate = (date: Date) => {
     let suffix = '';
     switch (date.getDate()) {
       case 1:
@@ -55,95 +61,15 @@ const useDateFormat = () => {
         suffix = 'th';
     }
 
-    return `${month} ${date.getDate()}${suffix}`;
+    return `${getMonthStr(date.getMonth(), 'short')} ${date.getDate()}${suffix}`;
   };
 
   const getLongDate = (date: Date) => {
-    let month = '';
-    switch (date.getMonth()) {
-      case 0:
-        month = 'January';
-        break;
-      case 1:
-        month = 'February';
-        break;
-      case 2:
-        month = 'March';
-        break;
-      case 3:
-        month = 'April';
-        break;
-      case 4:
-        month = 'May';
-        break;
-      case 5:
-        month = 'June';
-        break;
-      case 6:
-        month = 'July';
-        break;
-      case 7:
-        month = 'August';
-        break;
-      case 8:
-        month = 'September';
-        break;
-      case 9:
-        month = 'October';
-        break;
-      case 10:
-        month = 'November';
-        break;
-      case 11:
-        month = 'December';
-        break;
-    }
-
-    return `${month} ${date.getDate()}, ${date.getFullYear()}`;
+    return `${getMonthStr(date.getMonth(), 'long')} ${date.getDate()}, ${date.getFullYear()}`;
   };
 
   const getDateTime = (date: Date) => {
-    let month = '';
-    switch (date.getMonth()) {
-      case 0:
-        month = 'January';
-        break;
-      case 1:
-        month = 'February';
-        break;
-      case 2:
-        month = 'March';
-        break;
-      case 3:
-        month = 'April';
-        break;
-      case 4:
-        month = 'May';
-        break;
-      case 5:
-        month = 'June';
-        break;
-      case 6:
-        month = 'July';
-        break;
-      case 7:
-        month = 'August';
-        break;
-      case 8:
-        month = 'September';
-        break;
-      case 9:
-        month = 'October';
-        break;
-      case 10:
-        month = 'November';
-        break;
-      case 11:
-        month = 'December';
-        break;
-    }
-
-    return `${month} ${date.getDate()}, ${date.getFullYear()} at ${date.getHours()}:${date.getMinutes()}`;
+    return `${getMonthStr(date.getMonth(), 'long')} ${date.getDate()}, ${date.getFullYear()} at ${formatNumber(date.getHours())}:${formatNumber(date.getMinutes())}`;
   };
 
   const getDateTimeValue = (date: Date) => {
@@ -151,17 +77,8 @@ const useDateFormat = () => {
     const day = date.getDate();
     const hour = date.getHours();
     const minute = date.getMinutes();
-    let monthStr = `${month}`;
-    let dayStr = `${day}`;
-    let hourStr = `${hour}`;
-    let minuteStr = `${minute}`;
 
-    if (month < 10) monthStr = `0${monthStr}`;
-    if (day < 10) dayStr = `0${dayStr}`;
-    if (hour < 10) hourStr = `0${hourStr}`;
-    if (minute < 10) minuteStr = `0${minuteStr}`;
-
-    return `${date.getFullYear()}-${monthStr}-${dayStr}T${hourStr}:${minuteStr}`;
+    return `${date.getFullYear()}-${formatNumber(month)}-${formatNumber(day)}T${formatNumber(hour)}:${formatNumber(minute)}`;
   };
 
   return { getShortDate, getLongDate, getDateTime, getDateTimeValue };
