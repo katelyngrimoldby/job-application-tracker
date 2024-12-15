@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import useInput from '../hooks/useInput';
 import useDateFormat from '../hooks/useDateFormat';
 import useFind from '../hooks/useFind';
@@ -7,7 +8,7 @@ import { Interview, NewInterview } from '../types';
 import FileUploader from './FileUploader';
 import RichTextEditor from './RichTextEditor';
 import Dropdown from './Dropdown';
-import { Link } from 'react-router-dom';
+import styles from '../styles/components/ContentForm.module.css';
 
 const InterviewForm = ({
   content,
@@ -23,7 +24,7 @@ const InterviewForm = ({
 
   if (applications.length <= 0)
     return (
-      <p>
+      <p className={styles.fallback}>
         You have no applications to assign an interview to.{' '}
         <Link to='/applications/new'>Add one now.</Link>
       </p>
@@ -70,12 +71,16 @@ const InterviewForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
+    <form
+      onSubmit={handleSubmit}
+      className={styles.form}
+    >
+      <div className={styles.inputWrapper}>
         <p
           id='application'
           aria-label='Application'
           role='label'
+          className={styles.pLabel}
         >
           Application
         </p>
@@ -94,29 +99,31 @@ const InterviewForm = ({
           labelledBy='application'
         />
       </div>
-      <div>
-        <label htmlFor='contact'>Contact</label>
-        <input
-          name='contact'
-          {...contact}
-        />
+      <div className={styles.inputGroup}>
+        <div className={styles.inputWrapper}>
+          <label htmlFor='contact'>Contact</label>
+          <input
+            name='contact'
+            {...contact}
+          />
+        </div>
+        <div className={styles.inputWrapper}>
+          <label htmlFor='website'>Website</label>
+          <input
+            name='website'
+            {...website}
+          />
+        </div>
       </div>
-      <div>
-        <label htmlFor='website'>Website</label>
-        <input
-          name='website'
-          {...website}
-        />
-      </div>
-      <div>
-        <div>
+      <div className={styles.smallInputGroup}>
+        <div className={styles.inputWrapper}>
           <label htmlFor='time'>Time</label>
           <input
             name='time'
             {...dateTime}
           />
         </div>
-        <div>
+        <div className={styles.inputWrapper}>
           <label htmlFor='files'>Files</label>
           <FileUploader
             handleChange={getConvertedFiles}
@@ -124,10 +131,11 @@ const InterviewForm = ({
           />
         </div>
       </div>
-      <div>
+      <div className={styles.inputWrapper}>
         <p
           aria-label='Notes'
           role='label'
+          className={styles.pLabel}
         >
           Notes
         </p>
@@ -137,7 +145,12 @@ const InterviewForm = ({
           setContent={setNotes}
         />
       </div>
-      <button type='submit'>Save</button>
+      <button
+        type='submit'
+        className='primary'
+      >
+        Save
+      </button>
     </form>
   );
 };
