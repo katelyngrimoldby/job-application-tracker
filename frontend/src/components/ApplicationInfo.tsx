@@ -67,7 +67,7 @@ const ApplicationInfo = ({
           <ul>
             {interviews.length > 0 ? (
               interviews.map((interview) => (
-                <li>
+                <li key={interview.id}>
                   <Link
                     to={`/interviews/${interview.id}`}
                     key={interview.id}
