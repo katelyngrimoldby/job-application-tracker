@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import useDateFormat from '../../hooks/useDateFormat';
 import { Application } from '../../types';
 import ArrowIcon from '../icons/ArrowIcon';
-import styles from '../../styles/components/List/ApplicationItem.module.css';
+import styles from '../../styles/components/ListItem.module.css';
 
 const ListApplicationItem = ({ application }: { application: Application }) => {
   const [visible, setVisible] = useState(false);
