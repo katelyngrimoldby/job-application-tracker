@@ -22,6 +22,8 @@
   --info-foreground: #005bd1;
 
   --font: 'Inter', sans-serif;
+
+  --color-scheme: light;
 }
 
 [data-theme='dark'] {
@@ -46,4 +48,6 @@
   --info-foreground: #005bd1;
 
   --font: 'Inter', sans-serif;
+
+  --color-scheme: dark;
 }
