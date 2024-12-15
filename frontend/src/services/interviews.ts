@@ -15,7 +15,9 @@ const getAll = async (token: string, userid: number, params?: string) => {
     config
   );
 
-  return response.data;
+  return response.data.map((interview) => {
+    return { ...interview, time: new Date(interview.time) } as Interview;
+  });
 };
 
 const addNew = async (token: string, userid: number, payload: NewInterview) => {
@@ -28,7 +30,7 @@ const addNew = async (token: string, userid: number, payload: NewInterview) => {
 
   const response = await axios.post<Interview>(`${baseUrl}`, payload, config);
 
-  return response.data;
+  return { ...response.data, time: new Date(response.data.time) } as Interview;
 };
 
 const edit = async (
@@ -50,7 +52,7 @@ const edit = async (
     config
   );
 
-  return response.data;
+  return { ...response.data, time: new Date(response.data.time) } as Interview;
 };
 
 const remove = async (token: string, userid: number, id: number) => {
