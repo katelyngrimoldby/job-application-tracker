@@ -36,7 +36,6 @@ const FileUploader = ({
 
   return (
     <>
-      <p>Files</p>
       <button
         type='button'
         className={styles.labelBtn}
