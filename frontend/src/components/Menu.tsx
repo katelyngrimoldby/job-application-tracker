@@ -1,18 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { useStateValue, clearCurrentUser } from '../state';
+import { useStateValue, clearCurrentUser, updateTheme } from '../state';
 import { logout } from '../services/userAuth';
 import sunIcon from '../assets/sun.svg';
 import moonIcon from '../assets/moon.svg';
 import styles from '../styles/components/Menu.module.css';
 
 const Menu = () => {
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user, theme }, dispatch] = useStateValue();
   const [visible, setVisible] = useState(false);
-  const [theme, setTheme] = useState<'light' | 'dark'>(
-    window.matchMedia('(prefers-color-scheme: dark') ? 'dark' : 'light'
-  );
   const navigate = useNavigate();
 
   const handleClick = async () => {
@@ -115,7 +112,7 @@ const Menu = () => {
       ></div>
       <button
         type='button'
-        onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+        onClick={() => dispatch(updateTheme())}
       >
         {theme === 'light' ? (
           <img
