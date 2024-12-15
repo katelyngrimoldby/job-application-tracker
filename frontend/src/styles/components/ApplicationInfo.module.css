@@ -109,12 +109,21 @@
   }
 
   .assets {
+    flex-direction: row;
+
     ul {
       width: 33%;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      gap: 0;
     }
 
     div {
       width: 66%;
+      > * {
+        width: 100%;
+      }
     }
   }
 }
