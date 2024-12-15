@@ -68,6 +68,10 @@ const useDateFormat = () => {
     return `${getMonthStr(date.getMonth(), 'long')} ${date.getDate()}, ${date.getFullYear()}`;
   };
 
+  const getTime = (date: Date) => {
+    return `${formatNumber(date.getHours())}:${formatNumber(date.getMinutes())}`;
+  };
+
   const getDateTime = (date: Date) => {
     return `${getMonthStr(date.getMonth(), 'long')} ${date.getDate()}, ${date.getFullYear()} at ${formatNumber(date.getHours())}:${formatNumber(date.getMinutes())}`;
   };
@@ -81,7 +85,7 @@ const useDateFormat = () => {
     return `${date.getFullYear()}-${formatNumber(month)}-${formatNumber(day)}T${formatNumber(hour)}:${formatNumber(minute)}`;
   };
 
-  return { getShortDate, getLongDate, getDateTime, getDateTimeValue };
+  return { getShortDate, getLongDate, getTime, getDateTime, getDateTimeValue };
 };
 
 export default useDateFormat;
