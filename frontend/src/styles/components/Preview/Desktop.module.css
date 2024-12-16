@@ -1,0 +1,39 @@
+@import '../../variables.css';
+
+@media screen and (min-width: 0px) {
+  .wrapper {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .wrapper {
+    display: table;
+    width: 100%;
+    background-color: var(--background-secondary);
+    border-radius: 5px;
+    border-spacing: 0 0.5rem;
+
+    th {
+      font-weight: 700;
+      padding-bottom: 0.25rem;
+      border-bottom: 1px solid var(--accent-tertiary);
+    }
+
+    td {
+      padding: 0 0.5rem;
+      text-align: center;
+    }
+
+    tr:last-of-type td {
+      padding-top: 0.25rem;
+      border-top: 1px solid var(--accent-tertiary);
+      text-align: end;
+    }
+
+    a {
+      font-weight: 600;
+      color: var(--accent-secondary);
+    }
+  }
+}
