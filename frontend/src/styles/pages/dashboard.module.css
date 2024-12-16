@@ -1,32 +1,69 @@
 @media screen and (min-width: 0px) {
-  .main {
-    background-color: var(--background-main);
+  .statusWrapper {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
+    margin-bottom: 1rem;
 
     header {
-      padding-top: 1.5rem;
-      width: 100%;
+      h1 {
+        font-size: 2rem;
+      }
 
       span {
-        font-weight: 500;
-        font-size: 1.125rem;
-        color: var(--text-secondary);
+        font-size: 1.25rem;
       }
     }
+  }
 
-    section {
-      a {
-        font-weight: 600;
-        color: var(--accent-secondary);
-      }
-    }
+  .chartContainer {
+    width: min-content;
+    margin-inline: auto;
+  }
+
+  .statsDesktop {
+    display: none;
+  }
+
+  .stats {
+    width: 100%;
+  }
+
+  .applicationTable {
+    margin-bottom: 1rem;
   }
 }
 
 @media screen and (min-width: 768px) {
+  .statusWrapper {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .chartContainer {
+    margin: 0;
+  }
 }
 
 @media screen and (min-width: 1024px) {
+  .stats {
+    display: none;
+  }
+
+  .statusWrapper {
+    flex-wrap: nowrap;
+  }
+
+  .left {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .statsDesktop {
+    display: block;
+    width: 100%;
+  }
 }
