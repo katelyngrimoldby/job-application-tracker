@@ -1,5 +1,7 @@
 const useDateCalc = (date: Date) => {
-  const diffDays = Math.round((Date.now() - date.getTime()) / 24);
+  const diffDays = Math.round(
+    (Date.now() - date.getTime()) / (1000 * 60 * 60 * 24)
+  );
 
   const diffMonths = Math.round(diffDays / 30);
 
