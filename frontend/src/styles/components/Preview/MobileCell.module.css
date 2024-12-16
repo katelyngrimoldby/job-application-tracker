@@ -9,7 +9,7 @@
   border-radius: 5px;
 
   a {
-    text-align: start;
+    text-align: start !important;
     font-weight: 600;
     color: var(--accent-secondary);
   }
