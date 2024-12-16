@@ -1,0 +1,29 @@
+@import '../variables.css';
+
+@media screen and (min-width: 0px) {
+  .wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 1rem;
+    width: 100%;
+
+    span {
+      text-align: center;
+      font-weight: 500;
+      width: 45%;
+      padding: 4px 8px;
+      border: 2px solid var(--text-secondary);
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .wrapper {
+    flex-wrap: nowrap;
+
+    span {
+      width: 25%;
+    }
+  }
+}
