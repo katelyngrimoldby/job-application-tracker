@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Application } from '../../../types';
 import useDateCalc from '../../../hooks/useDateCalc';
+import useStatusFormat from '../../../hooks/useStatusFormat';
 import styles from '../../../styles/components/Preview/MobileCell.module.css';
 
 const ApplicationCellMobile = ({
@@ -9,6 +10,7 @@ const ApplicationCellMobile = ({
   application: Application;
 }) => {
   const dateDiff = useDateCalc(application.applyDate);
+  const status = useStatusFormat(application.status);
 
   return (
     <div className={styles.wrapper}>
@@ -17,7 +19,7 @@ const ApplicationCellMobile = ({
       <span>
         Date: {dateDiff ? `${dateDiff[0]} ${dateDiff[1]} ago` : 'Today'}
       </span>
-      <span>Status: {application.status}</span>
+      <span>Status: {status}</span>
       <Link to={`/application/${application.id}`}>Go to Application</Link>
     </div>
   );

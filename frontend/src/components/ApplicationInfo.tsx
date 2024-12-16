@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import useDateFormat from '../hooks/useDateFormat';
 import useFind from '../hooks/useFind';
 import useFileConversion from '../hooks/useFileConversion';
+import useStatusFormat from '../hooks/useStatusFormat';
 import { Application } from '../types';
 import ReadOnlyRichText from './RichTextEditor/ReadOnly';
 import PencilIcon from './icons/PencilIcon';
@@ -18,6 +19,7 @@ const ApplicationInfo = ({
   const { getLongDate, getDateTime } = useDateFormat();
   const { findInterviewsForApplication } = useFind();
   const { filesToFile } = useFileConversion();
+  const status = useStatusFormat(application.status);
 
   const interviews = findInterviewsForApplication(application.id);
   const files = filesToFile(application.files);
@@ -30,11 +32,7 @@ const ApplicationInfo = ({
           <span className={styles.company}>{application.company}</span>
         </header>
         <div className={styles.secondary}>
-          <span className={styles.status}>
-            Status:{' '}
-            {application.status.charAt(0).toUpperCase() +
-              application.status.substring(1)}
-          </span>
+          <span className={styles.status}>Status:{status}</span>
           <span>Job ID: {application.jobId}</span>
           <span>Location: {application.location}</span>
         </div>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useDateFormat from '../../hooks/useDateFormat';
+import useStatusFormat from '../../hooks/useStatusFormat';
 import { Application } from '../../types';
 import ArrowIcon from '../icons/ArrowIcon';
 import styles from '../../styles/components/ListItem.module.css';
@@ -8,16 +9,14 @@ import styles from '../../styles/components/ListItem.module.css';
 const ListApplicationItem = ({ application }: { application: Application }) => {
   const [visible, setVisible] = useState(false);
   const { getShortDate } = useDateFormat();
+  const status = useStatusFormat(application.status);
 
   return (
     <li className={styles.wrapper}>
       <div className={styles.primaryInfo}>
         <span>{application.positionTitle}</span>
         <span>{application.company}</span>
-        <span>
-          {application.status.charAt(0).toUpperCase() +
-            application.status.substring(1)}
-        </span>
+        <span>{status}</span>
         <button
           className={visible ? styles.collapseBtn : styles.expandBtn}
           onClick={() => setVisible(!visible)}
