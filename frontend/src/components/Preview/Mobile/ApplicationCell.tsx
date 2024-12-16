@@ -1,12 +1,17 @@
 import { Link } from 'react-router-dom';
-import { Application } from '../../types';
-import useDateCalc from '../../hooks/useDateCalc';
+import { Application } from '../../../types';
+import useDateCalc from '../../../hooks/useDateCalc';
+import styles from '../../../styles/components/Preview/MobileCell.module.css';
 
-const ApplicationCell = ({ application }: { application: Application }) => {
+const ApplicationCellMobile = ({
+  application,
+}: {
+  application: Application;
+}) => {
   const dateDiff = useDateCalc(application.applyDate);
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       <span>Company: {application.company}</span>
       <span>Position: {application.positionTitle}</span>
       <span>
@@ -18,4 +23,4 @@ const ApplicationCell = ({ application }: { application: Application }) => {
   );
 };
 
-export default ApplicationCell;
+export default ApplicationCellMobile;
