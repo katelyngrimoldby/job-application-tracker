@@ -18,7 +18,7 @@ const ApplicationCellMobile = ({
       <td>{dateDiff ? `${dateDiff[0]} ${dateDiff[1]} ago` : 'Today'}</td>
       <td>{status}</td>
       <td>
-        <Link to={`/application/${application.id}`}>Go to Application</Link>
+        <Link to={`/applications/${application.id}`}>Go to Application</Link>
       </td>
     </tr>
   );
