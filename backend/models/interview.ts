@@ -17,7 +17,7 @@ import {
   Default,
   HasMany,
 } from '@sequelize/core/decorators-legacy';
-import BinFile from './binFile';
+import { InterviewFile } from './file';
 
 @Table({ timestamps: false })
 class Interview extends Model<
@@ -55,12 +55,15 @@ class Interview extends Model<
   declare applicationId: number;
 
   // One-to-many association
-  @HasMany(() => BinFile, 'interviewId')
-  declare files?: NonAttribute<BinFile[]>;
+  @HasMany(() => InterviewFile, 'interviewId')
+  declare files?: NonAttribute<InterviewFile[]>;
 
   // File methods
-  declare getFiles: HasManyGetAssociationsMixin<BinFile>;
-  declare addFile: HasManyAddAssociationMixin<BinFile, BinFile['id']>;
+  declare getFiles: HasManyGetAssociationsMixin<InterviewFile>;
+  declare addFile: HasManyAddAssociationMixin<
+    InterviewFile,
+    InterviewFile['id']
+  >;
 }
 
 export default Interview;

@@ -1,6 +1,6 @@
 import Application from './application';
 import Interview from './interview';
 import User from './user';
-import BinFile from './binFile';
+import { ApplicationFile, InterviewFile } from './file';
 
-export { Application, Interview, User, BinFile };
+export { Application, Interview, User, ApplicationFile, InterviewFile };

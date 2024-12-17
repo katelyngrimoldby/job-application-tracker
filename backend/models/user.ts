@@ -21,7 +21,7 @@ import {
 
 import Application from './application';
 import Interview from './interview';
-import BinFile from './binFile';
+import { ApplicationFile, InterviewFile } from './file';
 
 @Table({ timestamps: false })
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
@@ -49,8 +49,11 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   @HasMany(() => Interview, 'userId')
   declare interviews?: NonAttribute<Interview[]>;
 
-  @HasMany(() => BinFile, 'userId')
-  declare files?: NonAttribute<Interview[]>;
+  @HasMany(() => ApplicationFile, 'userId')
+  declare applicationFiles?: NonAttribute<ApplicationFile[]>;
+
+  @HasMany(() => InterviewFile, 'userId')
+  declare interviewFiles?: NonAttribute<InterviewFile[]>;
 
   // application methods
   declare getApplications: HasManyGetAssociationsMixin<Application>;
@@ -73,10 +76,27 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   >;
   declare countInterviews: HasManyCountAssociationsMixin<Interview>;
 
-  // File methods
-  declare getFiles: HasManyGetAssociationsMixin<BinFile>;
-  declare addFile: HasManyAddAssociationMixin<BinFile, BinFile['id']>;
-  declare removeFile: HasManyRemoveAssociationMixin<BinFile, BinFile['id']>;
+  // applicationFile methods
+  declare getApplicationFiles: HasManyGetAssociationsMixin<ApplicationFile>;
+  declare addApplicationFile: HasManyAddAssociationMixin<
+    ApplicationFile,
+    ApplicationFile['id']
+  >;
+  declare removeApplicationFile: HasManyRemoveAssociationMixin<
+    ApplicationFile,
+    ApplicationFile['id']
+  >;
+
+  // interviewFile methods
+  declare getInterviewFiles: HasManyGetAssociationsMixin<InterviewFile>;
+  declare addInterviewFile: HasManyAddAssociationMixin<
+    InterviewFile,
+    InterviewFile['id']
+  >;
+  declare removeInterviewFile: HasManyRemoveAssociationMixin<
+    InterviewFile,
+    InterviewFile['id']
+  >;
 }
 
 export default User;

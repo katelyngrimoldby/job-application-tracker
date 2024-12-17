@@ -11,13 +11,12 @@ import {
   NotNull,
   AutoIncrement,
   Table,
-  Default,
 } from '@sequelize/core/decorators-legacy';
 
-@Table({ timestamps: false })
-class BinFile extends Model<
-  InferAttributes<BinFile>,
-  InferCreationAttributes<BinFile>
+@Table.Abstract
+class BinFile<M extends BinFile<M>> extends Model<
+  InferAttributes<M>,
+  InferCreationAttributes<M>
 > {
   @Attribute(DataTypes.INTEGER)
   @PrimaryKey
@@ -32,20 +31,25 @@ class BinFile extends Model<
   @NotNull
   declare fileData: string;
 
-  @Attribute(DataTypes.ENUM('application', 'interview'))
-  @Default('application')
-  declare belongsTo: CreationOptional<'application' | 'interview'>;
-
-  // foriegn keys
+  // Foriegn key
   @Attribute(DataTypes.INTEGER)
   @NotNull
   declare userId: number;
-
-  @Attribute(DataTypes.INTEGER)
-  declare applicationId: number | null;
-
-  @Attribute(DataTypes.INTEGER)
-  declare interviewId: number | null;
 }
 
-export default BinFile;
+@Table({ timestamps: false })
+class ApplicationFile extends BinFile<ApplicationFile> {
+  // Foriegn keys
+  @Attribute(DataTypes.INTEGER)
+  @NotNull
+  declare applicationId: number;
+}
+@Table({ timestamps: false })
+class InterviewFile extends BinFile<InterviewFile> {
+  // Foriegn keys
+  @Attribute(DataTypes.INTEGER)
+  @NotNull
+  declare interviewId: number;
+}
+
+export { ApplicationFile, InterviewFile };
