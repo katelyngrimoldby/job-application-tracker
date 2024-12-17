@@ -21,7 +21,7 @@ import {
 
 import { Status } from '../types';
 import Interview from './interview';
-import BinFile from './binFile';
+import { ApplicationFile } from './file';
 
 @Table({
   updatedAt: false,
@@ -91,16 +91,19 @@ class Application extends Model<
   @HasMany(() => Interview, 'applicationId')
   declare interviews?: NonAttribute<Interview[]>;
 
-  @HasMany(() => BinFile, 'applicationId')
-  declare files?: NonAttribute<BinFile[]>;
+  @HasMany(() => ApplicationFile, 'applicationId')
+  declare files?: NonAttribute<ApplicationFile[]>;
 
   // Interview methods
   declare getInterviews: HasManyGetAssociationsMixin<Interview>;
   declare addInterview: HasManyAddAssociationMixin<Interview, Interview['id']>;
 
   // File methods
-  declare getFiles: HasManyGetAssociationsMixin<BinFile>;
-  declare addFile: HasManyAddAssociationMixin<BinFile, BinFile['id']>;
+  declare getFiles: HasManyGetAssociationsMixin<ApplicationFile>;
+  declare addFile: HasManyAddAssociationMixin<
+    ApplicationFile,
+    ApplicationFile['id']
+  >;
 }
 
 export default Application;
