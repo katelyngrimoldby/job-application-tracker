@@ -36,6 +36,14 @@ export const parseDate = (date: unknown, key: string): Date => {
   return checkDateString(date, key);
 };
 
+export const parseNumber = (num: unknown): number => {
+  if (!num || !isNumber(num)) {
+    throw new Error('Missing or invalid id');
+  }
+
+  return num;
+};
+
 const isDate = (date: unknown): date is Date => {
   return date instanceof Date;
 };

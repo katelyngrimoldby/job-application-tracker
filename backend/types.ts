@@ -47,10 +47,15 @@ export interface AuthUser {
   password: string;
 }
 
-export interface NewFile {
+interface NewFile {
   filename: string;
   fileData: string;
-  belongsTo: 'application' | 'interview';
-  applicationId: number | null;
-  interviewId: number | null;
+}
+
+export interface NewApplicationFile extends NewFile {
+  applicationId: number;
+}
+
+export interface NewInterviewFile extends NewFile {
+  interviewId: number;
 }

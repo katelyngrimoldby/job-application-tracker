@@ -1,36 +1,22 @@
-import { NewFile } from '../../types';
-import { parseString, isString, isNumber } from './globalParsers';
+import { NewApplicationFile, NewInterviewFile } from '../../types';
+import { parseString, parseNumber } from './globalParsers';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const toNewFile = (obj: any): NewFile => {
+const toNewApplicationFile = (obj: any): NewApplicationFile => {
   return {
     filename: parseString(obj.filename, 'Filename'),
     fileData: parseString(obj.fileData, 'File data'),
-    belongsTo: parseBelongsTo(obj.belongsTo),
-    applicationId: parseOptionalNumber(obj.applicationId),
-    interviewId: parseOptionalNumber(obj.interviewId),
+    applicationId: parseNumber(obj.applicationId),
   };
 };
 
-const parseBelongsTo = (string: unknown): 'application' | 'interview' => {
-  if (!isString(string)) {
-    throw new Error('Invalid value for NewFile.belongsTo');
-  }
-
-  if (string !== 'application' && string !== 'interview') {
-    throw new Error('Invalid value for NewFile.belongsTo');
-  }
-
-  return string;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const toNewInterviewFile = (obj: any): NewInterviewFile => {
+  return {
+    filename: parseString(obj.filename, 'Filename'),
+    fileData: parseString(obj.fileData, 'File data'),
+    interviewId: parseNumber(obj.interviewId),
+  };
 };
 
-const parseOptionalNumber = (num: unknown): number | null => {
-  if (num == null || num == undefined) return null;
-
-  if (!isNumber(num)) {
-    throw new Error('Invalid foreign key value for NewFile');
-  }
-  return num;
-};
-
-export default toNewFile;
+export { toNewApplicationFile, toNewInterviewFile };
