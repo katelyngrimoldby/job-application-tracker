@@ -42,11 +42,9 @@ class BinFile extends Model<
   declare userId: number;
 
   @Attribute(DataTypes.INTEGER)
-  @Default(null)
   declare applicationId: number | null;
 
   @Attribute(DataTypes.INTEGER)
-  @Default(null)
   declare interviewId: number | null;
 }
 
