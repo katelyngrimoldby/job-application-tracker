@@ -21,6 +21,7 @@ import {
 
 import Application from './application';
 import Interview from './interview';
+import BinFile from './binFile';
 
 @Table({ timestamps: false })
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
@@ -48,6 +49,9 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   @HasMany(() => Interview, 'userId')
   declare interviews?: NonAttribute<Interview[]>;
 
+  @HasMany(() => BinFile, 'userId')
+  declare files?: NonAttribute<Interview[]>;
+
   // application methods
   declare getApplications: HasManyGetAssociationsMixin<Application>;
   declare addApplication: HasManyAddAssociationMixin<
@@ -68,6 +72,11 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
     Interview['id']
   >;
   declare countInterviews: HasManyCountAssociationsMixin<Interview>;
+
+  // File methods
+  declare getFiles: HasManyGetAssociationsMixin<BinFile>;
+  declare addFile: HasManyAddAssociationMixin<BinFile, BinFile['id']>;
+  declare removeFile: HasManyRemoveAssociationMixin<BinFile, BinFile['id']>;
 }
 
 export default User;

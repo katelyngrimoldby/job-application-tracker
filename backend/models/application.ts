@@ -21,6 +21,7 @@ import {
 
 import { Status } from '../types';
 import Interview from './interview';
+import BinFile from './binFile';
 
 @Table({
   updatedAt: false,
@@ -77,10 +78,6 @@ class Application extends Model<
   @Default('applied')
   declare status: CreationOptional<Status>;
 
-  @Attribute(DataTypes.ARRAY(DataTypes.TEXT))
-  @NotNull
-  declare files: string[];
-
   @Attribute(DataTypes.TEXT)
   @NotNull
   declare notes: string;
@@ -90,13 +87,20 @@ class Application extends Model<
   @NotNull
   declare userId: number;
 
-  // One-to-Many association
+  // One-to-Many associations
   @HasMany(() => Interview, 'applicationId')
   declare interviews?: NonAttribute<Interview[]>;
 
-  //Interview methods
+  @HasMany(() => BinFile, 'applicationId')
+  declare files?: NonAttribute<BinFile[]>;
+
+  // Interview methods
   declare getInterviews: HasManyGetAssociationsMixin<Interview>;
   declare addInterview: HasManyAddAssociationMixin<Interview, Interview['id']>;
+
+  // File methods
+  declare getFiles: HasManyGetAssociationsMixin<BinFile>;
+  declare addFile: HasManyAddAssociationMixin<BinFile, BinFile['id']>;
 }
 
 export default Application;

@@ -4,6 +4,9 @@ import {
   InferAttributes,
   InferCreationAttributes,
   CreationOptional,
+  NonAttribute,
+  HasManyGetAssociationsMixin,
+  HasManyAddAssociationMixin,
 } from '@sequelize/core';
 import {
   Attribute,
@@ -12,7 +15,9 @@ import {
   PrimaryKey,
   Table,
   Default,
+  HasMany,
 } from '@sequelize/core/decorators-legacy';
+import BinFile from './binFile';
 
 @Table({ timestamps: false })
 class Interview extends Model<
@@ -36,10 +41,6 @@ class Interview extends Model<
   @Default('')
   declare website: CreationOptional<string>;
 
-  @Attribute(DataTypes.ARRAY(DataTypes.TEXT))
-  @NotNull
-  declare files: string[];
-
   @Attribute(DataTypes.TEXT)
   @NotNull
   declare notes: string;
@@ -52,6 +53,14 @@ class Interview extends Model<
   @Attribute(DataTypes.INTEGER)
   @NotNull
   declare applicationId: number;
+
+  // One-to-many association
+  @HasMany(() => BinFile, 'interviewId')
+  declare files?: NonAttribute<BinFile[]>;
+
+  // File methods
+  declare getFiles: HasManyGetAssociationsMixin<BinFile>;
+  declare addFile: HasManyAddAssociationMixin<BinFile, BinFile['id']>;
 }
 
 export default Interview;
