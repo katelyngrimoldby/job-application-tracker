@@ -31,7 +31,7 @@ const Dashboard = () => {
       {applications.length > 0 ? (
         <>
           <section className={styles.statusWrapper}>
-            <div className={styles.left}>
+            <div className={styles.header}>
               <header>
                 <h1>Hello, {user.name}</h1>
                 <span>
@@ -54,7 +54,7 @@ const Dashboard = () => {
             <h2>My Applications</h2>
             <Preview type='applications' />
           </section>
-          <section>
+          <section className={styles.noInterviews}>
             <h2>My Interviews</h2>
             {interviews.length > 0 ? (
               <Preview type='interviews' />
@@ -68,14 +68,14 @@ const Dashboard = () => {
         </>
       ) : (
         <>
-          <header>
+          <header className={styles.header}>
             <h1>Hello, {user.name}</h1>
             <span>
               You have applied to {applicationCount} job
               {applicationCount != 1 ? 's' : null} today!
             </span>
           </header>
-          <section>
+          <section className={styles.noApplications}>
             <h2>Applications</h2>
             <p>
               You don't have any applications.{' '}
