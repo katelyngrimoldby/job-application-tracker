@@ -3,7 +3,7 @@ import useDateFormat from '../hooks/useDateFormat';
 import useFind from '../hooks/useFind';
 import useFileConversion from '../hooks/useFileConversion';
 import useStatusFormat from '../hooks/useStatusFormat';
-import { Application } from '../types';
+import { Application, Interview } from '../types';
 import ReadOnlyRichText from './RichTextEditor/ReadOnly';
 import PencilIcon from './icons/PencilIcon';
 import TrashIcon from './icons/TrashIcon';
@@ -14,7 +14,7 @@ const ApplicationInfo = ({
   handleDelete,
 }: {
   application: Application;
-  handleDelete: () => void;
+  handleDelete: (interviews: Interview[]) => void;
 }) => {
   const { getLongDate, getDateTime } = useDateFormat();
   const { findInterviewsForApplication } = useFind();
@@ -115,7 +115,7 @@ const ApplicationInfo = ({
         <Link to={`/applications/${application.id}/edit`}>
           <PencilIcon />
         </Link>
-        <button onClick={handleDelete}>
+        <button onClick={() => handleDelete(interviews)}>
           <TrashIcon />
         </button>
       </div>
