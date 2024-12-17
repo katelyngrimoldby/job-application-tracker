@@ -2,7 +2,7 @@ import { DataTypes } from '@sequelize/core';
 import type { Migration } from '../util/db';
 
 export const up: Migration = async ({ context: queryInterface }) => {
-  await queryInterface.createTable('binfiles', {
+  await queryInterface.createTable('applicationfiles', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -17,10 +17,6 @@ export const up: Migration = async ({ context: queryInterface }) => {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    belongs_to: {
-      type: DataTypes.ENUM('application', 'interview'),
-      defaultValue: 'application',
-    },
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -30,6 +26,28 @@ export const up: Migration = async ({ context: queryInterface }) => {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: { table: 'applications', key: 'id' },
+    },
+  });
+
+  await queryInterface.createTable('interviewfiles', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    filename: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false,
+    },
+    file_data: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: { table: 'users', key: 'id' },
     },
     interview_id: {
       type: DataTypes.INTEGER,
