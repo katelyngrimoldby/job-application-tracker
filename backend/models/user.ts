@@ -8,7 +8,7 @@ import {
   HasManyGetAssociationsMixin,
   HasManyAddAssociationMixin,
   HasManyRemoveAssociationMixin,
-  HasManyCountAssociationsMixin,
+  HasManyCreateAssociationMixin,
 } from '@sequelize/core';
 import {
   PrimaryKey,
@@ -43,20 +43,30 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare passwordHash: string;
 
   // One-to-Many associations
-  @HasMany(() => Application, 'userId')
+  @HasMany(() => Application, { foreignKey: 'userId', inverse: { as: 'user' } })
   declare applications?: NonAttribute<Application[]>;
 
-  @HasMany(() => Interview, 'userId')
+  @HasMany(() => Interview, { foreignKey: 'userId', inverse: { as: 'user' } })
   declare interviews?: NonAttribute<Interview[]>;
 
-  @HasMany(() => ApplicationFile, 'userId')
+  @HasMany(() => ApplicationFile, {
+    foreignKey: 'userId',
+    inverse: { as: 'user' },
+  })
   declare applicationFiles?: NonAttribute<ApplicationFile[]>;
 
-  @HasMany(() => InterviewFile, 'userId')
+  @HasMany(() => InterviewFile, {
+    foreignKey: 'userId',
+    inverse: { as: 'user' },
+  })
   declare interviewFiles?: NonAttribute<InterviewFile[]>;
 
   // application methods
   declare getApplications: HasManyGetAssociationsMixin<Application>;
+  declare createApplication: HasManyCreateAssociationMixin<
+    Application,
+    'userId'
+  >;
   declare addApplication: HasManyAddAssociationMixin<
     Application,
     Application['id']
@@ -65,19 +75,22 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
     Application,
     Application['id']
   >;
-  declare countApplications: HasManyCountAssociationsMixin<Application>;
 
   // interview methods
   declare getInterviews: HasManyGetAssociationsMixin<Interview>;
+  declare createInterview: HasManyCreateAssociationMixin<Interview, 'userId'>;
   declare addInterview: HasManyAddAssociationMixin<Interview, Interview['id']>;
   declare removeInterview: HasManyRemoveAssociationMixin<
     Interview,
     Interview['id']
   >;
-  declare countInterviews: HasManyCountAssociationsMixin<Interview>;
 
   // applicationFile methods
   declare getApplicationFiles: HasManyGetAssociationsMixin<ApplicationFile>;
+  declare createApplicationFile: HasManyCreateAssociationMixin<
+    ApplicationFile,
+    'userId'
+  >;
   declare addApplicationFile: HasManyAddAssociationMixin<
     ApplicationFile,
     ApplicationFile['id']
@@ -89,6 +102,10 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
 
   // interviewFile methods
   declare getInterviewFiles: HasManyGetAssociationsMixin<InterviewFile>;
+  declare createInterviewFile: HasManyCreateAssociationMixin<
+    InterviewFile,
+    'userId'
+  >;
   declare addInterviewFile: HasManyAddAssociationMixin<
     InterviewFile,
     InterviewFile['id']

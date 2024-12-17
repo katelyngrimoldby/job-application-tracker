@@ -7,6 +7,7 @@ import {
   NonAttribute,
   HasManyGetAssociationsMixin,
   HasManyAddAssociationMixin,
+  HasManyRemoveAssociationsMixin,
 } from '@sequelize/core';
 import {
   Attribute,
@@ -88,19 +89,33 @@ class Application extends Model<
   declare userId: number;
 
   // One-to-Many associations
-  @HasMany(() => Interview, 'applicationId')
+  @HasMany(() => Interview, {
+    foreignKey: 'applicationId',
+    inverse: { as: 'application' },
+  })
   declare interviews?: NonAttribute<Interview[]>;
 
-  @HasMany(() => ApplicationFile, 'applicationId')
+  @HasMany(() => ApplicationFile, {
+    foreignKey: 'applicationId',
+    inverse: { as: 'application' },
+  })
   declare files?: NonAttribute<ApplicationFile[]>;
 
   // Interview methods
   declare getInterviews: HasManyGetAssociationsMixin<Interview>;
   declare addInterview: HasManyAddAssociationMixin<Interview, Interview['id']>;
+  declare removeInterviews: HasManyRemoveAssociationsMixin<
+    Interview,
+    Interview['id']
+  >;
 
   // File methods
   declare getFiles: HasManyGetAssociationsMixin<ApplicationFile>;
   declare addFile: HasManyAddAssociationMixin<
+    ApplicationFile,
+    ApplicationFile['id']
+  >;
+  declare removeFiles: HasManyRemoveAssociationsMixin<
     ApplicationFile,
     ApplicationFile['id']
   >;
