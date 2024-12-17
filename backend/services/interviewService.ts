@@ -1,14 +1,15 @@
-import { Interview } from '../models';
+import { Application, Interview, User } from '../models';
 import { NewInterview } from '../types';
-import { getInterviewOrder } from '../util/filtrationHelper';
+import applicationService from './applicationService';
 
-const getAll = async (userId: number, order: string | undefined) => {
-  const sort = getInterviewOrder(order);
+const getAll = async (userId: number) => {
+  const user = await User.findByPk(userId);
 
-  const interviews = await Interview.findAll({
-    where: { userId: userId },
-    order: sort,
-  });
+  if (!user) {
+    throw new Error('Invalid permissions');
+  }
+
+  const interviews = await user.getInterviews();
 
   return interviews;
 };
@@ -23,25 +24,36 @@ const getOne = async (id: number, userId: number) => {
   return interview;
 };
 
-const getAllForApplication = async (
-  applicationId: number,
-  order: string | undefined
-) => {
-  const sort = getInterviewOrder(order);
+const getAllForApplication = async (applicationId: number) => {
+  const application = await Application.findByPk(applicationId);
 
-  const interviews = await Interview.findAll({
-    where: { applicationId: applicationId },
-    order: sort,
-  });
+  if (!application) {
+    throw new Error("Application doesn't exist");
+  }
+
+  const interviews = await application.getInterviews();
 
   return interviews;
 };
 
 const addNew = async (obj: NewInterview, userId: number) => {
-  const interview = await Interview.create({
-    ...obj,
-    userId: userId,
-  });
+  const user = await User.findByPk(userId);
+
+  if (!user) {
+    throw new Error('Invalid permissions');
+  }
+
+  const application = await applicationService.getOne(
+    obj.applicationId,
+    userId
+  );
+
+  if (!application) {
+    throw new Error("Application doesn't exist");
+  }
+
+  const interview = await user.createInterview(obj);
+  await application.addInterview(interview);
 
   return interview;
 };
@@ -53,21 +65,19 @@ const update = async (id: number, userId: number, obj: NewInterview) => {
     return null;
   }
 
-  const updatedInterview = await interview.update({
-    ...obj,
-  });
+  const updatedInterview = await interview.update(obj);
 
   return updatedInterview;
 };
 
 const remove = async (id: number, userId: number) => {
-  const interview = await getOne(id, userId);
+  const user = await User.findByPk(userId);
 
-  if (!interview) {
-    return null;
+  if (!user) {
+    throw new Error('Invalid permissions');
   }
 
-  await interview.destroy();
+  await user.removeInterview(id);
   return { message: 'Interview deleted' };
 };
 

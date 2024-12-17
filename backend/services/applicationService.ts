@@ -1,59 +1,54 @@
-import { Application } from '../models';
+import { Application, User } from '../models';
 import { NewApplication, Status } from '../types';
-import {
-  getApplicationFilter,
-  getApplicationOrder,
-} from '../util/filtrationHelper';
 
-const getAll = async (
-  id: number,
-  statusFilter: Status | undefined,
-  order: string | undefined
-) => {
-  const filter = getApplicationFilter(statusFilter);
-  const sort = getApplicationOrder(order);
+const getAll = async (userId: number) => {
+  const user = await User.findByPk(userId);
 
-  const jobs = await Application.findAll({
-    where: { ...filter, userId: id },
-    order: sort,
-  });
+  if (!user) {
+    throw new Error('Invalid permissions');
+  }
 
-  return jobs;
+  const applications = await user.getApplications();
+
+  return applications;
 };
 
 const getOne = async (id: number, userId: number) => {
-  const job = await Application.findByPk(id);
+  const application = await Application.findByPk(id);
 
-  if (job && job.userId !== userId) {
+  if (application && application.userId !== userId) {
     throw new Error('Invalid Permissions');
   }
 
-  return job;
+  return application;
 };
 
-const addNew = async (obj: NewApplication, id: number) => {
-  const job = await Application.create({
-    ...obj,
-    userId: id,
-  });
+const addNew = async (obj: NewApplication, userId: number) => {
+  const user = await User.findByPk(userId);
 
-  return job;
+  if (!user) {
+    throw new Error('Invalid permissions');
+  }
+
+  const application = await user.createApplication(obj);
+
+  return application;
 };
 
 const update = async (id: number, userId: number, obj: NewApplication) => {
-  const job = await getOne(id, userId);
+  const application = await getOne(id, userId);
 
-  if (!job) {
+  if (!application) {
     return null;
   }
 
   const addStatusDate = (
-    job: Application,
+    application: Application,
     obj: NewApplication
   ): object | null => {
     let alteredStatus: Status | null = null;
 
-    if (obj.status != job.status) {
+    if (obj.status != application.status) {
       alteredStatus = obj.status;
     }
 
@@ -71,22 +66,22 @@ const update = async (id: number, userId: number, obj: NewApplication) => {
     }
   };
 
-  const updatedJob = await job.update({
+  const updatedApplication = await application.update({
     ...obj,
-    ...addStatusDate(job, obj),
+    ...addStatusDate(application, obj),
   });
-  return updatedJob;
+  return updatedApplication;
 };
 
 const remove = async (id: number, userId: number) => {
-  const job = await getOne(id, userId);
+  const user = await User.findByPk(userId);
 
-  if (!job) {
-    return null;
+  if (!user) {
+    throw new Error('Invalid permissions');
   }
 
-  await job.destroy();
-  return { message: 'Job deleted' };
+  await user.removeApplication(id);
+  return { message: 'Application deleted' };
 };
 
 export default { getAll, getOne, addNew, update, remove };
