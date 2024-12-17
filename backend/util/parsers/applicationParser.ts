@@ -1,10 +1,5 @@
 import { NewApplication, Status } from '../../types';
-import {
-  parseOptionalString,
-  parseString,
-  parseFiles,
-  isStatus,
-} from './globalParsers';
+import { parseOptionalString, parseString, isStatus } from './globalParsers';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const toNewApplication = (obj: any): NewApplication => {
@@ -13,7 +8,6 @@ const toNewApplication = (obj: any): NewApplication => {
     company: parseString(obj.company, 'Company'),
     location: parseString(obj.location, 'Location'),
     status: parseStatus(obj.status),
-    files: parseFiles(obj.files),
     notes: parseOptionalString(obj.notes, 'Notes'),
     jobId: parseOptionalString(obj.jobId, 'Job ID'),
   };

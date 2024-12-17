@@ -24,7 +24,6 @@ export interface NewApplication {
   company: string;
   location: string;
   status: Status;
-  files: string[];
   notes: string;
   jobId: string;
 }
@@ -34,7 +33,6 @@ export interface NewInterview {
   contact: string;
   time: Date;
   website: string;
-  files: string[];
   notes: string;
 }
 
@@ -47,4 +45,12 @@ export interface NewUser {
 export interface AuthUser {
   username: string;
   password: string;
+}
+
+export interface NewFile {
+  filename: string;
+  fileData: string;
+  belongsTo: 'application' | 'interview';
+  applicationId: number | null;
+  interviewId: number | null;
 }

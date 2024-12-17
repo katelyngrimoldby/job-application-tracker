@@ -1,12 +1,12 @@
 import { Status } from '../../types';
 
 export const parseOptionalString = (text: unknown, key: string): string => {
-  if (!isString(text)) {
-    throw new Error(`Incorrect parameter: ${key}`);
+  if (text == null || text == undefined) {
+    return '';
   }
 
-  if (!text) {
-    return '';
+  if (!isString(text)) {
+    throw new Error(`Incorrect parameter: ${key}`);
   }
 
   return text;
@@ -18,26 +18,6 @@ export const parseString = (string: unknown, key: string): string => {
   }
 
   return string;
-};
-
-const parseFile = (file: unknown, key: string): string => {
-  if (!file || !isString(file)) {
-    throw new Error(`Incorrect or missing file: ${key}`);
-  } else if (!isFile(file)) {
-    throw new Error(`Invalid encoding for file: ${key}`);
-  }
-
-  return file;
-};
-
-export const parseFiles = (files: unknown): string[] => {
-  if (!files || !Array.isArray(files)) {
-    throw new Error('Missing file array');
-  }
-
-  return files.map((file: unknown, key: number): string =>
-    parseFile(file, `File #${key + 1}`)
-  );
 };
 
 export const parseDate = (date: unknown, key: string): Date => {
@@ -79,6 +59,6 @@ export const isStatus = (string: any): string is Status => {
   return Object.values(Status).includes(string);
 };
 
-const isFile = (file: string): boolean => {
-  return file.startsWith('data:application/pdf;base64,');
+export const isNumber = (num: unknown): num is number => {
+  return typeof num == 'number' || num instanceof Number;
 };
