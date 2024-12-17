@@ -9,7 +9,7 @@ const FileUploader = ({
   handleChange: (files: string[]) => void;
   initFiles: string[];
 }) => {
-  const { filesToBase64, filesToFile } = useFileConversion();
+  const { filesToBytes, filesToFile } = useFileConversion();
   const [files, setFiles] = useState<File[]>(filesToFile(initFiles));
   const fileInput = useRef<HTMLInputElement>(null);
 
@@ -21,8 +21,8 @@ const FileUploader = ({
 
     setFiles(fileArr);
 
-    const base64Files = await filesToBase64(fileArr);
-    handleChange(base64Files);
+    const binFiles = await filesToBytes(fileArr);
+    handleChange(binFiles);
   };
 
   const handleFileRemove = async (fileName: string) => {
@@ -30,8 +30,8 @@ const FileUploader = ({
 
     setFiles(fileArr);
 
-    const base64Files = await filesToBase64(fileArr);
-    handleChange(base64Files);
+    const binFiles = await filesToBytes(fileArr);
+    handleChange(binFiles);
   };
 
   return (
