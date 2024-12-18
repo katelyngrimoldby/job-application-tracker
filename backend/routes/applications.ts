@@ -1,9 +1,9 @@
 import express from 'express';
 import { RequestUserAuth } from '../types';
 import toNewApplication from '../util/parsers/applicationParser';
-import { parseFilter, parseSort } from '../util/parsers/queryParsers';
 import applicationService from '../services/applicationService';
 import interviewService from '../services/interviewService';
+import applicationFileService from '../services/applicationFileService';
 
 const applicationRouter = express.Router();
 
@@ -12,14 +12,7 @@ applicationRouter.get('/', async (req: RequestUserAuth, res) => {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  const filter = parseFilter(req.query.filter);
-  const sort = parseSort(req.query.sort);
-
-  const result = await applicationService.getAll(
-    req.decodedToken.id,
-    filter,
-    sort
-  );
+  const result = await applicationService.getAll(req.decodedToken.id);
 
   res.json(
     result.map((application) => {
@@ -58,20 +51,45 @@ applicationRouter.get('/:id/interviews', async (req: RequestUserAuth, res) => {
 
   const id = req.params.id;
 
-  const job = await applicationService.getOne(Number(id), req.decodedToken?.id);
+  const application = await applicationService.getOne(
+    Number(id),
+    req.decodedToken.id
+  );
 
-  if (!job) {
+  if (!application) {
     return res.status(404).end();
   }
 
-  const result = await interviewService.getAllForApplication(
-    Number(id),
-    'soonest'
-  );
+  const result = await interviewService.getAllForApplication(Number(id));
 
   res.json(
     result.map((interview) => {
       return { ...interview.dataValues };
+    })
+  );
+});
+
+applicationRouter.get('/:id/files', async (req: RequestUserAuth, res) => {
+  if (!req.decodedToken?.id) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  const id = req.params.id;
+
+  const application = await applicationService.getOne(
+    Number(id),
+    req.decodedToken?.id
+  );
+
+  if (!application) {
+    return res.status(404).end();
+  }
+
+  const result = await applicationFileService.getAllForApplication(Number(id));
+
+  res.json(
+    result.map((file) => {
+      return { ...file.dataValues };
     })
   );
 });

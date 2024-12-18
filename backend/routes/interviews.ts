@@ -1,8 +1,8 @@
 import express from 'express';
 import { RequestUserAuth } from '../types';
 import toNewInterview from '../util/parsers/interviewParser';
-import { parseSort } from '../util/parsers/queryParsers';
 import interviewService from '../services/interviewService';
+import interviewFileService from '../services/interviewFileService';
 
 const interviewRouter = express.Router();
 
@@ -11,9 +11,7 @@ interviewRouter.get('/', async (req: RequestUserAuth, res) => {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  const sort = parseSort(req.query.sort);
-
-  const result = await interviewService.getAll(req.decodedToken.id, sort);
+  const result = await interviewService.getAll(req.decodedToken.id);
 
   res.json(
     result.map((interview) => {
@@ -36,6 +34,26 @@ interviewRouter.get('/:id', async (req: RequestUserAuth, res) => {
   }
 
   res.json({ ...result.dataValues });
+});
+
+interviewRouter.get('/:id/files', async (req: RequestUserAuth, res) => {
+  if (!req.decodedToken?.id) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  const id = Number(req.params.id);
+
+  const interview = await interviewService.getOne(id, req.decodedToken.id);
+
+  if (!interview) return res.status(404).end();
+
+  const result = await interviewFileService.getAllForInterview(id);
+
+  res.json(
+    result.map((file) => {
+      return { ...file.dataValues };
+    })
+  );
 });
 
 interviewRouter.post('/', async (req: RequestUserAuth, res) => {
