@@ -9,6 +9,9 @@ import authRouter from './routes/auth';
 import userRouter from './routes/users';
 import applicationRouter from './routes/applications';
 import interviewRouter from './routes/interviews';
+import fileRouter from './routes/files';
+import applicationFileRouter from './routes/applicationFiles';
+import interviewFileRouter from './routes/interviewFiles';
 
 app.use(express.json());
 
@@ -24,6 +27,9 @@ app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
 app.use('/api/applications', tokenExtractor, applicationRouter);
 app.use('/api/interviews', tokenExtractor, interviewRouter);
+app.use('/api/files', tokenExtractor, fileRouter);
+app.use('/api/files/applicationFiles', tokenExtractor, applicationFileRouter);
+app.use('/api/files/interviewFiles', tokenExtractor, interviewFileRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.get('*', (_req, res) => {
