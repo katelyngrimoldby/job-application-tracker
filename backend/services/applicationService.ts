@@ -80,7 +80,13 @@ const remove = async (id: number, userId: number) => {
     throw new Error('Invalid permissions');
   }
 
-  await user.removeApplication(id);
+  const application = await getOne(id, userId);
+
+  if (!application) return null;
+
+  await application.removeInterviews();
+  await application.removeFiles();
+  await user.removeApplication(application);
   return { message: 'Application deleted' };
 };
 

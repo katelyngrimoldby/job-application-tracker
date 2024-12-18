@@ -77,7 +77,12 @@ const remove = async (id: number, userId: number) => {
     throw new Error('Invalid permissions');
   }
 
-  await user.removeInterview(id);
+  const interview = await getOne(id, userId);
+
+  if (!interview) return null;
+
+  await interview.removeFiles();
+  await user.removeInterview(interview);
   return { message: 'Interview deleted' };
 };
 
