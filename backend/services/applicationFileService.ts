@@ -75,4 +75,4 @@ const remove = async (id: number, userId: number) => {
   return { message: 'File deleted' };
 };
 
-export { getAll, getOne, getAllForApplication, addNew, update, remove };
+export default { getAll, getOne, getAllForApplication, addNew, update, remove };
