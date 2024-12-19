@@ -1,13 +1,19 @@
 import supertest from 'supertest';
 import app from '../app';
 import { redis, sequelize, connectToDatabase } from '../util/db';
-import { User, Application, Interview } from '../models';
+import {
+  User,
+  Application,
+  Interview,
+  ApplicationFile,
+  InterviewFile,
+} from '../models';
 import helper from '../util/testHelper';
 import userService from '../services/userService';
 import authService from '../services/authService';
 import applicationService from '../services/applicationService';
-import toNewApplication from '../util/parsers/applicationParser';
 import interviewService from '../services/interviewService';
+import applicationFileService from '../services/applicationFileService';
 
 const api = supertest(app);
 
@@ -24,6 +30,8 @@ describe('Job application management', () => {
     await Application.truncate({ cascade: true });
     await User.truncate({ cascade: true });
     await Interview.truncate({ cascade: true });
+    await ApplicationFile.truncate({ cascade: true });
+    await InterviewFile.truncate({ cascade: true });
 
     const user = helper.initialUsers[0];
 
@@ -37,10 +45,7 @@ describe('Job application management', () => {
 
   describe('Viewing all job applications', () => {
     beforeEach(async () => {
-      await applicationService.addNew(
-        toNewApplication(helper.initialApplications[1]),
-        userId
-      );
+      await applicationService.addNew(helper.initialApplications[1], userId);
     });
     it('Returns array of applications', async () => {
       const response = await api
@@ -49,7 +54,7 @@ describe('Job application management', () => {
 
       expect(response.body).toHaveLength(2);
       expect(response.body[0]).toEqual({
-        ...helper.initialApplications[1],
+        ...helper.initialApplications[0],
         id: expect.any(Number),
         userId,
         applyDate: expect.any(String),
@@ -57,7 +62,6 @@ describe('Job application management', () => {
         interviewDate: null,
         offerDate: null,
         rejectionDate: null,
-        files: expect.any(Array<string>),
       });
     });
   });
@@ -66,11 +70,7 @@ describe('Job application management', () => {
     let applicationId: number;
 
     beforeEach(async () => {
-      const applications = await applicationService.getAll(
-        userId,
-        undefined,
-        undefined
-      );
+      const applications = await applicationService.getAll(userId);
 
       applicationId = applications[0].id;
     });
@@ -110,7 +110,6 @@ describe('Job application management', () => {
         interviewDate: null,
         offerDate: null,
         rejectionDate: null,
-        files: [],
       });
     });
   });
@@ -119,11 +118,7 @@ describe('Job application management', () => {
     let applicationId: number;
 
     beforeEach(async () => {
-      const applications = await applicationService.getAll(
-        userId,
-        undefined,
-        undefined
-      );
+      const applications = await applicationService.getAll(userId);
 
       applicationId = applications[0].id;
 
@@ -161,14 +156,10 @@ describe('Job application management', () => {
     it('Returns empty array if applications does not have interviews', async () => {
       await applicationService.addNew(helper.initialApplications[1], userId);
 
-      const applications = await applicationService.getAll(
-        userId,
-        undefined,
-        undefined
-      );
+      const applications = await applicationService.getAll(userId);
 
       const response = await api
-        .get(`/api/applications/${applications[0].id}/interviews`)
+        .get(`/api/applications/${applications[1].id}/interviews`)
         .set('authorization', `bearer ${userToken}`);
 
       expect(response.body).toStrictEqual([]);
@@ -186,7 +177,72 @@ describe('Job application management', () => {
         userId,
         applicationId,
         time: helper.initialInterviews[0].time.toISOString(),
-        files: expect.any(Array<string>),
+      });
+    });
+  });
+
+  describe('Viewing all files for an application', () => {
+    let applicationId: number;
+
+    beforeEach(async () => {
+      const applications = await applicationService.getAll(userId);
+
+      applicationId = applications[0].id;
+
+      await applicationFileService.addNew(
+        { ...helper.sampleFiles[0], applicationId },
+        userId
+      );
+      await applicationFileService.addNew(
+        { ...helper.sampleFiles[1], applicationId },
+        userId
+      );
+    });
+
+    it('Returns invalid perms error if incorrect user views files', async () => {
+      const user = helper.initialUsers[1];
+      await userService.addNew(user);
+      const userAuth = await authService.login(user.username, user.password);
+
+      const response = await api
+        .get(`/api/applications/${applicationId}/files`)
+        .set('authorization', `bearer ${userAuth.accessToken}`);
+
+      expect(response.status).toBe(401);
+      expect(response.body).toEqual({ error: 'Invalid Permissions' });
+    });
+
+    it('Returns 404 if files cannot be found', async () => {
+      const response = await api
+        .get(`/api/applications/${applicationId + 10}/files`)
+        .set('authorization', `bearer ${userToken}`);
+
+      expect(response.status).toBe(404);
+    });
+
+    it('Returns empty array if application does not have files', async () => {
+      await applicationService.addNew(helper.initialApplications[1], userId);
+
+      const applications = await applicationService.getAll(userId);
+
+      const response = await api
+        .get(`/api/applications/${applications[1].id}/files`)
+        .set('authorization', `bearer ${userToken}`);
+
+      expect(response.body).toStrictEqual([]);
+    });
+
+    it('Returns array of files if successful', async () => {
+      const response = await api
+        .get(`/api/applications/${applicationId}/files`)
+        .set('authorization', `bearer ${userToken}`);
+
+      expect(response.body).toHaveLength(2);
+      expect(response.body[0]).toEqual({
+        ...helper.sampleFiles[0],
+        id: expect.any(Number),
+        userId,
+        applicationId,
       });
     });
   });
@@ -207,7 +263,6 @@ describe('Job application management', () => {
         interviewDate: null,
         offerDate: null,
         rejectionDate: null,
-        files: expect.any(Array<string>),
       });
     });
   });
@@ -216,11 +271,7 @@ describe('Job application management', () => {
     let applicationId: number;
 
     beforeEach(async () => {
-      const applications = await applicationService.getAll(
-        userId,
-        undefined,
-        undefined
-      );
+      const applications = await applicationService.getAll(userId);
 
       applicationId = applications[0].id;
     });
@@ -263,7 +314,6 @@ describe('Job application management', () => {
         interviewDate: null,
         offerDate: null,
         rejectionDate: expect.any(String),
-        files: expect.any(Array<string>),
       });
     });
   });
@@ -272,11 +322,7 @@ describe('Job application management', () => {
     let applicationId: number;
 
     beforeEach(async () => {
-      const jobs = await applicationService.getAll(
-        userId,
-        undefined,
-        undefined
-      );
+      const jobs = await applicationService.getAll(userId);
 
       applicationId = jobs[0].id;
     });

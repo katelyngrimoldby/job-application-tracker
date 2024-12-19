@@ -1,7 +1,13 @@
 import supertest from 'supertest';
 import app from '../app';
 import { redis, sequelize, connectToDatabase } from '../util/db';
-import { User, Application, Interview } from '../models';
+import {
+  User,
+  Application,
+  Interview,
+  ApplicationFile,
+  InterviewFile,
+} from '../models';
 import helper from '../util/testHelper';
 import userService from '../services/userService';
 
@@ -17,6 +23,8 @@ describe('User management', () => {
     await Application.truncate({ cascade: true });
     await Interview.truncate({ cascade: true });
     await User.truncate({ cascade: true });
+    await ApplicationFile.truncate({ cascade: true });
+    await InterviewFile.truncate({ cascade: true });
 
     await userService.addNew(helper.initialUsers[0]);
   });

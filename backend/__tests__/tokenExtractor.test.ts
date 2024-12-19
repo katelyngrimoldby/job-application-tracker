@@ -1,5 +1,11 @@
 import { redis, sequelize, connectToDatabase } from '../util/db';
-import { User, Application, Interview } from '../models';
+import {
+  User,
+  Application,
+  Interview,
+  ApplicationFile,
+  InterviewFile,
+} from '../models';
 import helper from '../util/testHelper';
 import { NextFunction, Response } from 'express';
 import { RequestUserAuth } from '../types';
@@ -21,6 +27,8 @@ describe('Token extractor middleware', () => {
     await Application.truncate({ cascade: true });
     await Interview.truncate({ cascade: true });
     await User.truncate({ cascade: true });
+    await ApplicationFile.truncate({ cascade: true });
+    await InterviewFile.truncate({ cascade: true });
 
     await userService.addNew(helper.initialUsers[0]);
 
