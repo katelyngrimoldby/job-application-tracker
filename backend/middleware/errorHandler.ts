@@ -23,7 +23,12 @@ const errorHandler = (
   ) {
     return res.status(401).json({ error: err.message });
   }
-
+  if (
+    err.message === "Application doesn't exist" ||
+    err.message === "Interview doesn't exist"
+  ) {
+    return res.status(404).end();
+  }
   return res.status(400).json({ error: err.message });
   next(err);
 };
