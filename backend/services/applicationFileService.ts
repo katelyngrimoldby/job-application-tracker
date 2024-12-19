@@ -5,7 +5,7 @@ const getAll = async (userId: number) => {
   const user = await User.findByPk(userId);
 
   if (!user) {
-    throw new Error('Invalid permissions');
+    throw new Error('Invalid Permissions');
   }
 
   const files = await user.getApplicationFiles();
@@ -17,7 +17,7 @@ const getOne = async (id: number, userId: number) => {
   const file = await ApplicationFile.findByPk(id);
 
   if (file && file.userId != userId) {
-    throw new Error('Invalid permissions');
+    throw new Error('Invalid Permissions');
   }
 
   return file;
@@ -30,7 +30,7 @@ const getAllForApplication = async (applicationId: number) => {
     throw new Error("Application doesn't exist");
   }
 
-  const files = await application.getFiles();
+  const files = await application.getApplicationFiles();
 
   return files;
 };
@@ -39,7 +39,7 @@ const addNew = async (obj: NewApplicationFile, userId: number) => {
   const user = await User.findByPk(userId);
 
   if (!user) {
-    throw new Error('Invalid permissions');
+    throw new Error('Invalid Permissions');
   }
 
   const application = await Application.findByPk(obj.applicationId);
@@ -49,7 +49,7 @@ const addNew = async (obj: NewApplicationFile, userId: number) => {
   }
 
   const file = await user.createApplicationFile(obj);
-  await application.addFile(file);
+  await application.addApplicationFile(file);
 
   return file;
 };
@@ -68,10 +68,14 @@ const remove = async (id: number, userId: number) => {
   const user = await User.findByPk(userId);
 
   if (!user) {
-    throw new Error('Invalid permissions');
+    throw new Error('Invalid Permissions');
   }
 
-  await user.removeApplicationFile(id);
+  const file = await getOne(id, userId);
+
+  if (!file) return null;
+
+  await user.removeApplicationFile(file);
   return { message: 'File deleted' };
 };
 
