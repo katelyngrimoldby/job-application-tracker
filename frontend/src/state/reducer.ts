@@ -1,5 +1,11 @@
 import { State } from './state';
-import { Application, Interview, User } from '../types';
+import {
+  Application,
+  Interview,
+  User,
+  ApplicationFile,
+  InterviewFile,
+} from '../types';
 
 export type Action =
   | {
@@ -19,10 +25,6 @@ export type Action =
       payload: number;
     }
   | {
-      type: 'SET_CURRENT_USER';
-      payload: User;
-    }
-  | {
       type: 'SET_INTERVIEW_LIST';
       payload: Interview[];
     }
@@ -37,6 +39,42 @@ export type Action =
   | {
       type: 'REMOVE_INTERVIEW';
       payload: number;
+    }
+  | {
+      type: 'SET_APPLICATIONFILE_LIST';
+      payload: ApplicationFile[];
+    }
+  | {
+      type: 'ADD_APPLICATIONFILE';
+      payload: ApplicationFile;
+    }
+  | {
+      type: 'UPDATE_APPLICATIONFILE';
+      payload: ApplicationFile;
+    }
+  | {
+      type: 'REMOVE_APPLICATIONFILE';
+      payload: number;
+    }
+  | {
+      type: 'SET_INTERVIEWFILE_LIST';
+      payload: InterviewFile[];
+    }
+  | {
+      type: 'ADD_INTERVIEWFILE';
+      payload: InterviewFile;
+    }
+  | {
+      type: 'UPDATE_INTERVIEWFILE';
+      payload: InterviewFile;
+    }
+  | {
+      type: 'REMOVE_INTERVIEWFILE';
+      payload: number;
+    }
+  | {
+      type: 'SET_CURRENT_USER';
+      payload: User;
     }
   | {
       type: 'CLEAR_CURRENT_USER';
@@ -77,6 +115,38 @@ export const updateInterview = (payload: Interview): Action => {
 
 export const removeInterview = (id: number): Action => {
   return { type: 'REMOVE_INTERVIEW', payload: id };
+};
+
+export const setApplicationFileList = (payload: ApplicationFile[]): Action => {
+  return { type: 'SET_APPLICATIONFILE_LIST', payload: payload };
+};
+
+export const addApplicationFile = (payload: ApplicationFile): Action => {
+  return { type: 'ADD_APPLICATIONFILE', payload: payload };
+};
+
+export const updateApplicationFile = (payload: ApplicationFile): Action => {
+  return { type: 'UPDATE_APPLICATIONFILE', payload: payload };
+};
+
+export const removeApplicationFile = (id: number): Action => {
+  return { type: 'REMOVE_APPLICATIONFILE', payload: id };
+};
+
+export const setInterviewFileList = (payload: InterviewFile[]): Action => {
+  return { type: 'SET_INTERVIEWFILE_LIST', payload: payload };
+};
+
+export const addInterviewFile = (payload: InterviewFile): Action => {
+  return { type: 'ADD_INTERVIEWFILE', payload: payload };
+};
+
+export const updateInterviewFile = (payload: InterviewFile): Action => {
+  return { type: 'UPDATE_INTERVIEWFILE', payload: payload };
+};
+
+export const removeInterviewFile = (id: number): Action => {
+  return { type: 'REMOVE_INTERVIEWFILE', payload: id };
 };
 
 export const setCurrentUser = (payload: User): Action => {
@@ -146,6 +216,66 @@ export const reducer = (state: State, action: Action): State => {
         interviews: [
           ...state.interviews.filter(
             (interview) => interview.id !== action.payload
+          ),
+        ],
+      };
+    case 'SET_APPLICATIONFILE_LIST':
+      return {
+        ...state,
+        applicationFiles: action.payload,
+      };
+    case 'ADD_APPLICATIONFILE':
+      return {
+        ...state,
+        applicationFiles: [action.payload, ...state.applicationFiles],
+      };
+    case 'UPDATE_APPLICATIONFILE':
+      return {
+        ...state,
+        applicationFiles: [
+          ...state.applicationFiles.map((applicationFile) =>
+            applicationFile.id !== action.payload.id
+              ? applicationFile
+              : action.payload
+          ),
+        ],
+      };
+    case 'REMOVE_APPLICATIONFILE':
+      return {
+        ...state,
+        applicationFiles: [
+          ...state.applicationFiles.filter(
+            (applicationFile) => applicationFile.id !== action.payload
+          ),
+        ],
+      };
+    case 'SET_INTERVIEWFILE_LIST':
+      return {
+        ...state,
+        interviewFiles: action.payload,
+      };
+    case 'ADD_INTERVIEWFILE':
+      return {
+        ...state,
+        interviewFiles: [action.payload, ...state.interviewFiles],
+      };
+    case 'UPDATE_INTERVIEWFILE':
+      return {
+        ...state,
+        interviewFiles: [
+          ...state.interviewFiles.map((interviewFile) =>
+            interviewFile.id !== action.payload.id
+              ? interviewFile
+              : action.payload
+          ),
+        ],
+      };
+    case 'REMOVE_INTERVIEWFILE':
+      return {
+        ...state,
+        interviewFiles: [
+          ...state.interviewFiles.filter(
+            (interviewFile) => interviewFile.id !== action.payload
           ),
         ],
       };

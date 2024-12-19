@@ -1,10 +1,18 @@
 import { createContext, useContext, useReducer } from 'react';
 import { Action } from './reducer';
-import { Application, Interview, User } from '../types';
+import {
+  Application,
+  Interview,
+  User,
+  ApplicationFile,
+  InterviewFile,
+} from '../types';
 
 export type State = {
   applications: Application[];
   interviews: Interview[];
+  applicationFiles: ApplicationFile[];
+  interviewFiles: InterviewFile[];
   user: User | null;
   theme: 'light' | 'dark';
 };
@@ -12,6 +20,8 @@ export type State = {
 const initialState: State = {
   applications: [],
   interviews: [],
+  applicationFiles: [],
+  interviewFiles: [],
   user: null,
   theme: window.matchMedia('(prefers-color-scheme: dark') ? 'dark' : 'light',
 };
