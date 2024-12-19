@@ -60,15 +60,15 @@ class Interview extends Model<
     foreignKey: 'interviewId',
     inverse: { as: 'interview' },
   })
-  declare files?: NonAttribute<InterviewFile[]>;
+  declare interviewFiles?: NonAttribute<InterviewFile[]>;
 
   // File methods
-  declare getFiles: HasManyGetAssociationsMixin<InterviewFile>;
-  declare addFile: HasManyAddAssociationMixin<
+  declare getInterviewFiles: HasManyGetAssociationsMixin<InterviewFile>;
+  declare addInterviewFile: HasManyAddAssociationMixin<
     InterviewFile,
     InterviewFile['id']
   >;
-  declare removeFiles: HasManyRemoveAssociationsMixin<
+  declare removeInterviewFiles: HasManyRemoveAssociationsMixin<
     InterviewFile,
     InterviewFile['id']
   >;

@@ -99,7 +99,7 @@ class Application extends Model<
     foreignKey: 'applicationId',
     inverse: { as: 'application' },
   })
-  declare files?: NonAttribute<ApplicationFile[]>;
+  declare applicationFiles?: NonAttribute<ApplicationFile[]>;
 
   // Interview methods
   declare getInterviews: HasManyGetAssociationsMixin<Interview>;
@@ -110,12 +110,12 @@ class Application extends Model<
   >;
 
   // File methods
-  declare getFiles: HasManyGetAssociationsMixin<ApplicationFile>;
-  declare addFile: HasManyAddAssociationMixin<
+  declare getApplicationFiles: HasManyGetAssociationsMixin<ApplicationFile>;
+  declare addApplicationFile: HasManyAddAssociationMixin<
     ApplicationFile,
     ApplicationFile['id']
   >;
-  declare removeFiles: HasManyRemoveAssociationsMixin<
+  declare removeApplicationFiles: HasManyRemoveAssociationsMixin<
     ApplicationFile,
     ApplicationFile['id']
   >;
