@@ -85,7 +85,7 @@ const remove = async (id: number, userId: number) => {
   if (!application) return null;
 
   await application.removeInterviews();
-  await application.removeFiles();
+  await application.removeApplicationFiles();
   await user.removeApplication(application);
   return { message: 'Application deleted' };
 };

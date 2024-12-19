@@ -81,7 +81,7 @@ const remove = async (id: number, userId: number) => {
 
   if (!interview) return null;
 
-  await interview.removeFiles();
+  await interview.removeInterviewFiles();
   await user.removeInterview(interview);
   return { message: 'Interview deleted' };
 };
