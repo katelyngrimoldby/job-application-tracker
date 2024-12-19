@@ -52,18 +52,23 @@ const update = async (id: number, userId: number, obj: NewApplication) => {
       alteredStatus = obj.status;
     }
 
-    switch (alteredStatus) {
-      case Status.Assessments:
-        return { assessmentDate: new Date() };
-      case Status.Interviewing:
-        return { interviewDate: new Date() };
-      case Status.Offered:
-        return { offerDate: new Date() };
-      case Status.Rejected:
-        return { rejectionDate: new Date() };
-      default:
-        return null;
-    }
+    if (application.assessmentDate)
+      return { assessmentDate: application.assessmentDate };
+    else if (alteredStatus == ('assessments' as Status))
+      return { assessmentDate: new Date() };
+    if (application.interviewDate)
+      return { interviewDate: application.interviewDate };
+    else if (alteredStatus == ('interviewing' as Status))
+      return { interviewDate: new Date() };
+    if (application.rejectionDate)
+      return { rejectionDate: application.rejectionDate };
+    else if (alteredStatus == ('rejected' as Status))
+      return { rejectionDate: new Date() };
+    if (application.offerDate) return { offerDate: application.offerDate };
+    else if (alteredStatus == ('offered' as Status))
+      return { offerDate: new Date() };
+
+    return null;
   };
 
   const updatedApplication = await application.update({
