@@ -3,7 +3,13 @@ import { PostgresDialect } from '@sequelize/postgres';
 import { createClient } from 'redis';
 import { Umzug, SequelizeStorage } from 'umzug';
 import { POSTGRES_DB, POSTGRES_USER, POSTGRES_PASS, REDIS_URL } from './config';
-import { Application, User, Interview } from '../models';
+import {
+  Application,
+  User,
+  Interview,
+  ApplicationFile,
+  InterviewFile,
+} from '../models';
 
 const sequelize = new Sequelize({
   dialect: PostgresDialect,
@@ -13,7 +19,7 @@ const sequelize = new Sequelize({
   define: {
     underscored: true,
   },
-  models: [User, Application, Interview],
+  models: [User, Application, Interview, ApplicationFile, InterviewFile],
 });
 const redis = createClient({
   url: REDIS_URL,
