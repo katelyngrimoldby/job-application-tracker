@@ -2,7 +2,7 @@ import { DataTypes } from '@sequelize/core';
 import type { Migration } from '../util/db';
 
 export const up: Migration = async ({ context: queryInterface }) => {
-  await queryInterface.createTable('applicationfiles', {
+  await queryInterface.createTable('application_files', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -29,7 +29,7 @@ export const up: Migration = async ({ context: queryInterface }) => {
     },
   });
 
-  await queryInterface.createTable('interviewfiles', {
+  await queryInterface.createTable('interview_files', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -61,7 +61,8 @@ export const up: Migration = async ({ context: queryInterface }) => {
 };
 
 export const down: Migration = async ({ context: queryInterface }) => {
-  await queryInterface.dropTable('binfiles');
+  await queryInterface.dropTable('application_files', { cascade: true });
+  await queryInterface.dropTable('interview_files', { cascade: true });
   await queryInterface.addColumn('applications', 'files', {
     type: DataTypes.ARRAY(DataTypes.TEXT),
     allowNull: false,
