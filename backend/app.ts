@@ -28,8 +28,8 @@ app.use('/api/users', userRouter);
 app.use('/api/applications', tokenExtractor, applicationRouter);
 app.use('/api/interviews', tokenExtractor, interviewRouter);
 app.use('/api/files', tokenExtractor, fileRouter);
-app.use('/api/files/applicationFiles', tokenExtractor, applicationFileRouter);
-app.use('/api/files/interviewFiles', tokenExtractor, interviewFileRouter);
+app.use('/api/files/application', tokenExtractor, applicationFileRouter);
+app.use('/api/files/interview', tokenExtractor, interviewFileRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.get('*', (_req, res) => {
