@@ -1,13 +1,14 @@
 import { useState, useRef } from 'react';
 import useFileConversion from '../hooks/useFileConversion';
 import styles from '../styles/components/FileUploader.module.css';
+import { ApplicationFile, InterviewFile } from '../types';
 
 const FileUploader = ({
   handleChange,
   initFiles,
 }: {
-  handleChange: (files: string[]) => void;
-  initFiles: string[];
+  handleChange: (files: { fileData: string; filename: string }[]) => void;
+  initFiles: ApplicationFile[] | InterviewFile[];
 }) => {
   const { filesToBytes, filesToFile } = useFileConversion();
   const [files, setFiles] = useState<File[]>(filesToFile(initFiles));
