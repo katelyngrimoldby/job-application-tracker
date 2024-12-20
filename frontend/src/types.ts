@@ -24,16 +24,17 @@ export interface Interview {
   userId: number;
 }
 
-export interface ApplicationFile {
+export interface BasicFile {
   filename: string;
   fileData: string;
+}
+
+export interface ApplicationFile extends BasicFile {
   id: number;
   applicationId: number;
 }
 
-export interface InterviewFile {
-  filename: string;
-  fileData: string;
+export interface InterviewFile extends BasicFile {
   id: number;
   interviewId: number;
 }
