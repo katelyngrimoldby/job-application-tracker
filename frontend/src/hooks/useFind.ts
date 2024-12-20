@@ -3,7 +3,8 @@ import { useMatch } from 'react-router-dom';
 import { useStateValue } from '../state';
 
 const useFind = () => {
-  const [{ applications, interviews }] = useStateValue();
+  const [{ applications, interviews, applicationFiles, interviewFiles }] =
+    useStateValue();
 
   const searchApplications = (id: number) => {
     const application = Object.values(applications).find(
@@ -39,7 +40,7 @@ const useFind = () => {
     return interview;
   };
 
-  const findApplicationForInterview = (id: Number) => {
+  const findApplicationForInterview = (id: number) => {
     const foundApplication = applications.find(
       (application) => application.id === id
     );
@@ -65,8 +66,16 @@ const useFind = () => {
       } as Application;
   };
 
-  const findInterviewsForApplication = (id: Number) => {
+  const findInterviewsForApplication = (id: number) => {
     return interviews.filter((interview) => interview.applicationId === id);
+  };
+
+  const findFilesForApplication = (id: number) => {
+    return applicationFiles.filter((file) => file.applicationId === id);
+  };
+
+  const findFilesForInterview = (id: number) => {
+    return interviewFiles.filter((file) => file.interviewId === id);
   };
 
   return {
@@ -74,6 +83,8 @@ const useFind = () => {
     findInterview,
     findApplicationForInterview,
     findInterviewsForApplication,
+    findFilesForApplication,
+    findFilesForInterview,
   };
 };
 
