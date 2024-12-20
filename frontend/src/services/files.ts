@@ -141,12 +141,4 @@ const removeIF = async (token: string, userId: number, id: number) => {
   return response.data;
 };
 
-export default {
-  getAll,
-  addNewAF,
-  addNewIF,
-  editAF,
-  editIF,
-  removeAF,
-  removeIF,
-};
+export { getAll, addNewAF, addNewIF, editAF, editIF, removeAF, removeIF };
