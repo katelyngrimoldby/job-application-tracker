@@ -1,14 +1,25 @@
 import { Application, User } from '../models';
 import { NewApplication, Status } from '../types';
+import { getFilter, getOrder } from '../util/filtrationHelper';
 
-const getAll = async (userId: number) => {
+const getAll = async (
+  userId: number,
+  statusFilter: Status | undefined,
+  order: string | undefined
+) => {
   const user = await User.findByPk(userId);
 
   if (!user) {
     throw new Error('Invalid permissions');
   }
 
-  const applications = await user.getApplications();
+  const filter = getFilter(statusFilter);
+  const sort = getOrder(order);
+
+  const applications = await user.getApplications({
+    where: filter,
+    order: sort,
+  });
 
   return applications;
 };
