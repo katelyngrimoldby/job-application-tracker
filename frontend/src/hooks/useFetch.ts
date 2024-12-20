@@ -1,12 +1,15 @@
 import { isAxiosError } from 'axios';
 import { getAll as getAllApplications } from '../services/applications';
 import { getAll as getAllInterviews } from '../services/interviews';
+import { getAll as getAllFiles } from '../services/files';
 import { getSession } from '../services/userAuth';
 import {
   useStateValue,
   setCurrentUser,
   setApplicationList,
   setInterviewList,
+  setApplicationFileList,
+  setInterviewFileList,
 } from '../state';
 import useErrorHandler from './useErrorHandler';
 
@@ -46,6 +49,10 @@ const useFetch = () => {
         const interviews = await getAllInterviews(userAuth.accessToken, id);
         dispatch(setInterviewList(interviews));
       }
+
+      const files = await getAllFiles(userAuth.accessToken, id);
+      dispatch(setApplicationFileList(files.applicationFiles));
+      dispatch(setInterviewFileList(files.interviewFiles));
     } catch (err) {
       if (isAxiosError(err)) {
         handleError(err.response?.data.error);
