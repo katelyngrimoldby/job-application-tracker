@@ -4,7 +4,7 @@ import useInput from '../hooks/useInput';
 import useDateFormat from '../hooks/useDateFormat';
 import useFind from '../hooks/useFind';
 import { useStateValue } from '../state';
-import { Interview, NewInterview } from '../types';
+import { BasicFile, Interview, InterviewFile, NewInterview } from '../types';
 import FileUploader from './FileUploader';
 import RichTextEditor from './RichTextEditor';
 import Dropdown from './Dropdown';
@@ -12,12 +12,18 @@ import styles from '../styles/components/ContentForm.module.css';
 
 const InterviewForm = ({
   content,
+  initFiles,
   handleUpdate,
   handleAddition,
 }: {
   content?: Interview;
-  handleUpdate?: (interview: NewInterview, id: number) => void;
-  handleAddition?: (interview: NewInterview) => void;
+  initFiles?: InterviewFile[];
+  handleUpdate?: (
+    interview: NewInterview,
+    id: number,
+    files: BasicFile[]
+  ) => void;
+  handleAddition?: (interview: NewInterview, files: BasicFile[]) => void;
 }) => {
   const { getDateTimeValue } = useDateFormat();
   const [{ applications }] = useStateValue();
@@ -41,9 +47,18 @@ const InterviewForm = ({
     content ? getDateTimeValue(content.time) : ''
   );
   const [notes, setNotes] = useState(content ? content.notes : '');
-  const [files, setFiles] = useState(content ? content.files : []);
+  const [files, setFiles] = useState(
+    initFiles
+      ? initFiles.map((file) => {
+          return {
+            filename: file.filename,
+            fileData: file.fileData,
+          } as BasicFile;
+        })
+      : []
+  );
 
-  const getConvertedFiles = (files: string[]) => {
+  const getConvertedFiles = (files: BasicFile[]) => {
     setFiles(files);
   };
 
@@ -54,7 +69,6 @@ const InterviewForm = ({
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const submission: NewInterview = {
-      files,
       notes,
       applicationId,
       time: new Date(dateTime.value),
@@ -64,9 +78,9 @@ const InterviewForm = ({
     if (website.value) submission.website = website.value;
 
     if (content) {
-      if (handleUpdate) handleUpdate(submission, content.id);
+      if (handleUpdate) handleUpdate(submission, content.id, files);
     } else {
-      if (handleAddition) handleAddition(submission);
+      if (handleAddition) handleAddition(submission, files);
     }
   };
 
@@ -127,7 +141,7 @@ const InterviewForm = ({
           <label htmlFor='files'>Files</label>
           <FileUploader
             handleChange={getConvertedFiles}
-            initFiles={files}
+            initFiles={initFiles ? initFiles : []}
           />
         </div>
       </div>

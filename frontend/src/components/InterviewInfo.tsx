@@ -16,11 +16,11 @@ const InterviewInfo = ({
   handleDelete: () => void;
 }) => {
   const { getDateTime } = useDateFormat();
-  const { findApplicationForInterview } = useFind();
+  const { findApplicationForInterview, findFilesForInterview } = useFind();
   const { filesToFile } = useFileConversion();
 
   const application = findApplicationForInterview(interview.applicationId);
-  const files = filesToFile(interview.files);
+  const files = filesToFile(findFilesForInterview(interview.id));
 
   return (
     <>
