@@ -1,5 +1,7 @@
+import { ApplicationFile, BasicFile, InterviewFile } from '../types';
+
 const useFileConversion = () => {
-  const toBytes = (file: File): Promise<string> => {
+  const toBytes = (file: File): Promise<BasicFile> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -7,7 +9,7 @@ const useFileConversion = () => {
         const base64 = reader.result as string;
         const base64Data = base64.replace(/^data:.+;base64,/, '');
         const byteCharacters = atob(base64Data);
-        resolve(byteCharacters);
+        resolve({ fileData: byteCharacters, filename: file.name });
       };
       reader.onerror = (error) => reject(error);
     });
@@ -36,8 +38,8 @@ const useFileConversion = () => {
     return file;
   };
 
-  const filesToFile = (files: string[]) => {
-    return files.map((file, index) => toFile(file, `File ${index + 1}`));
+  const filesToFile = (files: ApplicationFile[] | InterviewFile[]) => {
+    return files.map((file) => toFile(file.fileData, file.filename));
   };
 
   return { filesToBytes, filesToFile };
