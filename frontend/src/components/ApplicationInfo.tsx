@@ -3,7 +3,7 @@ import useDateFormat from '../hooks/useDateFormat';
 import useFind from '../hooks/useFind';
 import useFileConversion from '../hooks/useFileConversion';
 import useStatusFormat from '../hooks/useStatusFormat';
-import { Application, Interview } from '../types';
+import { Application, ApplicationFile, Interview } from '../types';
 import ReadOnlyRichText from './RichTextEditor/ReadOnly';
 import PencilIcon from './icons/PencilIcon';
 import TrashIcon from './icons/TrashIcon';
@@ -11,9 +11,11 @@ import styles from '../styles/components/ApplicationInfo.module.css';
 
 const ApplicationInfo = ({
   application,
+  files,
   handleDelete,
 }: {
   application: Application;
+  files: ApplicationFile[];
   handleDelete: (interviews: Interview[]) => void;
 }) => {
   const { getLongDate, getDateTime } = useDateFormat();
@@ -22,7 +24,7 @@ const ApplicationInfo = ({
   const status = useStatusFormat(application.status);
 
   const interviews = findInterviewsForApplication(application.id);
-  const files = filesToFile(application.files);
+  const convertedFiles = filesToFile(files);
 
   return (
     <>
@@ -89,8 +91,8 @@ const ApplicationInfo = ({
         <h2>Files and Notes</h2>
         <div className={styles.assets}>
           <ul>
-            {files.length > 0 ? (
-              files.map((file) => (
+            {convertedFiles.length > 0 ? (
+              convertedFiles.map((file) => (
                 <li key={file.name}>
                   <button
                     onClick={() => {
