@@ -1,6 +1,7 @@
 import express from 'express';
 import { RequestUserAuth } from '../types';
 import toNewApplication from '../util/parsers/applicationParser';
+import { parseFilter, parseSort } from '../util/parsers/filtrationParsers';
 import applicationService from '../services/applicationService';
 import interviewService from '../services/interviewService';
 import applicationFileService from '../services/applicationFileService';
@@ -12,7 +13,14 @@ applicationRouter.get('/', async (req: RequestUserAuth, res) => {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  const result = await applicationService.getAll(req.decodedToken.id);
+  const filter = parseFilter(req.query.filter);
+  const sort = parseSort(req.query.sort);
+
+  const result = await applicationService.getAll(
+    req.decodedToken.id,
+    filter,
+    sort
+  );
 
   res.json(
     result.map((application) => {

@@ -1,6 +1,7 @@
 import express from 'express';
 import { RequestUserAuth } from '../types';
 import toNewInterview from '../util/parsers/interviewParser';
+import { parseSort } from '../util/parsers/filtrationParsers';
 import interviewService from '../services/interviewService';
 import interviewFileService from '../services/interviewFileService';
 
@@ -11,7 +12,9 @@ interviewRouter.get('/', async (req: RequestUserAuth, res) => {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  const result = await interviewService.getAll(req.decodedToken.id);
+  const sort = parseSort(req.query.sort);
+
+  const result = await interviewService.getAll(req.decodedToken.id, sort);
 
   res.json(
     result.map((interview) => {
