@@ -9,7 +9,6 @@ import {
   removeInterview,
 } from '../../../state';
 import useErrorHandler from '../../../hooks/useErrorHandler';
-import useFind from '../../../hooks/useFind';
 import Error from '../../../components/Error';
 import ApplicationInfo from '../../../components/ApplicationInfo';
 
@@ -17,13 +16,10 @@ const ApplicationSingle = ({ application }: { application: Application }) => {
   const navigate = useNavigate();
   const [{ user }, dispatch] = useStateValue();
   const [error, handleError] = useErrorHandler();
-  const { findFilesForApplication } = useFind();
 
   if (!user) {
     return null;
   }
-
-  const files = findFilesForApplication(application.id);
 
   const handleDelete = async (interviews: Interview[]) => {
     try {
@@ -54,7 +50,6 @@ const ApplicationSingle = ({ application }: { application: Application }) => {
       {error && <Error err={error} />}
       <ApplicationInfo
         application={application}
-        files={files}
         handleDelete={handleDelete}
       />
     </main>
