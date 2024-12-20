@@ -2,11 +2,11 @@ import axios from 'axios';
 import { NewApplication, Application } from '../types';
 const baseUrl = '/api/applications';
 
-const getAll = async (token: string, userid: number, params?: string) => {
+const getAll = async (token: string, userId: number, params?: string) => {
   const config = {
     headers: {
       Authorization: `bearer ${token}`,
-      userid,
+      userId,
     },
   };
 
@@ -35,13 +35,13 @@ const getAll = async (token: string, userid: number, params?: string) => {
 
 const addNew = async (
   token: string,
-  userid: number,
+  userId: number,
   payload: NewApplication
 ) => {
   const config = {
     headers: {
       Authorization: `bearer ${token}`,
-      userid,
+      userId,
     },
   };
 
@@ -68,13 +68,13 @@ const addNew = async (
 const edit = async (
   token: string,
   payload: NewApplication,
-  userid: number,
+  userId: number,
   id: number
 ) => {
   const config = {
     headers: {
       Authorization: `bearer ${token}`,
-      userid,
+      userId,
     },
   };
 
@@ -102,11 +102,11 @@ const edit = async (
   } as Application;
 };
 
-const remove = async (token: string, userid: number, id: number) => {
+const remove = async (token: string, userId: number, id: number) => {
   const config = {
     headers: {
       Authorization: `bearer ${token}`,
-      userid,
+      userId,
     },
   };
 
