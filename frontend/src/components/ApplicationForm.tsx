@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import useInput from '../hooks/useInput';
-import { Application, NewApplication } from '../types';
+import {
+  Application,
+  NewApplication,
+  ApplicationFile,
+  BasicFile,
+} from '../types';
 import FileUploader from './FileUploader';
 import RichTextEditor from './RichTextEditor';
 import Dropdown from './Dropdown';
@@ -16,12 +21,18 @@ const statusOptions = [
 
 const ApplicationForm = ({
   content,
+  initFiles,
   handleAddition,
   handleUpdate,
 }: {
   content?: Application;
-  handleAddition?: (submission: NewApplication) => void;
-  handleUpdate?: (submission: NewApplication, id: number) => void;
+  initFiles?: ApplicationFile[];
+  handleAddition?: (submission: NewApplication, files: BasicFile[]) => void;
+  handleUpdate?: (
+    submission: NewApplication,
+    id: number,
+    files: BasicFile[]
+  ) => void;
 }) => {
   const positionTitle = useInput('text', content ? content.positionTitle : '');
   const company = useInput('text', content ? content.company : '');
@@ -31,9 +42,18 @@ const ApplicationForm = ({
     'applied' | 'assessments' | 'interviewing' | 'rejected' | 'offered'
   >(content ? content.status : 'applied');
   const [notes, setNotes] = useState(content ? content.notes : '');
-  const [files, setFiles] = useState(content ? content.files : []);
+  const [files, setFiles] = useState(
+    initFiles
+      ? initFiles.map((file) => {
+          return {
+            filename: file.filename,
+            fileData: file.fileData,
+          } as BasicFile;
+        })
+      : []
+  );
 
-  const getConvertedFiles = (files: string[]) => {
+  const getConvertedFiles = (files: BasicFile[]) => {
     setFiles(files);
   };
 
@@ -61,33 +81,11 @@ const ApplicationForm = ({
       interviewDate: null,
       offerDate: null,
       rejectionDate: null,
-      files,
       notes,
     };
 
-    if (status == 'assessments' && !content?.assessmentDate)
-      submission.assessmentDate = new Date();
-    else if (status == 'interviewing' && !content?.interviewDate)
-      submission.interviewDate = new Date();
-    else if (status == 'rejected' && !content?.rejectionDate)
-      submission.interviewDate = new Date();
-    else if (status == 'offered' && !content?.offerDate)
-      submission.offerDate = new Date();
-
     if (content) {
-      if (content.assessmentDate)
-        submission.assessmentDate = content.assessmentDate;
-      else if (status == 'assessments') submission.assessmentDate = new Date();
-      if (content.interviewDate)
-        submission.interviewDate = content.interviewDate;
-      else if (status == 'interviewing') submission.interviewDate = new Date();
-      if (content.rejectionDate)
-        submission.rejectionDate = content.rejectionDate;
-      else if (status == 'rejected') submission.rejectionDate = new Date();
-      if (content.offerDate) submission.offerDate = content.offerDate;
-      else if (status == 'offered') submission.offerDate = new Date();
-
-      if (handleUpdate) handleUpdate(submission, content.id);
+      if (handleUpdate) handleUpdate(submission, content.id, files);
     } else {
       switch (status) {
         case 'assessments':
@@ -103,7 +101,7 @@ const ApplicationForm = ({
           submission.rejectionDate = new Date();
       }
 
-      if (handleAddition) handleAddition(submission);
+      if (handleAddition) handleAddition(submission, files);
     }
   };
 
@@ -173,7 +171,7 @@ const ApplicationForm = ({
           <label htmlFor='files'>Files</label>
           <FileUploader
             handleChange={getConvertedFiles}
-            initFiles={files}
+            initFiles={initFiles ? initFiles : []}
           />
         </div>
       </div>
