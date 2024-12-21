@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useMatch } from 'react-router-dom';
 import { useEffect } from 'react';
 import useFetch from './hooks/useFetch';
 import useFind from './hooks/useFind';
@@ -21,6 +21,10 @@ function App() {
   const data = useFetch();
   const navigate = useNavigate();
   const { findApplication, findInterview } = useFind();
+  const applicationMatch = useMatch('/applications/:id');
+  const applicationEditMatch = useMatch('/applications/:id/edit');
+  const interviewMatch = useMatch('/interviews/:id');
+  const interviewEditMatch = useMatch('/interviews/:id/edit');
 
   useEffect(() => {
     const userId = window.localStorage.getItem('id');
@@ -29,12 +33,12 @@ function App() {
     } else {
       navigate('/');
     }
-  }, []);
+  });
 
-  const application = findApplication('/applications/:id');
-  const applicationEdit = findApplication('/applications/:id/edit');
-  const interview = findInterview('/interviews/:id');
-  const interviewEdit = findInterview('/interviews/:id/edit');
+  const application = findApplication(applicationMatch);
+  const applicationEdit = findApplication(applicationEditMatch);
+  const interview = findInterview(interviewMatch);
+  const interviewEdit = findInterview(interviewEditMatch);
 
   return (
     <>

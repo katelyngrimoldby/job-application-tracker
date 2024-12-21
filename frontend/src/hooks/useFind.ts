@@ -1,5 +1,5 @@
+import { PathMatch } from 'react-router-dom';
 import { Application } from '../types';
-import { useMatch } from 'react-router-dom';
 import { useStateValue } from '../state';
 
 const useFind = () => {
@@ -24,18 +24,16 @@ const useFind = () => {
     return null;
   };
 
-  const findApplication = (path: string) => {
-    const matchApplication = useMatch(path);
-    const application = matchApplication
-      ? searchApplications(Number(matchApplication.params.id))
+  const findApplication = (pathMatch: PathMatch<string> | null) => {
+    const application = pathMatch
+      ? searchApplications(Number(pathMatch.params.id))
       : undefined;
     return application;
   };
 
-  const findInterview = (path: string) => {
-    const matchInterview = useMatch(path);
-    const interview = matchInterview
-      ? searchInterviews(Number(matchInterview.params.id))
+  const findInterview = (pathMatch: PathMatch<string> | null) => {
+    const interview = pathMatch
+      ? searchInterviews(Number(pathMatch.params.id))
       : undefined;
     return interview;
   };
