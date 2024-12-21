@@ -27,14 +27,6 @@ const InterviewForm = ({
 }) => {
   const { getDateTimeValue } = useDateFormat();
   const [{ applications }] = useStateValue();
-
-  if (applications.length <= 0)
-    return (
-      <p className={styles.fallback}>
-        You have no applications to assign an interview to.{' '}
-        <Link to='/applications/new'>Add one now.</Link>
-      </p>
-    );
   const { findApplicationForInterview } = useFind();
   const [applicationId, setApplicationId] = useState(
     content ? content.applicationId : applications[0].id
@@ -57,6 +49,14 @@ const InterviewForm = ({
         })
       : []
   );
+
+  if (applications.length <= 0)
+    return (
+      <p className={styles.fallback}>
+        You have no applications to assign an interview to.{' '}
+        <Link to='/applications/new'>Add one now.</Link>
+      </p>
+    );
 
   const getConvertedFiles = (files: BasicFile[]) => {
     setFiles(files);
