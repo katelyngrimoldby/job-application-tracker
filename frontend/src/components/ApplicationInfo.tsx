@@ -32,7 +32,7 @@ const ApplicationInfo = ({
           <span className={styles.company}>{application.company}</span>
         </header>
         <div className={styles.secondary}>
-          <span className={styles.status}>Status:{status}</span>
+          <span className={styles.status}>Status: {status}</span>
           <span>Job ID: {application.jobId}</span>
           <span>Location: {application.location}</span>
         </div>

@@ -18,7 +18,7 @@ const getAll = async (token: string, userId: number) => {
   const response = await axios.get<{
     applicationFiles: ApplicationFile[];
     interviewFiles: InterviewFile[];
-  }>(`${baseUrl}}`, config);
+  }>(`${baseUrl}`, config);
 
   return response.data;
 };
