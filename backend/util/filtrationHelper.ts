@@ -1,7 +1,7 @@
 import { Order } from '@sequelize/core';
 import { Status } from '../types';
 
-const getOrder = (sort: string | undefined): Order => {
+const getApplicationOrder = (sort: string | undefined): Order => {
   switch (sort) {
     case 'company-asc':
       return [['company', 'ASC']];
@@ -12,11 +12,30 @@ const getOrder = (sort: string | undefined): Order => {
     case 'position-desc':
       return [['positionTitle', 'DESC']];
     case 'newest':
-      return [['applied', 'DESC']];
+      return [['applyDate', 'DESC']];
     case 'oldest':
-      return [['applied', 'ASC']];
+      return [['applyDate', 'ASC']];
     default:
-      return [['applied', 'DESC']];
+      return [['applyDate', 'DESC']];
+  }
+};
+
+const getInterviewOrder = (sort: string | undefined): Order => {
+  switch (sort) {
+    case 'company-asc':
+      return [['company', 'ASC']];
+    case 'company-desc':
+      return [['company', 'DESC']];
+    case 'position-asc':
+      return [['positionTitle', 'ASC']];
+    case 'position-desc':
+      return [['positionTitle', 'DESC']];
+    case 'newest':
+      return [['time', 'DESC']];
+    case 'oldest':
+      return [['time', 'ASC']];
+    default:
+      return [['time', 'DESC']];
   }
 };
 
@@ -29,4 +48,4 @@ const getFilter = (
 
   return {};
 };
-export { getOrder, getFilter };
+export { getApplicationOrder, getInterviewOrder, getFilter };

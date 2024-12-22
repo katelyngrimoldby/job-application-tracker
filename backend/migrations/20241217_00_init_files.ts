@@ -65,10 +65,10 @@ export const down: Migration = async ({ context: queryInterface }) => {
   await queryInterface.dropTable('interview_files', { cascade: true });
   await queryInterface.addColumn('applications', 'files', {
     type: DataTypes.ARRAY(DataTypes.TEXT),
-    allowNull: false,
+    defaultValue: [],
   });
   await queryInterface.addColumn('interviews', 'files', {
     type: DataTypes.ARRAY(DataTypes.TEXT),
-    allowNull: false,
+    defaultValue: [],
   });
 };

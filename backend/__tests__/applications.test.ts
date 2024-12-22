@@ -54,7 +54,7 @@ describe('Job application management', () => {
 
       expect(response.body).toHaveLength(2);
       expect(response.body[0]).toEqual({
-        ...helper.initialApplications[0],
+        ...helper.initialApplications[1],
         id: expect.any(Number),
         userId,
         applyDate: expect.any(String),
@@ -159,7 +159,7 @@ describe('Job application management', () => {
       const applications = await applicationService.getAll(userId);
 
       const response = await api
-        .get(`/api/applications/${applications[1].id}/interviews`)
+        .get(`/api/applications/${applications[0].id}/interviews`)
         .set('authorization', `bearer ${userToken}`);
 
       expect(response.body).toStrictEqual([]);
@@ -226,7 +226,7 @@ describe('Job application management', () => {
       const applications = await applicationService.getAll(userId);
 
       const response = await api
-        .get(`/api/applications/${applications[1].id}/files`)
+        .get(`/api/applications/${applications[0].id}/files`)
         .set('authorization', `bearer ${userToken}`);
 
       expect(response.body).toStrictEqual([]);
