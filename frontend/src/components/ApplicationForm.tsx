@@ -136,7 +136,6 @@ const ApplicationForm = ({
           <input
             id='jobId'
             name='jobId'
-            required
             {...jobId}
           />
         </div>
