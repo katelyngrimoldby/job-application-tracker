@@ -1,6 +1,5 @@
-import '@testing-library/jest-dom/extend-expect';
-import { vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import LoginForm from '../../components/LoginForm';
 
@@ -18,6 +17,7 @@ describe('LoginForm component', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
+    cleanup();
   });
 
   it('Sends callback when submitted', async () => {

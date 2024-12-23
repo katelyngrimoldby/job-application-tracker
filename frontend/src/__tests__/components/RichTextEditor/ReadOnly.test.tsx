@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import ReadOnlyRichText from '../../../components/RichTextEditor/ReadOnly';
 
