@@ -25,15 +25,28 @@ const InterviewInfo = ({
   return (
     <>
       <header>
-        <h1 className={styles.position}>{application.positionTitle}</h1>
-        <span className={styles.company}>{application.company}</span>
+        <h1
+          className={styles.position}
+          data-testid='position'
+        >
+          {application.positionTitle}
+        </h1>
+        <span
+          className={styles.company}
+          data-testid='company'
+        >
+          {application.company}
+        </span>
       </header>
       <div className={styles.secondary}>
         <div className={styles.first}>
           <span>With {interview.contact}</span>
           <span>{getDateTime(interview.time)}</span>
         </div>
-        <div className={styles.second}>
+        <div
+          className={styles.second}
+          data-testid='application'
+        >
           <Link to={`/applications/${interview.applicationId}`}>
             Application
           </Link>
@@ -69,10 +82,16 @@ const InterviewInfo = ({
         </div>
       </section>
       <div className={styles.buttons}>
-        <Link to={`/interviews/${interview.id}/edit`}>
+        <Link
+          to={`/interviews/${interview.id}/edit`}
+          data-testid='edit'
+        >
           <PencilIcon />
         </Link>
-        <button onClick={handleDelete}>
+        <button
+          onClick={handleDelete}
+          data-testid='delete'
+        >
           <TrashIcon />
         </button>
       </div>
