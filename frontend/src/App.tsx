@@ -33,7 +33,7 @@ function App() {
     } else {
       navigate('/');
     }
-  });
+  }, []);
 
   const application = findApplication(applicationMatch);
   const applicationEdit = findApplication(applicationEditMatch);
