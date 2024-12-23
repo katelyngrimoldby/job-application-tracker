@@ -3,7 +3,7 @@ import { Application } from '../../../types';
 import useDateCalc from '../../../hooks/useDateCalc';
 import useStatusFormat from '../../../hooks/useStatusFormat';
 
-const ApplicationCellMobile = ({
+const ApplicationCellDesktop = ({
   application,
 }: {
   application: Application;
@@ -24,4 +24,4 @@ const ApplicationCellMobile = ({
   );
 };
 
-export default ApplicationCellMobile;
+export default ApplicationCellDesktop;
