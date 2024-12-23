@@ -48,9 +48,7 @@ const ApplicationInfo = ({
               </li>
             )}
             {application.interviewDate && (
-              <li>
-                Interviewss began {getLongDate(application.interviewDate)}
-              </li>
+              <li>Interviews began {getLongDate(application.interviewDate)}</li>
             )}
             {application.rejectionDate && (
               <li>Rejected on {getLongDate(application.rejectionDate)}</li>
@@ -112,10 +110,16 @@ const ApplicationInfo = ({
         </div>
       </section>
       <div className={styles.buttons}>
-        <Link to={`/applications/${application.id}/edit`}>
+        <Link
+          to={`/applications/${application.id}/edit`}
+          data-testid='edit'
+        >
           <PencilIcon />
         </Link>
-        <button onClick={() => handleDelete(interviews)}>
+        <button
+          onClick={() => handleDelete([])}
+          data-testid='delete'
+        >
           <TrashIcon />
         </button>
       </div>
