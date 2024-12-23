@@ -3,13 +3,11 @@ import { render, screen, cleanup } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import '../util/matchMedia';
-import { testInterviews, testApplications } from '../util/testData';
+import { testInterviews } from '../util/testData';
 import InterviewInfo from '../../components/InterviewInfo';
 
 describe('ApplicationInfo component', () => {
   const interview = testInterviews[0];
-
-  const application = testApplications[0];
 
   const mockDelete = vi.fn();
 
@@ -31,33 +29,22 @@ describe('ApplicationInfo component', () => {
   });
 
   it('Renders all information', () => {
-    expect(screen.getByText(application.positionTitle)).toBeInTheDocument();
-    expect(screen.getByText(application.company)).toBeInTheDocument();
-    expect(
-      screen.getByText('Applied on December 31, 2023')
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText('Assessments began January 5, 2024')
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText('Interviews began January 16, 2024')
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText('Offer extended on February 2, 2024')
-    ).toBeInTheDocument();
-
-    expect(
-      screen.getByText(`Location: ${application.location}`)
-    ).toBeInTheDocument();
-    expect(screen.getByText('Status: Offered')).toBeInTheDocument();
-    expect(screen.getByText(`Job ID: ${application.jobId}`));
+    expect(screen.getByTestId('position')).toHaveTextContent('Error');
+    expect(screen.getByTestId('company')).toHaveTextContent('Error');
+    expect(screen.getByText(`With ${interview.contact}`)).toBeInTheDocument();
+    expect(screen.getByText(`January 5, 2025 at 12:30`)).toBeInTheDocument();
+    expect(screen.getByText('Application')).toHaveAttribute(
+      'href',
+      `/applications/2`
+    );
+    expect(screen.getByText('Website')).toHaveAttribute('href', 'example.com');
   });
 
   it('Links to correct edit page', () => {
     const editButton = screen.getByTestId('edit');
 
     expect(editButton.getAttribute('href')).toBe(
-      `/applications/${application.id}/edit`
+      `/interviews/${interview.id}/edit`
     );
   });
 
