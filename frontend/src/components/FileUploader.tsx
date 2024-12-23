@@ -53,6 +53,7 @@ const FileUploader = ({
         onChange={handleFileAdd}
         className={styles.input}
         ref={fileInput}
+        data-testId='fileInput'
       />
       <ul className={styles.fileList}>
         {files.map((file) => (
