@@ -12,6 +12,7 @@ import interviewRouter from './routes/interviews';
 import fileRouter from './routes/files';
 import applicationFileRouter from './routes/applicationFiles';
 import interviewFileRouter from './routes/interviewFiles';
+import testingRouter from './routes/testing';
 
 app.use(express.json());
 
@@ -35,6 +36,10 @@ if (process.env.NODE_ENV === 'production') {
   app.get('*', (_req, res) => {
     res.sendFile(path.join(__dirname + '/dist/index.html'));
   });
+}
+
+if (process.env.NODE_ENV === 'test') {
+  app.use('/api/testing', testingRouter);
 }
 
 app.use(errorHandler);
