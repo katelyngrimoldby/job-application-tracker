@@ -16,14 +16,14 @@ const useFileConversion = () => {
   };
 
   const filesToBytes = async (files: File[]) => {
-    const base64Files = await Promise.all(
+    const binaryFiles = await Promise.all(
       files.map(async (file) => {
-        const base64 = await toBytes(file);
-        return base64;
+        const binary = await toBytes(file);
+        return binary;
       })
     );
 
-    return base64Files;
+    return binaryFiles;
   };
 
   const toFile = (byteChars: string, filename: string) => {
