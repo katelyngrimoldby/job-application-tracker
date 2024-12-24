@@ -8,13 +8,13 @@ describe('ApplicationCellDesktop testing', () => {
   const application = testApplications[0];
 
   const getDateDiff = (date: Date) => {
-    const diffDays = Math.round(
+    const diffDays = Math.floor(
       (Date.now() - date.getTime()) / (1000 * 60 * 60 * 24)
     );
 
-    const diffMonths = Math.round(diffDays / 30);
+    const diffMonths = Math.floor(diffDays / 30);
 
-    const diffWeeks = Math.round(diffDays / 7);
+    const diffWeeks = Math.floor(diffDays / 7);
 
     if (diffMonths != 0) return [diffMonths, 'months'];
     else if (diffWeeks != 0) return [diffWeeks, 'weeks'];
