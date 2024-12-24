@@ -81,11 +81,11 @@ const useDateFormat = () => {
   };
 
   const getTime = (date: Date) => {
-    return `${formatNumber(date.getHours())}:${formatNumber(date.getMinutes())}`;
+    return `${date.getHours()}:${formatNumber(date.getMinutes())}`;
   };
 
   const getDateTime = (date: Date) => {
-    return `${getMonthStr(date.getMonth(), 'long')} ${date.getDate()}, ${date.getFullYear()} at ${formatNumber(date.getHours())}:${formatNumber(date.getMinutes())}`;
+    return `${getLongDate(date)} at ${getTime(date)}`;
   };
 
   const getDateTimeValue = (date: Date) => {
