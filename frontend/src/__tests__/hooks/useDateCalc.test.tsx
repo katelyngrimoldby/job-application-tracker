@@ -1,6 +1,4 @@
-import '@testing-library/jest-dom';
 import { renderHook, cleanup } from '@testing-library/react';
-import '../util/matchMedia';
 import useDateCalc from '../../hooks/useDateCalc';
 
 describe('useDateCalc testing', () => {
