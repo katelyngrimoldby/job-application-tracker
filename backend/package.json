@@ -45,7 +45,6 @@
     "prettier": "2.8.3",
     "supertest": "^6.3.3",
     "ts-jest": "^29.0.3",
-    "ts-node-dev": "^2.0.0",
-    "typescript": "^5.5.3"
+    "ts-node-dev": "^2.0.0"
   }
 }
