@@ -112,6 +112,7 @@ const Menu = () => {
       ></div>
       <button
         type='button'
+        id='toggleTheme'
         onClick={() => dispatch(updateTheme())}
       >
         {theme === 'light' ? (

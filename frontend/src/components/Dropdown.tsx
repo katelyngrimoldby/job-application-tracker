@@ -29,8 +29,9 @@ const Dropdown = ({
       <button
         onClick={() => setOpen(!open)}
         className={styles.selectHead}
-        aria-label='Select Status'
+        aria-label='Select'
         type='button'
+        data-testid={labelledBy}
       >
         {selected}
         <ArrowIcon />

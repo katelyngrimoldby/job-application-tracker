@@ -26,11 +26,13 @@ const LoginForm = ({
       className={styles.form}
     >
       <input
+        id='username'
         placeholder='Username'
         required
         {...username}
       />
       <input
+        id='password'
         placeholder='Password'
         required
         {...password}

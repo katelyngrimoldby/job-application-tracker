@@ -29,7 +29,11 @@ const InterviewForm = ({
   const [{ applications }] = useStateValue();
   const { findApplicationForInterview } = useFind();
   const [applicationId, setApplicationId] = useState(
-    content ? content.applicationId : applications[0].id
+    content
+      ? content.applicationId
+      : applications.length > 0
+        ? applications[0].id
+        : 0
   );
   const application = findApplicationForInterview(applicationId);
   const contact = useInput('text', content ? content.contact : '');
