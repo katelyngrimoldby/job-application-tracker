@@ -1,0 +1,16 @@
+{
+  "name": "job-application-tracker",
+  "version": "1.0.0",
+  "description": "Fullstack app to track job application status",
+  "main": "index.js",
+  "scripts": {
+    "cypress": "cypress open",
+    "test": "cypress run"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^13.17.0",
+    "typescript": "^5.7.2"
+  }
+}
