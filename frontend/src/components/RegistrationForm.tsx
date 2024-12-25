@@ -34,11 +34,13 @@ const RegistrationForm = ({
     >
       <div className={styles.inputs}>
         <input
+          id='username'
           placeholder='Username'
           required
           {...username}
         />
         <input
+          id='name'
           placeholder='Name'
           required
           {...name}
@@ -46,12 +48,14 @@ const RegistrationForm = ({
       </div>
       <div className={styles.inputs}>
         <input
+          id='password'
           placeholder='Password'
           required
           min={3}
           {...password}
         />
         <input
+          id='confirmPass'
           placeholder='Confirm Password'
           required
           {...confirmPass}
@@ -61,7 +65,7 @@ const RegistrationForm = ({
         disabled={
           !username.value ||
           !name.value ||
-          password.value.length < 3 ||
+          password.value.length < 5 ||
           !confirmPass.value ||
           password.value !== confirmPass.value
         }
