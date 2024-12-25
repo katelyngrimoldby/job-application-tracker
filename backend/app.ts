@@ -12,7 +12,6 @@ import interviewRouter from './routes/interviews';
 import fileRouter from './routes/files';
 import applicationFileRouter from './routes/applicationFiles';
 import interviewFileRouter from './routes/interviewFiles';
-import testingRouter from './routes/testing';
 
 app.use(express.json());
 
@@ -39,6 +38,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 if (process.env.NODE_ENV === 'test') {
+  const testingRouter = require('./routes/testing');
   app.use('/api/testing', testingRouter);
 }
 
