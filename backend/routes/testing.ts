@@ -21,4 +21,4 @@ testingRouter.delete('/reset', async (_req, res) => {
   res.status(204).end();
 });
 
-export default testingRouter;
+module.exports = testingRouter;

@@ -27,9 +27,9 @@ class BinFile<M extends BinFile<M>> extends Model<
   @NotNull
   declare filename: string;
 
-  @Attribute(DataTypes.TEXT)
+  @Attribute(DataTypes.BLOB)
   @NotNull
-  declare fileData: string;
+  declare fileData: Buffer<ArrayBuffer>;
 
   // Foriegn key
   @Attribute(DataTypes.INTEGER)

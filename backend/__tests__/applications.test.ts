@@ -240,6 +240,7 @@ describe('Job application management', () => {
       expect(response.body).toHaveLength(2);
       expect(response.body[0]).toEqual({
         ...helper.sampleFiles[0],
+        fileData: expect.any(Object),
         id: expect.any(Number),
         userId,
         applicationId,

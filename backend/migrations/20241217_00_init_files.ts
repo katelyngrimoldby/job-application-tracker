@@ -14,7 +14,7 @@ export const up: Migration = async ({ context: queryInterface }) => {
       allowNull: false,
     },
     file_data: {
-      type: DataTypes.TEXT,
+      type: DataTypes.BLOB,
       allowNull: false,
     },
     user_id: {
@@ -41,7 +41,7 @@ export const up: Migration = async ({ context: queryInterface }) => {
       allowNull: false,
     },
     file_data: {
-      type: DataTypes.TEXT,
+      type: DataTypes.BLOB,
       allowNull: false,
     },
     user_id: {

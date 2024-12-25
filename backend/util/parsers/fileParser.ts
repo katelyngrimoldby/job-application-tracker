@@ -5,7 +5,7 @@ import { parseString, parseNumber } from './globalParsers';
 const toNewApplicationFile = (obj: any): NewApplicationFile => {
   return {
     filename: parseString(obj.filename, 'Filename'),
-    fileData: parseString(obj.fileData, 'File data'),
+    fileData: parseBuffer(obj.fileData),
     applicationId: parseNumber(obj.applicationId),
   };
 };
@@ -14,9 +14,21 @@ const toNewApplicationFile = (obj: any): NewApplicationFile => {
 const toNewInterviewFile = (obj: any): NewInterviewFile => {
   return {
     filename: parseString(obj.filename, 'Filename'),
-    fileData: parseString(obj.fileData, 'File data'),
+    fileData: parseBuffer(obj.fileData),
     interviewId: parseNumber(obj.interviewId),
   };
+};
+
+const parseBuffer = (data: unknown): Buffer<ArrayBuffer> => {
+  if (!data || !isBuffer(data)) {
+    throw new Error('Invalid format for file data');
+  }
+
+  return Buffer.from(data);
+};
+
+const isBuffer = (data: any): data is Buffer<ArrayBuffer> => {
+  return Buffer.from(data) instanceof Buffer;
 };
 
 export { toNewApplicationFile, toNewInterviewFile };

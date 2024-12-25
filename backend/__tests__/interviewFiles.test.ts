@@ -78,6 +78,7 @@ describe('Interview file management', () => {
       expect(response.body).toHaveLength(2);
       expect(response.body[0]).toEqual({
         ...helper.sampleFiles[0],
+        fileData: expect.any(Object),
         id: expect.any(Number),
         userId,
         interviewId,
@@ -121,6 +122,7 @@ describe('Interview file management', () => {
 
       expect(response.body).toEqual({
         ...helper.sampleFiles[0],
+        fileData: expect.any(Object),
         id: fileId,
         userId,
         interviewId,
@@ -146,6 +148,7 @@ describe('Interview file management', () => {
 
       expect(response.body).toEqual({
         ...helper.sampleFiles[1],
+        fileData: expect.any(Object),
         id: expect.any(Number),
         userId,
         interviewId,
@@ -195,6 +198,7 @@ describe('Interview file management', () => {
 
       expect(response.body).toEqual({
         ...helper.sampleFiles[1],
+        fileData: expect.any(Object),
         id: fileId,
         userId,
         interviewId,

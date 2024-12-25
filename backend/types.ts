@@ -13,7 +13,7 @@ export interface RequestUserAuth extends Request {
 
 export enum Status {
   Applied = 'applied',
-  Assessments = 'assesments',
+  Assessments = 'assessments',
   Interviewing = 'interviewing',
   Offered = 'offered',
   Rejected = 'rejected',
@@ -47,9 +47,14 @@ export interface AuthUser {
   password: string;
 }
 
+export interface FileData {
+  data: number[];
+  type: string;
+}
+
 interface NewFile {
   filename: string;
-  fileData: string;
+  fileData: Buffer<ArrayBuffer>;
 }
 
 export interface NewApplicationFile extends NewFile {
