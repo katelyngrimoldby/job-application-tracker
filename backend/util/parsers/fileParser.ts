@@ -1,5 +1,5 @@
 import { NewApplicationFile, NewInterviewFile } from '../../types';
-import { parseString, parseNumber } from './globalParsers';
+import { parseString, parseNumber, isString } from './globalParsers';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const toNewApplicationFile = (obj: any): NewApplicationFile => {
@@ -20,15 +20,11 @@ const toNewInterviewFile = (obj: any): NewInterviewFile => {
 };
 
 const parseBuffer = (data: unknown): Buffer<ArrayBuffer> => {
-  if (!data || !isBuffer(data)) {
+  if (!data || !isString(data)) {
     throw new Error('Invalid format for file data');
   }
 
-  return Buffer.from(data);
-};
-
-const isBuffer = (data: any): data is Buffer<ArrayBuffer> => {
-  return Buffer.from(data) instanceof Buffer;
+  return Buffer.from(data, 'base64');
 };
 
 export { toNewApplicationFile, toNewInterviewFile };
