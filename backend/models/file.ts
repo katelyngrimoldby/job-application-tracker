@@ -4,6 +4,7 @@ import {
   InferAttributes,
   InferCreationAttributes,
   CreationOptional,
+  NonAttribute,
 } from '@sequelize/core';
 import {
   PrimaryKey,
@@ -30,6 +31,10 @@ class BinFile<M extends BinFile<M>> extends Model<
   @Attribute(DataTypes.BLOB)
   @NotNull
   declare fileData: Buffer<ArrayBuffer>;
+  get fileBuff(): NonAttribute<Buffer<ArrayBuffer>> {
+    const data = this.fileData as any;
+    return data;
+  }
 
   // Foriegn key
   @Attribute(DataTypes.INTEGER)
