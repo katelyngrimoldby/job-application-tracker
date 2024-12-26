@@ -24,7 +24,7 @@ const parseBuffer = (data: unknown): Buffer<ArrayBuffer> => {
     throw new Error('Invalid format for file data');
   }
 
-  return Buffer.from(data, 'base64');
+  return Buffer.from(data.replace(/^data:.+;base64,/, ''), 'base64');
 };
 
 export { toNewApplicationFile, toNewInterviewFile };
