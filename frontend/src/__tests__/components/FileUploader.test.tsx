@@ -5,13 +5,13 @@ import '../util/matchMedia';
 import FileUploader from '../../components/FileUploader';
 import { testFiles } from '../util/testData';
 
-const toFile = (byteChars: string, filename: string) => {
-  const byteNumbers = new Array(byteChars.length);
-
-  for (let i = 0; i < byteChars.length; i++) {
-    byteNumbers[i] = byteChars.charCodeAt(i);
+const toFile = (base64: string, filename: string) => {
+  const base64Data = base64.replace(/^data:.+;base64,/, '');
+  const byteCharacters = atob(base64Data);
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
   }
-
   const byteArray = new Uint8Array(byteNumbers);
   const file = new File([byteArray], filename, { type: 'application/pdf' });
   return file;
@@ -52,7 +52,7 @@ describe('FileUploader testing', () => {
       expect(screen.getByText(fileToAdd.name));
     });
 
-    it('Passes file as a binary string in callback', async () => {
+    it('Passes file as a base64 in callback', async () => {
       const user = userEvent.setup();
 
       await user.upload(screen.getByTestId('fileInput'), fileToAdd);
@@ -84,7 +84,7 @@ describe('FileUploader testing', () => {
       expect(screen.getByText(secondFileToAdd.name));
     });
 
-    it('Passes file as a binary string in callback', async () => {
+    it('Passes file as a base64 string in callback', async () => {
       const user = userEvent.setup();
 
       await user.upload(screen.getByTestId('fileInput'), [

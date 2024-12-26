@@ -27,9 +27,7 @@ describe('Dropdown testing', () => {
   });
 
   it('Displays the first value as selected', () => {
-    expect(screen.getByLabelText('Select Status')).toHaveTextContent(
-      data[0].label
-    );
+    expect(screen.getByLabelText('Select')).toHaveTextContent(data[0].label);
   });
 
   it('Displays all values as options', () => {

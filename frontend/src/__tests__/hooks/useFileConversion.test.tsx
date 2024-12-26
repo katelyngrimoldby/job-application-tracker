@@ -9,23 +9,22 @@ describe('useFileConversion testing', () => {
     new File(['world'], 'world.pdf', { type: 'application/pdf' }),
   ];
 
-  describe('To bytes', () => {
-    const { filesToBytes } = result.current;
+  describe('To base64', () => {
+    const { filesToBase64 } = result.current;
 
     it('Returns an array of all files', async () => {
-      const converted = await filesToBytes(sampleFiles);
-
+      const converted = await filesToBase64(sampleFiles);
       expect(converted).toHaveLength(2);
     });
 
     it('Returns an empty array if no files passed', async () => {
-      const converted = await filesToBytes([]);
+      const converted = await filesToBase64([]);
 
       expect(converted).toHaveLength(0);
     });
 
     it('Preserves file names', async () => {
-      const converted = await filesToBytes(sampleFiles);
+      const converted = await filesToBase64(sampleFiles);
       expect(converted[0]).toEqual({
         fileData: expect.any(String),
         filename: 'hello.pdf',
