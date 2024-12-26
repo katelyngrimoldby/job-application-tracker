@@ -57,7 +57,11 @@ describe('Interview file management', () => {
     interviewId = interview.id;
 
     await interviewFileService.addNew(
-      { ...helper.sampleFiles[0], interviewId },
+      {
+        ...helper.sampleFiles[0],
+        interviewId,
+        fileData: Buffer.from(helper.sampleFiles[0].fileData, 'base64'),
+      },
       userId
     );
   });
@@ -65,7 +69,11 @@ describe('Interview file management', () => {
   describe('Viewing all files', () => {
     beforeEach(async () => {
       await interviewFileService.addNew(
-        { ...helper.sampleFiles[1], interviewId },
+        {
+          ...helper.sampleFiles[1],
+          interviewId,
+          fileData: Buffer.from(helper.sampleFiles[1].fileData, 'base64'),
+        },
         userId
       );
     });
@@ -78,7 +86,6 @@ describe('Interview file management', () => {
       expect(response.body).toHaveLength(2);
       expect(response.body[0]).toEqual({
         ...helper.sampleFiles[0],
-        fileData: expect.any(Object),
         id: expect.any(Number),
         userId,
         interviewId,
@@ -122,7 +129,6 @@ describe('Interview file management', () => {
 
       expect(response.body).toEqual({
         ...helper.sampleFiles[0],
-        fileData: expect.any(Object),
         id: fileId,
         userId,
         interviewId,
@@ -148,7 +154,6 @@ describe('Interview file management', () => {
 
       expect(response.body).toEqual({
         ...helper.sampleFiles[1],
-        fileData: expect.any(Object),
         id: expect.any(Number),
         userId,
         interviewId,
@@ -198,7 +203,6 @@ describe('Interview file management', () => {
 
       expect(response.body).toEqual({
         ...helper.sampleFiles[1],
-        fileData: expect.any(Object),
         id: fileId,
         userId,
         interviewId,

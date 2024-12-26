@@ -190,11 +190,19 @@ describe('Job application management', () => {
       applicationId = applications[0].id;
 
       await applicationFileService.addNew(
-        { ...helper.sampleFiles[0], applicationId },
+        {
+          ...helper.sampleFiles[0],
+          applicationId,
+          fileData: Buffer.from(helper.sampleFiles[0].fileData, 'base64'),
+        },
         userId
       );
       await applicationFileService.addNew(
-        { ...helper.sampleFiles[1], applicationId },
+        {
+          ...helper.sampleFiles[1],
+          applicationId,
+          fileData: Buffer.from(helper.sampleFiles[1].fileData, 'base64'),
+        },
         userId
       );
     });
@@ -240,7 +248,6 @@ describe('Job application management', () => {
       expect(response.body).toHaveLength(2);
       expect(response.body[0]).toEqual({
         ...helper.sampleFiles[0],
-        fileData: expect.any(Object),
         id: expect.any(Number),
         userId,
         applicationId,

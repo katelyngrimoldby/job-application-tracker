@@ -48,7 +48,12 @@ describe('Application file management', () => {
     applicationId = application.id;
 
     await applicationFileService.addNew(
-      { ...helper.sampleFiles[0], applicationId },
+      {
+        ...helper.sampleFiles[0],
+        applicationId,
+        fileData: Buffer.from(helper.sampleFiles[0].fileData, 'base64'),
+      },
+
       userId
     );
   });
@@ -56,7 +61,11 @@ describe('Application file management', () => {
   describe('Viewing all files', () => {
     beforeEach(async () => {
       await applicationFileService.addNew(
-        { ...helper.sampleFiles[1], applicationId },
+        {
+          ...helper.sampleFiles[1],
+          fileData: Buffer.from(helper.sampleFiles[1].fileData, 'base64'),
+          applicationId,
+        },
         userId
       );
     });
@@ -68,7 +77,6 @@ describe('Application file management', () => {
 
       expect(response.body[0]).toEqual({
         ...helper.sampleFiles[0],
-        fileData: expect.any(Object),
         id: expect.any(Number),
         userId,
         applicationId,
@@ -112,7 +120,6 @@ describe('Application file management', () => {
 
       expect(response.body).toEqual({
         ...helper.sampleFiles[0],
-        fileData: expect.any(Object),
         id: fileId,
         userId,
         applicationId,
@@ -138,7 +145,6 @@ describe('Application file management', () => {
 
       expect(response.body).toEqual({
         ...helper.sampleFiles[1],
-        fileData: expect.any(Object),
         id: expect.any(Number),
         userId,
         applicationId,
@@ -185,7 +191,6 @@ describe('Application file management', () => {
 
       expect(response.body).toEqual({
         ...helper.sampleFiles[1],
-        fileData: expect.any(Object),
         id: fileId,
         userId,
         applicationId,

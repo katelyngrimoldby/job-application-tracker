@@ -131,11 +131,19 @@ describe('Interview management', () => {
       interviewId = interviews[0].id;
 
       await interviewFileService.addNew(
-        { ...helper.sampleFiles[0], interviewId },
+        {
+          ...helper.sampleFiles[0],
+          interviewId,
+          fileData: Buffer.from(helper.sampleFiles[1].fileData, 'base64'),
+        },
         userId
       );
       await interviewFileService.addNew(
-        { ...helper.sampleFiles[1], interviewId },
+        {
+          ...helper.sampleFiles[1],
+          interviewId,
+          fileData: Buffer.from(helper.sampleFiles[1].fileData, 'base64'),
+        },
         userId
       );
     });
@@ -184,7 +192,6 @@ describe('Interview management', () => {
       expect(response.body).toHaveLength(2);
       expect(response.body[0]).toEqual({
         ...helper.sampleFiles[0],
-        fileData: expect.any(Object),
         id: expect.any(Number),
         userId,
         interviewId,
