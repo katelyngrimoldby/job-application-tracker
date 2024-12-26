@@ -1,16 +1,16 @@
 import { useState, useRef } from 'react';
 import useFileConversion from '../hooks/useFileConversion';
 import styles from '../styles/components/FileUploader.module.css';
-import { ApplicationFile, InterviewFile } from '../types';
+import { ApplicationFile, BasicFile, InterviewFile } from '../types';
 
 const FileUploader = ({
   handleChange,
   initFiles,
 }: {
-  handleChange: (files: { fileData: string; filename: string }[]) => void;
+  handleChange: (files: BasicFile[]) => void;
   initFiles: ApplicationFile[] | InterviewFile[];
 }) => {
-  const { filesToBytes, filesToFile } = useFileConversion();
+  const { filesToBase64, filesToFile } = useFileConversion();
   const [files, setFiles] = useState<File[]>(filesToFile(initFiles));
   const fileInput = useRef<HTMLInputElement>(null);
 
@@ -22,8 +22,8 @@ const FileUploader = ({
 
     setFiles(fileArr);
 
-    const binFiles = await filesToBytes(fileArr);
-    handleChange(binFiles);
+    const base64Files = await filesToBase64(fileArr);
+    handleChange(base64Files);
   };
 
   const handleFileRemove = async (fileName: string) => {
@@ -31,8 +31,8 @@ const FileUploader = ({
 
     setFiles(fileArr);
 
-    const binFiles = await filesToBytes(fileArr);
-    handleChange(binFiles);
+    const base64Files = await filesToBase64(fileArr);
+    handleChange(base64Files);
   };
 
   return (
@@ -53,7 +53,7 @@ const FileUploader = ({
         onChange={handleFileAdd}
         className={styles.input}
         ref={fileInput}
-        data-testId='fileInput'
+        data-testid='fileInput'
       />
       <ul className={styles.fileList}>
         {files.map((file) => (
