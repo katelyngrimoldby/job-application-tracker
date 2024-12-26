@@ -14,7 +14,10 @@ applicationFileRouter.get('/', async (req: RequestUserAuth, res) => {
 
   res.json(
     result.map((file) => {
-      return { ...file.dataValues };
+      return {
+        ...file.dataValues,
+        fileData: file.fileBuff.toString('base64'),
+      };
     })
   );
 });
@@ -30,7 +33,10 @@ applicationFileRouter.get('/:id', async (req: RequestUserAuth, res) => {
 
   if (!result) return res.status(404).end();
 
-  res.json({ ...result.dataValues });
+  res.json({
+    ...result.dataValues,
+    fileData: result.fileBuff.toString('base64'),
+  });
 });
 
 applicationFileRouter.post('/', async (req: RequestUserAuth, res) => {
@@ -45,7 +51,10 @@ applicationFileRouter.post('/', async (req: RequestUserAuth, res) => {
     req.decodedToken.id
   );
 
-  res.json({ ...result.dataValues });
+  res.json({
+    ...result.dataValues,
+    fileData: result.fileBuff.toString('base64'),
+  });
 });
 
 applicationFileRouter.put('/:id', async (req: RequestUserAuth, res) => {
@@ -66,7 +75,10 @@ applicationFileRouter.put('/:id', async (req: RequestUserAuth, res) => {
     return res.status(404).end();
   }
 
-  res.json({ ...result.dataValues });
+  res.json({
+    ...result.dataValues,
+    fileData: result.fileBuff.toString('base64'),
+  });
 });
 
 applicationFileRouter.delete('/:id', async (req: RequestUserAuth, res) => {

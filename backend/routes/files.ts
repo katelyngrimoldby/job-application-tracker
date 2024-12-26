@@ -17,10 +17,16 @@ fileRouter.get('/', async (req: RequestUserAuth, res) => {
 
   res.json({
     applicationFiles: applicationFiles.map((file) => {
-      return { ...file.dataValues };
+      return {
+        ...file.dataValues,
+        fileData: file.fileBuff.toString('base64'),
+      };
     }),
     interviewFiles: interviewFiles.map((file) => {
-      return { ...file.dataValues };
+      return {
+        ...file.dataValues,
+        fileData: file.fileBuff.toString('base64'),
+      };
     }),
   });
 });

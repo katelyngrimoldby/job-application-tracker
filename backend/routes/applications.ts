@@ -97,7 +97,7 @@ applicationRouter.get('/:id/files', async (req: RequestUserAuth, res) => {
 
   res.json(
     result.map((file) => {
-      return { ...file.dataValues };
+      return { ...file.dataValues, fileData: file.fileBuff.toString('base64') };
     })
   );
 });
