@@ -2,7 +2,6 @@ import { isAxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Application, Interview } from '../../../types';
 import { remove as removeApp } from '../../../services/applications';
-import { remove as removeInter } from '../../../services/interviews';
 import {
   useStateValue,
   removeApplication,
@@ -31,7 +30,6 @@ const ApplicationSingle = ({ application }: { application: Application }) => {
       }
 
       interviews.forEach(async (interview) => {
-        await removeInter(user.token, Number(userId), interview.id);
         dispatch(removeInterview(interview.id));
       });
 
