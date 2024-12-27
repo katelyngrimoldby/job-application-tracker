@@ -87,20 +87,6 @@ const ApplicationForm = ({
     if (content) {
       if (handleUpdate) handleUpdate(submission, content.id, files);
     } else {
-      switch (status) {
-        case 'assessments':
-          submission.assessmentDate = new Date();
-          break;
-        case 'interviewing':
-          submission.interviewDate = new Date();
-          break;
-        case 'offered':
-          submission.offerDate = new Date();
-          break;
-        case 'rejected':
-          submission.rejectionDate = new Date();
-      }
-
       if (handleAddition) handleAddition(submission, files);
     }
   };
