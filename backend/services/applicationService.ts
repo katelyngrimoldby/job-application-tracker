@@ -41,7 +41,25 @@ const addNew = async (obj: NewApplication, userId: number) => {
     throw new Error('Invalid permissions');
   }
 
-  const application = await user.createApplication(obj);
+  const addStatusDate = (obj: NewApplication) => {
+    switch (obj.status) {
+      case 'assessments':
+        return { assessmentDate: new Date() };
+      case 'interviewing':
+        return {
+          interviewDate: new Date(),
+        };
+      case 'offered':
+        return { offerDate: new Date() };
+      case 'rejected':
+        return { rejectionDate: new Date() };
+    }
+  };
+
+  const application = await user.createApplication({
+    ...obj,
+    ...addStatusDate(obj),
+  });
 
   return application;
 };
