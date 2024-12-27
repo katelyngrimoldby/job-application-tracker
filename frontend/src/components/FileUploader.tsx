@@ -55,10 +55,16 @@ const FileUploader = ({
         ref={fileInput}
         data-testid='fileInput'
       />
-      <ul className={styles.fileList}>
+      <ul
+        className={styles.fileList}
+        data-testid='fileList'
+      >
         {files.map((file) => (
           <li key={file.name}>
-            <button onClick={() => handleFileRemove(file.name)}>
+            <button
+              type='button'
+              onClick={() => handleFileRemove(file.name)}
+            >
               {file.name}
             </button>
           </li>
