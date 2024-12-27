@@ -89,6 +89,7 @@ const RichTextEditor = ({
           disabled={!editor?.can().chain().focus().toggleItalic().run()}
           type='button'
           className={editor?.isActive('italic') ? styles.active : styles.button}
+          aria-label='Toggle Italic'
         >
           <ItalicIcon />
         </button>
