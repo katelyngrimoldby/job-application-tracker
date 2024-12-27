@@ -85,6 +85,10 @@ button {
   background-color: var(--background-secondary);
   color: var(--text-secondary);
 
+  ul {
+    list-style: disc;
+  }
+
   ul,
   ol {
     list-style-position: inside;
