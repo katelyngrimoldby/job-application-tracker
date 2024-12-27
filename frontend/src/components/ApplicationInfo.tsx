@@ -32,15 +32,20 @@ const ApplicationInfo = ({
           <span className={styles.company}>{application.company}</span>
         </header>
         <div className={styles.secondary}>
-          <span className={styles.status}>Status: {status}</span>
-          <span>Job ID: {application.jobId}</span>
-          <span>Location: {application.location}</span>
+          <span
+            className={styles.status}
+            data-testid='status'
+          >
+            Status: {status}
+          </span>
+          <span data-testid='jobId'>Job ID: {application.jobId}</span>
+          <span data-testid='location'>Location: {application.location}</span>
         </div>
       </section>
       <div className={styles.split}>
         <section>
           <h2>Timeline</h2>
-          <ul>
+          <ul data-testid='timeline'>
             <li>Applied on {getLongDate(application.applyDate)}</li>
             {application.assessmentDate && (
               <li>
@@ -60,7 +65,7 @@ const ApplicationInfo = ({
         </section>
         <section>
           <h2>Interviews</h2>
-          <ul>
+          <ul data-testid='interviews'>
             {interviews.length > 0 ? (
               interviews.map((interview) => (
                 <li key={interview.id}>
@@ -86,7 +91,7 @@ const ApplicationInfo = ({
       <section>
         <h2>Files and Notes</h2>
         <div className={styles.assets}>
-          <ul>
+          <ul data-testid='fileList'>
             {convertedFiles.length > 0 ? (
               convertedFiles.map((file) => (
                 <li key={file.name}>
