@@ -29,13 +29,16 @@ const DesktopPreview = ({ type }: { type: 'applications' | 'interviews' }) => {
             ))
           ) : (
             <>
-              <ApplicationCellDesktop application={applications[-1]} />
-              <ApplicationCellDesktop application={applications[-2]} />
-              <ApplicationCellDesktop application={applications[-3]} />
+              <ApplicationCellDesktop application={applications[0]} />
+              <ApplicationCellDesktop application={applications[1]} />
+              <ApplicationCellDesktop application={applications[2]} />
             </>
           )}
           <tr>
-            <td colSpan={5}>
+            <td
+              colSpan={5}
+              data-testid='allApplications'
+            >
               <Link to='/applications'>View All</Link>
             </td>
           </tr>
@@ -64,13 +67,16 @@ const DesktopPreview = ({ type }: { type: 'applications' | 'interviews' }) => {
             ))
           ) : (
             <>
-              <InterviewCellDesktop interview={interviews[-1]} />
-              <InterviewCellDesktop interview={interviews[-2]} />
-              <InterviewCellDesktop interview={interviews[-3]} />
+              <InterviewCellDesktop interview={interviews[0]} />
+              <InterviewCellDesktop interview={interviews[1]} />
+              <InterviewCellDesktop interview={interviews[2]} />
             </>
           )}
           <tr>
-            <td colSpan={5}>
+            <td
+              colSpan={5}
+              data-testid='allInterviews'
+            >
               <Link to='/interviews'>View All</Link>
             </td>
           </tr>
