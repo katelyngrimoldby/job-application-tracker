@@ -38,6 +38,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 if (process.env.NODE_ENV === 'test') {
+  // eslint-disable-next-line
   const testingRouter = require('./routes/testing');
   app.use('/api/testing', testingRouter);
 }
