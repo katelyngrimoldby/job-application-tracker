@@ -1,0 +1,26 @@
+[
+  {
+    "contact": "Lorem Ipsum",
+    "website": "loremipsum.com",
+    "time": "2024-12-30T09:00",
+    "notes": "<h1>header 1</h1><h2>header 2</h2><h3>header 3</h3><h4>header 4</h4><h5>header 5</h5><h6>header 6</h6><p>paragraph</p><p><strong>This is some bolded text</strong></p><p><em>This is italicized text</em></p><ul><li>this</li><li>is</li><li>an</li><li>unordered</li><li>list</li></ul><ol><li>this</li><li>is</li><li>an</li><li>ordered</li><li>list</li></ol>"
+  },
+  {
+    "contact": "Van Helsing",
+    "website": "example.com",
+    "time": "2025-01-05T09:00",
+    "notes": "<p>Changed notes</p>"
+  },
+  {
+    "contact": "John Doe",
+    "website": "www.example.com",
+    "time": "2025-01-22T14:15",
+    "notes": ""
+  },
+  {
+    "contact": "Jane Doe",
+    "website": "",
+    "time": "2025-02-01T12:00",
+    "notes": ""
+  }
+]
