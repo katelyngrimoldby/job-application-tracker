@@ -1,8 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["es5", "dom"],
-    "types": ["cypress", "node"]
+    "target": "es2021",
+    "lib": ["es2021", "dom"],
+    "types": ["cypress", "node"],
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["**/*.ts"]
 }
