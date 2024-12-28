@@ -19,9 +19,9 @@ const MobilePreview = ({ type }: { type: 'applications' | 'interviews' }) => {
           ))
         ) : (
           <>
-            <ApplicationCell application={applications[-1]} />
-            <ApplicationCell application={applications[-2]} />
-            <ApplicationCell application={applications[-3]} />
+            <ApplicationCell application={applications[0]} />
+            <ApplicationCell application={applications[1]} />
+            <ApplicationCell application={applications[2]} />
           </>
         )}
         <Link to='/applications'>View All</Link>
@@ -39,9 +39,9 @@ const MobilePreview = ({ type }: { type: 'applications' | 'interviews' }) => {
           ))
         ) : (
           <>
-            <InterviewCell interview={interviews[-1]} />
-            <InterviewCell interview={interviews[-2]} />
-            <InterviewCell interview={interviews[-3]} />
+            <InterviewCell interview={interviews[0]} />
+            <InterviewCell interview={interviews[1]} />
+            <InterviewCell interview={interviews[2]} />
           </>
         )}
         <Link to='/interviews'>View All</Link>
