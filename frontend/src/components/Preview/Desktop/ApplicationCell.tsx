@@ -12,12 +12,14 @@ const ApplicationCellDesktop = ({
   const status = useStatusFormat(application.status);
 
   return (
-    <tr>
-      <td>{application.company}</td>
-      <td>{application.positionTitle}</td>
-      <td>{dateDiff ? `${dateDiff[0]} ${dateDiff[1]} ago` : 'Today'}</td>
-      <td>{status}</td>
-      <td>
+    <tr data-testid={application.id}>
+      <td data-testid='company'>{application.company}</td>
+      <td data-testid='position'>{application.positionTitle}</td>
+      <td data-testid='date'>
+        {dateDiff ? `${dateDiff[0]} ${dateDiff[1]} ago` : 'Today'}
+      </td>
+      <td data-testid='status'>{status}</td>
+      <td data-testid='link'>
         <Link to={`/applications/${application.id}`}>Go to Application</Link>
       </td>
     </tr>

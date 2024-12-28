@@ -16,21 +16,28 @@ const ListInterviewItem = ({
   const { getShortDate, getTime } = useDateFormat();
 
   return (
-    <li className={styles.wrapper}>
+    <li
+      className={styles.wrapper}
+      data-testid={interview.id}
+    >
       <div className={styles.primaryInfo}>
-        <span>{application.positionTitle}</span>
-        <span>{application.company}</span>
-        <span>{getShortDate(interview.time)}</span>
+        <span data-testid='position'>{application.positionTitle}</span>
+        <span data-testid='company'>{application.company}</span>
+        <span data-testid='date'>{getShortDate(interview.time)}</span>
         <button
           onClick={() => setVisible(!visible)}
           className={visible ? styles.collapseBtn : styles.expandBtn}
+          data-testid='toggle'
         >
           <ArrowIcon />
         </button>
       </div>
-      <div className={visible ? styles.extraVisible : styles.extraInfo}>
-        <span>{interview.contact}</span>
-        <span>{getTime(interview.time)}</span>
+      <div
+        className={visible ? styles.extraVisible : styles.extraInfo}
+        data-testid='secondary'
+      >
+        <span data-testid='contact'>{interview.contact}</span>
+        <span data-testid='time'>{getTime(interview.time)}</span>
         <Link to={`/interviews/${interview.id}`}>View Interview</Link>
       </div>
     </li>

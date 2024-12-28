@@ -9,12 +9,12 @@ const InterviewCellDesktop = ({ interview }: { interview: Interview }) => {
   const { getShortDate, getTime } = useDateFormat();
 
   return (
-    <tr>
-      <td>{application.company}</td>
-      <td>{interview.contact}</td>
-      <td>{getShortDate(interview.time)}</td>
-      <td>{getTime(interview.time)}</td>
-      <td>
+    <tr data-testid={interview.id}>
+      <td data-testid='company'>{application.company}</td>
+      <td data-testid='contact'>{interview.contact}</td>
+      <td data-testid='date'>{getShortDate(interview.time)}</td>
+      <td data-testid='time'>{getTime(interview.time)}</td>
+      <td data-testid='link'>
         <Link to={`/interviews/${interview.id}`}>View Interview</Link>
       </td>
     </tr>
