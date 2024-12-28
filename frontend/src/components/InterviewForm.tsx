@@ -121,13 +121,16 @@ const InterviewForm = ({
         <div className={styles.inputWrapper}>
           <label htmlFor='contact'>Contact</label>
           <input
+            id='contact'
             name='contact'
+            required
             {...contact}
           />
         </div>
         <div className={styles.inputWrapper}>
           <label htmlFor='website'>Website</label>
           <input
+            id='website'
             name='website'
             {...website}
           />
@@ -137,7 +140,9 @@ const InterviewForm = ({
         <div className={styles.inputWrapper}>
           <label htmlFor='time'>Time</label>
           <input
+            id='time'
             name='time'
+            required
             {...dateTime}
           />
         </div>
@@ -151,7 +156,7 @@ const InterviewForm = ({
       </div>
       <div className={styles.inputWrapper}>
         <p
-          aria-label='Notes'
+          aria-label='notes'
           role='label'
           className={styles.pLabel}
         >
