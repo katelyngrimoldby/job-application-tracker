@@ -1,18 +1,15 @@
 import { Application, Interview, User } from '../models';
 import { NewInterview } from '../types';
 import applicationService from './applicationService';
-import { getInterviewOrder } from '../util/filtrationHelper';
 
-const getAll = async (userId: number, order?: string | undefined) => {
+const getAll = async (userId: number) => {
   const user = await User.findByPk(userId);
 
   if (!user) {
     throw new Error('Invalid permissions');
   }
 
-  const sort = getInterviewOrder(order);
-
-  const interviews = await user.getInterviews({ order: sort });
+  const interviews = await user.getInterviews({ order: [['time', 'DESC']] });
 
   return interviews;
 };
