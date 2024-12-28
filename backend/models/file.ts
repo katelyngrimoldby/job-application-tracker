@@ -32,7 +32,7 @@ class BinFile<M extends BinFile<M>> extends Model<
   @NotNull
   declare fileData: Buffer<ArrayBuffer>;
   get fileBuff(): NonAttribute<Buffer<ArrayBuffer>> {
-    const data = this.fileData as any;
+    const data = this.fileData;
     return data;
   }
 
