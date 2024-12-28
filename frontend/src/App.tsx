@@ -4,6 +4,7 @@ import useFetch from './hooks/useFetch';
 import useFind from './hooks/useFind';
 import { Header, Footer } from './components/Layout';
 import Error from './components/Error';
+import Loader from './pages/loader';
 import Dashboard from './pages/dashboard';
 import Login from './pages/login';
 import Register from './pages/register';
@@ -31,7 +32,11 @@ function App() {
     if (userId) {
       data.fetchData(Number(userId));
     } else {
-      navigate('/');
+      if (
+        window.location.pathname != '/register' &&
+        window.location.pathname != ''
+      )
+        navigate('/');
     }
   }, []);
 
@@ -44,76 +49,80 @@ function App() {
     <>
       <Header />
       {data.error && <Error err={data.error} />}
-      <Routes>
-        <Route
-          path='/'
-          element={data.user ? <Dashboard /> : <Login />}
-        />
-        <Route
-          path='/applications'
-          element={<Applications />}
-        />
-        <Route
-          path='/applications/:id'
-          element={
-            application ? (
-              <ApplicationSingle application={application} />
-            ) : (
-              <Custom404 />
-            )
-          }
-        />
-        <Route
-          path='/applications/:id/edit'
-          element={
-            applicationEdit ? (
-              <EditApplication application={applicationEdit} />
-            ) : (
-              <Custom404 />
-            )
-          }
-        />
-        <Route
-          path='/applications/new'
-          element={<NewApplication />}
-        />
-        <Route
-          path='/interviews'
-          element={<Interviews />}
-        />
-        <Route
-          path='/interviews/:id'
-          element={
-            interview ? (
-              <InterviewSingle interview={interview} />
-            ) : (
-              <Custom404 />
-            )
-          }
-        />
-        <Route
-          path='/interviews/:id/edit'
-          element={
-            interviewEdit ? (
-              <EditInterview interview={interviewEdit} />
-            ) : (
-              <Custom404 />
-            )
-          }
-        />
-        <Route
-          path='/interviews/new'
-          element={<NewInterview />}
-        />
-        <Route
-          path='/register'
-          element={<Register />}
-        />
-        <Route
-          path='*'
-          element={<Custom404 />}
-        />
-      </Routes>
+      {data.loading ? (
+        <Loader />
+      ) : (
+        <Routes>
+          <Route
+            path='/'
+            element={data.user ? <Dashboard /> : <Login />}
+          />
+          <Route
+            path='/applications'
+            element={<Applications />}
+          />
+          <Route
+            path='/applications/:id'
+            element={
+              application ? (
+                <ApplicationSingle application={application} />
+              ) : (
+                <Custom404 />
+              )
+            }
+          />
+          <Route
+            path='/applications/:id/edit'
+            element={
+              applicationEdit ? (
+                <EditApplication application={applicationEdit} />
+              ) : (
+                <Custom404 />
+              )
+            }
+          />
+          <Route
+            path='/applications/new'
+            element={<NewApplication />}
+          />
+          <Route
+            path='/interviews'
+            element={<Interviews />}
+          />
+          <Route
+            path='/interviews/:id'
+            element={
+              interview ? (
+                <InterviewSingle interview={interview} />
+              ) : (
+                <Custom404 />
+              )
+            }
+          />
+          <Route
+            path='/interviews/:id/edit'
+            element={
+              interviewEdit ? (
+                <EditInterview interview={interviewEdit} />
+              ) : (
+                <Custom404 />
+              )
+            }
+          />
+          <Route
+            path='/interviews/new'
+            element={<NewInterview />}
+          />
+          <Route
+            path='/register'
+            element={<Register />}
+          />
+          <Route
+            path='*'
+            element={<Custom404 />}
+          />
+        </Routes>
+      )}
       <Footer />
     </>
   );
