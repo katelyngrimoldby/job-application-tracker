@@ -67,9 +67,52 @@ jobs:
           POSTGRES_URL: postgresql://localUser:localPassword@localhost:5432/test
           REDIS_URL: redis://localhost:6379
           SECRET: ${{ secrets.SECRET }}
-      - name: Build app
-        run: npm run build
+
+  e2e:
+    runs-on: ubuntu-20.04
+    services:
+      postgres:
+        image: postgres:12-alpine
+        env:
+          POSTGRES_USER: localUser
+          POSTGRES_PASSWORD: localPassword
+          POSTGRES_DB: test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready --health-interval 10s --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping" --health-interval 10s --health-timeout
+          5s --health-retries 5
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Install deps (root)
+        run: npm ci
+        working-directory: ./
+      - name: Install deps (backend)
+        run: npm ci
         working-directory: ./backend
+      - name: Start backend
+        run: npm run start:test
+        working-directory: ./backend
+      - name: Install deps (frontend)
+        run: npm ci
+        working-directory: ./frontend
+      - name: start frontend
+        run: npm run dev
+        working-directory: ./frontend
+      - name: Test
+        run: npm test
+        working-directory: ./
+
   deploy:
     needs: [frontend-predeploy, backend-predeploy]
     runs-on: ubuntu-20.04
