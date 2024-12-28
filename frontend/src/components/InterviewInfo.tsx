@@ -40,29 +40,34 @@ const InterviewInfo = ({
       </header>
       <div className={styles.secondary}>
         <div className={styles.first}>
-          <span>With {interview.contact}</span>
-          <span>{getDateTime(interview.time)}</span>
+          <span data-testid='contact'>With {interview.contact}</span>
+          <span data-testid='time'>{getDateTime(interview.time)}</span>
         </div>
-        <div
-          className={styles.second}
-          data-testid='application'
-        >
-          <Link to={`/applications/${interview.applicationId}`}>
+        <div className={styles.second}>
+          <Link
+            to={`/applications/${interview.applicationId}`}
+            data-testid='application'
+          >
             Application
           </Link>
           {interview.website ? (
             interview.website.length > 0 && (
-              <a href={interview.website}>Website</a>
+              <a
+                href={interview.website}
+                data-testid='website'
+              >
+                Website
+              </a>
             )
           ) : (
-            <p>No website</p>
+            <p data-testid='website'>No website</p>
           )}
         </div>
       </div>
       <section>
         <h2>Files and Notes</h2>
         <div className={styles.assets}>
-          <ul>
+          <ul data-testid='fileList'>
             {files.map((file) => (
               <li key={file.name}>
                 <button
