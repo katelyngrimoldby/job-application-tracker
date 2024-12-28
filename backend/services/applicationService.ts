@@ -1,6 +1,6 @@
 import { Application, User } from '../models';
 import { NewApplication, Status } from '../types';
-import { getFilter, getApplicationOrder } from '../util/filtrationHelper';
+import { getFilter, getOrder } from '../util/filtrationHelper';
 
 const getAll = async (
   userId: number,
@@ -14,7 +14,7 @@ const getAll = async (
   }
 
   const filter = getFilter(statusFilter);
-  const sort = getApplicationOrder(order);
+  const sort = getOrder(order);
 
   const applications = await user.getApplications({
     where: filter,
