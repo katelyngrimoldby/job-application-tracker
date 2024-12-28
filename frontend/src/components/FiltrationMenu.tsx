@@ -20,10 +20,8 @@ const filter = [
 
 const FiltrationMenu = ({
   handleChange,
-  toFilter = true,
 }: {
   handleChange: (name: string, value: string) => void;
-  toFilter?: boolean;
 }) => {
   const [visible, setVisible] = useState(false);
 
@@ -41,33 +39,31 @@ const FiltrationMenu = ({
         <ArrowIcon />
       </button>
       <div className={styles.content}>
-        {toFilter ? (
-          <fieldset>
-            <legend>Filter</legend>
-            <div>
+        <fieldset>
+          <legend>Filter</legend>
+          <div>
+            <input
+              type='radio'
+              name='filter'
+              id='none'
+              value=''
+              onChange={onChange}
+            />
+            <label htmlFor='none'>No Filter</label>
+          </div>
+          {filter.map((e) => (
+            <div key={e}>
               <input
                 type='radio'
                 name='filter'
-                id='none'
-                value=''
+                id={e}
+                value={e}
                 onChange={onChange}
               />
-              <label htmlFor='none'>No Filter</label>
+              <label htmlFor={e}>{e}</label>
             </div>
-            {filter.map((e) => (
-              <div key={e}>
-                <input
-                  type='radio'
-                  name='filter'
-                  id={e}
-                  value={e}
-                  onChange={onChange}
-                />
-                <label htmlFor={e}>{e}</label>
-              </div>
-            ))}
-          </fieldset>
-        ) : null}
+          ))}
+        </fieldset>
         <fieldset>
           <legend>Sort</legend>
           {sort.map((e) => (
