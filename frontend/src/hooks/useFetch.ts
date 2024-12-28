@@ -1,4 +1,5 @@
 import { isAxiosError } from 'axios';
+import { useState } from 'react';
 import { getAll as getAllApplications } from '../services/applications';
 import { getAll as getAllInterviews } from '../services/interviews';
 import { getAll as getAllFiles } from '../services/files';
@@ -16,8 +17,10 @@ import useErrorHandler from './useErrorHandler';
 const useFetch = () => {
   const [{ user }, dispatch] = useStateValue();
   const [error, handleError] = useErrorHandler();
+  const [loading, setLoading] = useState(false);
 
   const fetchData = async (id: number) => {
+    setLoading(true);
     try {
       const userAuth = await getSession(id);
       dispatch(
@@ -53,14 +56,17 @@ const useFetch = () => {
       const files = await getAllFiles(userAuth.accessToken, id);
       dispatch(setApplicationFileList(files.applicationFiles));
       dispatch(setInterviewFileList(files.interviewFiles));
+
+      setLoading(false);
     } catch (err) {
       if (isAxiosError(err)) {
         handleError(err.response?.data.error);
+        setLoading(false);
       }
     }
   };
 
-  return { user, error, fetchData };
+  return { user, error, fetchData, loading };
 };
 
 export default useFetch;
