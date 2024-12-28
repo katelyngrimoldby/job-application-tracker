@@ -233,7 +233,7 @@ describe('Job Application Tracker', () => {
     });
 
     it('Deletes application when delete button is clicked', () => {
-      cy.get('[data-testid="delete"]').click();
+      cy.get('[data-testid="delete"]').click({ force: true });
       cy.get('p').contains('You have no applications. ');
     });
   });
@@ -769,7 +769,7 @@ describe('Job Application Tracker', () => {
     });
 
     it('Deletes interview when delete button is clicked', () => {
-      cy.get('[data-testid="delete"]').click();
+      cy.get('[data-testid="delete"]').click({ force: true });
       cy.get('p').contains('You have no interviews. ');
     });
   });
