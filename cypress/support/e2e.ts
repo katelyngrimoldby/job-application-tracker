@@ -15,3 +15,6 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands';
+import './uiBypass.ts';
+import './customAssertions';
+import './localStorage';
