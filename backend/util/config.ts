@@ -1,14 +1,28 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
-export const POSTGRES_DB = process.env.POSTGRES_DB;
+let POSTGRES_USER: string | undefined;
+let POSTGRES_PASS: string | undefined;
+let POSTGRES_DB: string | undefined;
 
-export const POSTGRES_USER = process.env.POSTGRES_USER;
+if (process.env.DATABASE_URL) {
+  const url = process.env.DATABASE_URL.replace('postgresql://', '');
 
-export const POSTGRES_PASS = process.env.POSTGRES_PASS;
+  POSTGRES_USER = url.substring(0, url.indexOf(':'));
+  POSTGRES_PASS = url.substring(url.indexOf(':') + 1, url.indexOf('@'));
+  POSTGRES_DB = url.substring(url.indexOf('/'));
+} else {
+  POSTGRES_DB = process.env.POSTGRES_DB;
 
-export const REDIS_URL = process.env.REDIS_URL;
+  POSTGRES_USER = process.env.POSTGRES_USER;
 
-export const PORT = process.env.PORT || 8080;
+  POSTGRES_PASS = process.env.POSTGRES_PASS;
+}
 
-export const SECRET = process.env.SECRET;
+const REDIS_URL = process.env.REDIS_URL;
+
+const PORT = process.env.PORT || 8080;
+
+const SECRET = process.env.SECRET;
+
+export { PORT, SECRET, REDIS_URL, POSTGRES_USER, POSTGRES_PASS, POSTGRES_DB };
