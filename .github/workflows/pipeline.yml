@@ -115,13 +115,13 @@ jobs:
         run: npm ci
         working-directory: ./frontend
       - name: Start app
-        run: npm run dev&
+        run: npm run dev --host 0.0.0.0&
         working-directory: ./frontend
       - name: Run Cypress
         uses: cypress-io/github-action@v6
         with:
           working-directory: ./
-          wait-on: http://localhost:5173
+          wait-on: http://0.0.0.0:5173
 
   deploy:
     needs: [frontend-predeploy, backend-predeploy, e2e]
