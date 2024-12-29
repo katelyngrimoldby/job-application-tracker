@@ -115,7 +115,7 @@ jobs:
         run: npm ci
         working-directory: ./frontend
       - name: Start app
-        run: npm run dev --host 0.0.0.0&
+        run: npm run dev&
         working-directory: ./frontend
       - name: Run Cypress
         uses: cypress-io/github-action@v6
