@@ -2,7 +2,13 @@ import { Sequelize } from '@sequelize/core';
 import { PostgresDialect } from '@sequelize/postgres';
 import { createClient } from 'redis';
 import { Umzug, SequelizeStorage } from 'umzug';
-import { POSTGRES_DB, POSTGRES_USER, POSTGRES_PASS, REDIS_URL } from './config';
+import {
+  POSTGRES_DB,
+  POSTGRES_USER,
+  POSTGRES_PASS,
+  REDIS_URL,
+  POSTGRES_HOST,
+} from './config';
 import {
   Application,
   User,
@@ -16,6 +22,8 @@ const sequelize = new Sequelize({
   database: POSTGRES_DB,
   user: POSTGRES_USER,
   password: POSTGRES_PASS,
+  host: POSTGRES_HOST,
+  ssl: false,
   define: {
     underscored: true,
   },
