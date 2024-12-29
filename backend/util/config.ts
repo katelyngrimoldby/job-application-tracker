@@ -1,6 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
+console.log(process.env.DATABASE_URL);
+
 const POSTGRES_DB = process.env.POSTGRES_DB;
 
 const POSTGRES_USER = process.env.POSTGRES_USER;
