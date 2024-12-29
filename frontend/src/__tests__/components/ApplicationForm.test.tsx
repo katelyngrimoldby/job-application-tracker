@@ -55,8 +55,8 @@ describe('ApplicationForm component', () => {
           ...submission,
           assessmentDate: null,
           interviewDate: null,
-          offerDate: expect.any(Date),
           rejectionDate: null,
+          offerDate: null,
         });
       });
 
