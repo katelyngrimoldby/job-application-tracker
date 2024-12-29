@@ -34,7 +34,7 @@ const redis = createClient({
 
 const migrator = new Umzug({
   migrations: {
-    glob: ['../migrations/*.ts', { cwd: __dirname }],
+    glob: 'migrations/*.js',
   },
   storage: new SequelizeStorage({ sequelize, tableName: 'migrations' }),
   context: sequelize.queryInterface,
