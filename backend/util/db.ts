@@ -11,6 +11,8 @@ import {
   InterviewFile,
 } from '../models';
 
+console.log(POSTGRES_PASS);
+
 const sequelize = new Sequelize({
   dialect: PostgresDialect,
   database: POSTGRES_DB,
