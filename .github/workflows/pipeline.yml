@@ -106,7 +106,7 @@ jobs:
         run: npm run start:test
         env:
           POSTGRES_USER: localUser
-          POSTGRES_PASSWORD: localPassword
+          POSTGRES_PASS: localPassword
           POSTGRES_DB: test
           REDIS_URL: redis://localhost:6379
           SECRET: ${{ secrets.SECRET }}
