@@ -1,93 +1,93 @@
 import { useState } from 'react';
-import { Job, NewJob } from '../types';
-import Dropdown from './Dropdown';
+import useInput from '../hooks/useInput';
+import {
+  Application,
+  NewApplication,
+  ApplicationFile,
+  BasicFile,
+} from '../types';
+import FileUploader from './FileUploader';
 import RichTextEditor from './RichTextEditor';
-import styles from '../styles/components/ApplicationForm.module.css';
+import Dropdown from './Dropdown';
+import styles from '../styles/components/ContentForm.module.css';
 
-type Status = 'applied' | 'interviewing' | 'offered' | 'rejected';
-
-const getFormattedDate = () => {
-  const date = new Date().getDate();
-  const month = new Date().getMonth() + 1;
-
-  return `${new Date().getFullYear()}-${month < 10 ? '0' + month : month}-${
-    date < 10 ? '0' + date : date
-  }`;
-};
+const statusOptions = [
+  { label: 'Applied', value: 'applied' },
+  { label: 'Assessments', value: 'assessments' },
+  { label: 'Interviewing', value: 'interviewing' },
+  { label: 'Offered', value: 'offered' },
+  { label: 'Rejected', value: 'rejected' },
+];
 
 const ApplicationForm = ({
   content,
+  initFiles,
   handleAddition,
   handleUpdate,
 }: {
-  content?: Job;
-  handleAddition?: (submission: NewJob) => void;
-  handleUpdate?: (submission: NewJob, id: number) => void;
+  content?: Application;
+  initFiles?: ApplicationFile[];
+  handleAddition?: (submission: NewApplication, files: BasicFile[]) => void;
+  handleUpdate?: (
+    submission: NewApplication,
+    id: number,
+    files: BasicFile[]
+  ) => void;
 }) => {
-  const [positionTitle, setPositionTitle] = useState(
-    content ? content.positionTitle : ''
+  const positionTitle = useInput('text', content ? content.positionTitle : '');
+  const company = useInput('text', content ? content.company : '');
+  const jobId = useInput('text', content ? content.jobId : '');
+  const location = useInput('text', content ? content.location : '');
+  const [status, setStatus] = useState<
+    'applied' | 'assessments' | 'interviewing' | 'rejected' | 'offered'
+  >(content ? content.status : 'applied');
+  const [notes, setNotes] = useState(content ? content.notes : '');
+  const [files, setFiles] = useState(
+    initFiles
+      ? initFiles.map((file) => {
+          return {
+            filename: file.filename,
+            fileData: file.fileData,
+          } as BasicFile;
+        })
+      : []
   );
-  const [company, setCompany] = useState(content ? content.company : '');
-  const [location, setLocation] = useState(content ? content.location : '');
-  const [applied, setApplied] = useState(
-    content ? content.applied.substring(0, 10) : getFormattedDate()
-  );
-  const [compensation, setCompensation] = useState(
-    content ? content.compensation : ''
-  );
-  const [status, setStatus] = useState<Status>(
-    content ? content.status : 'applied'
-  );
-  const [interviews, setInterviews] = useState(
-    content ? content.interviews : []
-  );
-  const [jobDescription, setJobDescription] = useState(
-    content ? content.jobDescription : ''
-  );
-  const [notes, setNotes] = useState(
-    content ? (content.notes ? content.notes : '') : ''
-  );
-  const [contacts, setContacts] = useState(content ? content.contacts : []);
-  const [interviewDate, setInterviewDate] = useState(getFormattedDate());
-  const [newContact, setNewContact] = useState({
-    name: '',
-    email: '',
-    number: '',
-  });
 
-  const handleStatusChange = (status: string) => {
-    setStatus(status as Status);
+  const getConvertedFiles = (files: BasicFile[]) => {
+    setFiles(files);
   };
 
-  const handleInterviewDelete = (interview: number) => {
-    const newInterviews = interviews.filter((_, index) => index != interview);
-    setInterviews(newInterviews);
-  };
-
-  const handleContactDelete = (contact: number) => {
-    const newContacts = contacts.filter((_, index) => index != contact);
-    setContacts(newContacts);
+  const getStatus = (status: string) => {
+    if (
+      status === 'applied' ||
+      status === 'assessments' ||
+      status === 'interviewing' ||
+      status === 'rejected' ||
+      status === 'offered'
+    ) {
+      setStatus(status);
+    }
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const submission = {
-      positionTitle,
-      company,
-      location,
-      applied,
-      compensation,
+    const submission: NewApplication = {
+      positionTitle: positionTitle.value,
+      company: company.value,
+      location: location.value,
+      jobId: jobId.value,
       status,
-      interviews,
-      jobDescription,
+      assessmentDate: null,
+      interviewDate: null,
+      offerDate: null,
+      rejectionDate: null,
       notes,
-      contacts,
     };
 
-    if (!content) {
-      if (handleAddition) handleAddition(submission);
+    if (content) {
+      if (handleUpdate) handleUpdate(submission, content.id, files);
     } else {
-      if (handleUpdate) handleUpdate(submission, content.id);
+      if (handleAddition) handleAddition(submission, files);
     }
   };
 
@@ -96,197 +96,89 @@ const ApplicationForm = ({
       onSubmit={handleSubmit}
       className={styles.form}
     >
-      <div className={styles.inputs}>
-        <input
-          type='text'
-          placeholder='Position'
-          id='position'
-          value={positionTitle}
-          onChange={(event) => setPositionTitle(event.target.value)}
-          required
-        />
-        <input
-          type='text'
-          placeholder='Company'
-          id='company'
-          value={company}
-          onChange={(event) => setCompany(event.target.value)}
-          required
-        />
-      </div>
-      <div className={styles.inputs}>
-        <input
-          type='text'
-          placeholder='Location'
-          id='location'
-          value={location}
-          onChange={(event) => setLocation(event.target.value)}
-          required
-        />
-        <input
-          type='text'
-          placeholder='Compensation'
-          id='compensation'
-          value={compensation}
-          onChange={(event) => setCompensation(event.target.value)}
-        />
-      </div>
-      <div className={styles.inputs}>
-        <div className={styles.formSection}>
-          <div className={styles.inputWrapper}>
-            <label htmlFor='appliedDate'>Applied</label>
-            <input
-              type='date'
-              id='appliedDate'
-              value={applied}
-              onChange={(event) => setApplied(event.target.value)}
-            />
-          </div>
-          <div className={styles.inputWrapper}>
-            <label htmlFor='status'>Status</label>
-            <Dropdown
-              id='status'
-              values={[
-                { value: 'applied', label: 'Applied' },
-                { value: 'interviewing', label: 'Interviewing' },
-                { value: 'offered', label: 'Offered' },
-                { value: 'rejected', label: 'Rejected' },
-              ]}
-              startValue={{
-                label: `${status[0].toUpperCase()}${status.substring(1)}`,
-                value: status,
-              }}
-              handleChange={handleStatusChange}
-            />
-          </div>
-          <div className={styles.inputWrapper}>
-            <label htmlFor='interviewDate'>Interview Dates</label>
-            <div className={styles.interviewInput}>
-              <input
-                type='date'
-                id='interviewDate'
-                value={interviewDate}
-                onChange={(event) => setInterviewDate(event.target.value)}
-              />
-              <button
-                onClick={() => setInterviews([...interviews, interviewDate])}
-                type='button'
-                id='addInterviewButton'
-              >
-                Add
-              </button>
-            </div>
-          </div>
-          <div className={styles.interviews}>
-            {interviews.map((e, i) => (
-              <p
-                key={i}
-                className={styles.interview}
-                data-testid={`interview${i}`}
-              >
-                {e.substring(0, 10)}{' '}
-                <button
-                  type='button'
-                  onClick={() => handleInterviewDelete(i)}
-                >
-                  Delete Interview
-                </button>
-              </p>
-            ))}
-          </div>
-          <div className={styles.inputWrapper}>
-            <label htmlFor='contactInputs'>Contacts</label>
-            <div
-              id='contactInputs'
-              className={styles.contactInputs}
-            >
-              <input
-                type='text'
-                placeholder='Name'
-                id='name'
-                value={newContact.name}
-                onChange={(event) =>
-                  setNewContact({ ...newContact, name: event.target.value })
-                }
-              />
-              <input
-                type='email'
-                placeholder='Email'
-                id='email'
-                value={newContact.email}
-                onChange={(event) =>
-                  setNewContact({ ...newContact, email: event.target.value })
-                }
-              />
-              <input
-                type='tel'
-                placeholder='Number'
-                id='number'
-                value={newContact.number}
-                onChange={(event) =>
-                  setNewContact({ ...newContact, number: event.target.value })
-                }
-              />
-              <button
-                onClick={() => {
-                  if (newContact.name) {
-                    setContacts([...contacts, newContact]);
-                    setNewContact({ name: '', email: '', number: '' });
-                  }
-                }}
-                type='button'
-                id='addContactButton'
-              >
-                Add
-              </button>
-            </div>
-            <div className={styles.contacts}>
-              {contacts.map((e, i) => (
-                <div
-                  key={i}
-                  className={styles.contact}
-                  data-testid={`contact${i}`}
-                >
-                  <div>
-                    <p>{e.name}</p>
-                    <p>{e.email}</p>
-                    <p>{e.number}</p>
-                  </div>
-                  <button
-                    type='button'
-                    onClick={() => handleContactDelete(i)}
-                  >
-                    Delete Contact
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
+      <div className={styles.inputGroup}>
+        <div className={styles.inputWrapper}>
+          <label htmlFor='position'>Position</label>
+          <input
+            id='position'
+            name='position'
+            required
+            {...positionTitle}
+          />
         </div>
-        <div className={styles.formSection}>
-          <div className={styles.inputWrapper}>
-            <label htmlFor='jobDesc'>Job Description</label>
-            <RichTextEditor
-              id='jobDesc'
-              initialContent={jobDescription}
-              setContent={setJobDescription}
-            />
-          </div>
-          <div className={styles.inputWrapper}>
-            <label htmlFor='notes'>Notes</label>
-            <RichTextEditor
-              id='notes'
-              initialContent={notes}
-              setContent={setNotes}
-            />
-          </div>
+        <div className={styles.inputWrapper}>
+          <label htmlFor='company'>Company</label>
+          <input
+            id='company'
+            name='company'
+            required
+            {...company}
+          />
         </div>
+      </div>
+      <div className={styles.inputGroup}>
+        <div className={styles.inputWrapper}>
+          <label htmlFor='jobId'>Job ID</label>
+          <input
+            id='jobId'
+            name='jobId'
+            {...jobId}
+          />
+        </div>
+        <div className={styles.inputWrapper}>
+          <label htmlFor='location'>Location</label>
+          <input
+            id='location'
+            name='location'
+            required
+            {...location}
+          />
+        </div>
+      </div>
+      <div className={styles.smallInputGroup}>
+        <div className={styles.inputWrapper}>
+          <p
+            id='status'
+            aria-label='Status'
+            role='label'
+            className={styles.pLabel}
+          >
+            Status
+          </p>
+          <Dropdown
+            values={statusOptions}
+            startValue={statusOptions[0]}
+            labelledBy='status'
+            handleChange={getStatus}
+          />
+        </div>
+        <div className={styles.inputWrapper}>
+          <label htmlFor='files'>Files</label>
+          <FileUploader
+            handleChange={getConvertedFiles}
+            initFiles={initFiles ? initFiles : []}
+          />
+        </div>
+      </div>
+      <div className={styles.inputWrapper}>
+        <p
+          aria-label='Notes'
+          role='label'
+          className={styles.pLabel}
+        >
+          Notes
+        </p>
+        <RichTextEditor
+          initialContent={notes}
+          id='notes'
+          setContent={setNotes}
+        />
       </div>
       <button
+        type='submit'
         className='primary'
-        id='submit'
       >
-        Submit
+        Save
       </button>
     </form>
   );

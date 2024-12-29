@@ -1,3 +1,15 @@
+@import '../variables.css';
+
 .main {
   max-width: 700px;
+
+  p {
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+
+  a {
+    font-weight: 600;
+    color: var(--accent-main);
+  }
 }

@@ -1,111 +1,128 @@
-import { Routes, Route, useMatch, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useMatch } from 'react-router-dom';
 import { useEffect } from 'react';
-import { isAxiosError } from 'axios';
-import { getAll } from './services/jobs';
-import { getSession } from './services/userAuth';
-import { useStateValue, setCurrentUser, setJobList } from './state';
-import useErrorHandler from './hooks/useErrorHandler';
+import useFetch from './hooks/useFetch';
+import useFind from './hooks/useFind';
 import { Header, Footer } from './components/Layout';
 import Error from './components/Error';
-import Jobs from './pages/jobs';
-import Landing from './pages/landing';
+import Loader from './pages/loader';
+import Dashboard from './pages/dashboard';
 import Login from './pages/login';
 import Register from './pages/register';
-import NewApplication from './pages/newApplication';
 import Custom404 from './pages/custom404';
-import SingleJob from './pages/singleJob';
-import Edit from './pages/singleJob/edit';
+import Applications from './pages/applications/index';
+import NewApplication from './pages/applications/addApplication';
+import ApplicationSingle from './pages/applications/single';
+import EditApplication from './pages/applications/single/edit';
+import Interviews from './pages/interviews';
+import NewInterview from './pages/interviews/addInterview';
+import InterviewSingle from './pages/interviews/single';
+import EditInterview from './pages/interviews/single/edit';
 
 function App() {
-  const [{ jobs }, dispatch] = useStateValue();
-  const [error, handleError] = useErrorHandler();
+  const data = useFetch();
   const navigate = useNavigate();
-
-  const fetchData = async (id: number) => {
-    try {
-      const userAuth = await getSession(id);
-      dispatch(
-        setCurrentUser({ token: userAuth.accessToken, name: userAuth.name })
-      );
-
-      if (location.pathname === '/jobs') {
-        const params = location.search.toString();
-        const jobs = await getAll(userAuth.accessToken, id, params);
-        dispatch(setJobList(jobs));
-      } else {
-        const jobs = await getAll(userAuth.accessToken, id);
-        dispatch(setJobList(jobs));
-      }
-    } catch (err) {
-      if (isAxiosError(err)) {
-        handleError(err.response?.data.error);
-      }
-    }
-  };
+  const { findApplication, findInterview } = useFind();
+  const applicationMatch = useMatch('/applications/:id');
+  const applicationEditMatch = useMatch('/applications/:id/edit');
+  const interviewMatch = useMatch('/interviews/:id');
+  const interviewEditMatch = useMatch('/interviews/:id/edit');
 
   useEffect(() => {
     const userId = window.localStorage.getItem('id');
     if (userId) {
-      fetchData(Number(userId));
+      data.fetchData(Number(userId));
     } else {
-      navigate('/');
+      if (
+        window.location.pathname != '/register' &&
+        window.location.pathname != ''
+      )
+        navigate('/');
     }
   }, []);
 
-  const findJob = (id: number) => {
-    const job = Object.values(jobs).find((job) => job.id === id);
-    if (job) {
-      return job;
-    }
-    return null;
-  };
-
-  const matchJob = useMatch('/jobs/:id');
-  const job = matchJob ? findJob(Number(matchJob.params.id)) : undefined;
-
-  const matchJobEdit = useMatch('/jobs/:id/edit');
-  const jobEdit = matchJobEdit
-    ? findJob(Number(matchJobEdit.params.id))
-    : undefined;
+  const application = findApplication(applicationMatch);
+  const applicationEdit = findApplication(applicationEditMatch);
+  const interview = findInterview(interviewMatch);
+  const interviewEdit = findInterview(interviewEditMatch);
 
   return (
     <>
       <Header />
-      {error && <Error err={error} />}
-      <Routes>
-        <Route
-          path='/'
-          element={<Landing />}
-        />
-        <Route
-          path='/jobs'
-          element={<Jobs />}
-        />
-        <Route
-          path='/jobs/:id'
-          element={job ? <SingleJob job={job} /> : <Custom404 />}
-        />
-        <Route
-          path='/jobs/:id/edit'
-          element={jobEdit ? <Edit job={jobEdit} /> : <Custom404 />}
-        />
-        <Route
-          path='/login'
-          element={<Login />}
-        />
-        <Route
-          path='/register'
-          element={<Register />}
-        />
-        <Route
-          path='/new'
-          element={<NewApplication />}
-        />
-        <Route
-          path='*'
-          element={<Custom404 />}
-        />
-      </Routes>
+      {data.error && <Error err={data.error} />}
+      {data.loading ? (
+        <Loader />
+      ) : (
+        <Routes>
+          <Route
+            path='/'
+            element={data.user ? <Dashboard /> : <Login />}
+          />
+          <Route
+            path='/applications'
+            element={<Applications />}
+          />
+          <Route
+            path='/applications/:id'
+            element={
+              application ? (
+                <ApplicationSingle application={application} />
+              ) : (
+                <Custom404 />
+              )
+            }
+          />
+          <Route
+            path='/applications/:id/edit'
+            element={
+              applicationEdit ? (
+                <EditApplication application={applicationEdit} />
+              ) : (
+                <Custom404 />
+              )
+            }
+          />
+          <Route
+            path='/applications/new'
+            element={<NewApplication />}
+          />
+          <Route
+            path='/interviews'
+            element={<Interviews />}
+          />
+          <Route
+            path='/interviews/:id'
+            element={
+              interview ? (
+                <InterviewSingle interview={interview} />
+              ) : (
+                <Custom404 />
+              )
+            }
+          />
+          <Route
+            path='/interviews/:id/edit'
+            element={
+              interviewEdit ? (
+                <EditInterview interview={interviewEdit} />
+              ) : (
+                <Custom404 />
+              )
+            }
+          />
+          <Route
+            path='/interviews/new'
+            element={<NewInterview />}
+          />
+          <Route
+            path='/register'
+            element={<Register />}
+          />
+          <Route
+            path='*'
+            element={<Custom404 />}
+          />
+        </Routes>
+      )}
       <Footer />
     </>
   );

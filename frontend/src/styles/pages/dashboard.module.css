@@ -1,0 +1,79 @@
+@media screen and (min-width: 0px) {
+  .statusWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .header {
+    h1 {
+      font-size: 2rem;
+    }
+
+    header span {
+      font-size: 1.25rem;
+    }
+  }
+
+  .chartContainer {
+    width: min-content;
+    margin-inline: auto;
+  }
+
+  .statsDesktop {
+    display: none;
+  }
+
+  .stats {
+    width: 100%;
+  }
+
+  .applicationTable {
+    margin-bottom: 1rem;
+  }
+
+  .noInterviews a,
+  .noApplications a {
+    font-weight: 600;
+    color: var(--accent-secondary);
+  }
+
+  .noApplications {
+    margin-top: 1rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .statusWrapper {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .chartContainer {
+    margin: 0;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .stats {
+    display: none;
+  }
+
+  .statusWrapper {
+    flex-wrap: nowrap;
+  }
+
+  .header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .statsDesktop {
+    display: block;
+    width: 100%;
+  }
+}

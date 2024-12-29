@@ -1,0 +1,129 @@
+@import '../variables.css';
+
+@media screen and (min-width: 0px) {
+  .position {
+    font-size: 1.7rem;
+  }
+
+  .company {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .secondary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-block: 1rem;
+
+    span {
+      width: 33%;
+      text-align: end;
+
+      &:first-of-type {
+        text-align: start;
+      }
+
+      &:last-of-type {
+        text-align: center;
+      }
+    }
+  }
+
+  .split {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    section {
+      width: 50%;
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .new {
+      font-weight: 600;
+      color: var(--accent-secondary);
+    }
+  }
+
+  .assets {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    ul {
+      width: 100%;
+      display: flex;
+      list-style: none;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: space-evenly;
+
+      button {
+        font-weight: 600;
+        color: var(--accent-main);
+      }
+    }
+  }
+
+  .buttons {
+    display: flex;
+    gap: 0.5rem;
+
+    svg {
+      width: 36px;
+      fill: var(--text-secondary);
+      transition: fill 200ms ease-in-out;
+
+      &:hover {
+        fill: var(--accent-secondary);
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .secondary {
+    flex-wrap: nowrap;
+
+    span {
+      text-align: center;
+
+      &:first-of-type {
+        text-align: center;
+      }
+    }
+  }
+
+  .split {
+    width: 85%;
+    margin-inline: auto;
+  }
+
+  .assets {
+    flex-direction: row;
+
+    ul {
+      width: 33%;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      gap: 0;
+    }
+
+    div {
+      width: 66%;
+      > * {
+        width: 100%;
+      }
+    }
+  }
+}

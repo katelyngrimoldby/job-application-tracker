@@ -1,15 +1,29 @@
 import { createContext, useContext, useReducer } from 'react';
 import { Action } from './reducer';
-import { Job, User } from '../types';
+import {
+  Application,
+  Interview,
+  User,
+  ApplicationFile,
+  InterviewFile,
+} from '../types';
 
 export type State = {
-  jobs: Job[];
+  applications: Application[];
+  interviews: Interview[];
+  applicationFiles: ApplicationFile[];
+  interviewFiles: InterviewFile[];
   user: User | null;
+  theme: 'light' | 'dark';
 };
 
 const initialState: State = {
-  jobs: [],
+  applications: [],
+  interviews: [],
+  applicationFiles: [],
+  interviewFiles: [],
   user: null,
+  theme: window.matchMedia('(prefers-color-scheme: dark') ? 'dark' : 'light',
 };
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([

@@ -1,0 +1,63 @@
+@import '../variables.css';
+
+.wrapper {
+  position: relative;
+  list-style: none;
+}
+
+.wrapper::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  margin-top: 0.5rem;
+  background-color: var(--accent-tertiary);
+}
+
+.primaryInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.expandBtn,
+.collapseBtn {
+  height: 24px;
+  width: 24px;
+  svg {
+    height: 24px;
+    width: 24px;
+    vertical-align: middle;
+    fill: var(--text-main);
+    transition: transform 400ms ease-in-out;
+  }
+}
+
+.collapseBtn svg {
+  transform: rotate(180deg);
+}
+
+.extraInfo,
+.extraVisible {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: space-between;
+  transition:
+    max-height 400ms,
+    padding 400ms;
+}
+
+.extraInfo {
+  max-height: 0px;
+  overflow: hidden;
+  padding: 0 1rem;
+}
+
+.extraVisible {
+  max-height: 1000px;
+  overflow: hidden;
+  padding: 1rem;
+}

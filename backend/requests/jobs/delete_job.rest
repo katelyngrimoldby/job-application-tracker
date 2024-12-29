@@ -1,3 +1,0 @@
-DELETE http://localhost:8080/api/jobs/5
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImthdGVseW5ncmltb2xkYnkiLCJpZCI6MywiaWF0IjoxNjcxODE5NDMzfQ.aetUHlFmD3dVjYl5hG1XYolswnSg6_5xxQXwMNeEIfc
-Userid: 906

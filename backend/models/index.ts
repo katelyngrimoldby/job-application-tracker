@@ -1,7 +1,6 @@
-import Job from './job';
+import Application from './application';
+import Interview from './interview';
 import User from './user';
+import { ApplicationFile, InterviewFile } from './file';
 
-User.hasMany(Job);
-Job.belongsTo(User);
-
-export { Job, User };
+export { Application, Interview, User, ApplicationFile, InterviewFile };

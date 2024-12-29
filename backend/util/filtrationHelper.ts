@@ -1,4 +1,4 @@
-import { Order } from 'sequelize';
+import { Order } from '@sequelize/core';
 import { Status } from '../types';
 
 const getOrder = (sort: string | undefined): Order => {
@@ -12,11 +12,11 @@ const getOrder = (sort: string | undefined): Order => {
     case 'position-desc':
       return [['positionTitle', 'DESC']];
     case 'newest':
-      return [['applied', 'DESC']];
+      return [['applyDate', 'DESC']];
     case 'oldest':
-      return [['applied', 'ASC']];
+      return [['applyDate', 'ASC']];
     default:
-      return [['applied', 'DESC']];
+      return [['applyDate', 'DESC']];
   }
 };
 

@@ -1,18 +1,18 @@
-import '@testing-library/jest-dom/extend-expect';
-import { vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import FiltrationMenu from '../../components/FiltrationMenu';
 
 describe('FiltrationMenu component', () => {
   const mockChange = vi.fn();
 
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
-
   beforeEach(() => {
     render(<FiltrationMenu handleChange={mockChange} />);
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
+    cleanup();
   });
 
   it('Sends callback with correct name & value (Filter)', async () => {

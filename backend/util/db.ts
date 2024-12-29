@@ -1,24 +1,40 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize } from '@sequelize/core';
+import { PostgresDialect } from '@sequelize/postgres';
 import { createClient } from 'redis';
 import { Umzug, SequelizeStorage } from 'umzug';
-import { POSTGRES_URL, REDIS_URL } from './config';
+import { POSTGRES_DB, POSTGRES_USER, POSTGRES_PASS, REDIS_URL } from './config';
+import {
+  Application,
+  User,
+  Interview,
+  ApplicationFile,
+  InterviewFile,
+} from '../models';
 
-const sequelize = new Sequelize(POSTGRES_URL ? POSTGRES_URL : 'nodb:');
+const sequelize = new Sequelize({
+  dialect: PostgresDialect,
+  database: POSTGRES_DB,
+  user: POSTGRES_USER,
+  password: POSTGRES_PASS,
+  define: {
+    underscored: true,
+  },
+  models: [User, Application, Interview, ApplicationFile, InterviewFile],
+});
 const redis = createClient({
   url: REDIS_URL,
 });
 
-const migrationConf = {
+const migrator = new Umzug({
   migrations: {
-    glob: 'migrations/*.js',
+    glob: ['../migrations/*.ts', { cwd: __dirname }],
   },
   storage: new SequelizeStorage({ sequelize, tableName: 'migrations' }),
-  context: sequelize.getQueryInterface(),
+  context: sequelize.queryInterface,
   logger: console,
-};
+});
 
 const runMigrations = async () => {
-  const migrator = new Umzug(migrationConf);
   const migrations = await migrator.up();
   console.log('Migrations up to date', {
     files: migrations.map((mig) => mig.name),
@@ -26,7 +42,6 @@ const runMigrations = async () => {
 };
 const rollbackMigration = async () => {
   await sequelize.authenticate();
-  const migrator = new Umzug(migrationConf);
   await migrator.down();
 };
 
@@ -45,3 +60,5 @@ const connectToDatabase = async () => {
 };
 
 export { sequelize, redis, connectToDatabase, rollbackMigration };
+
+export type Migration = typeof migrator._types.migration;

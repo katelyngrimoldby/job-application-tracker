@@ -13,22 +13,27 @@ export interface RequestUserAuth extends Request {
 
 export enum Status {
   Applied = 'applied',
+  Assessments = 'assessments',
   Interviewing = 'interviewing',
   Offered = 'offered',
   Rejected = 'rejected',
 }
 
-export interface NewJob {
+export interface NewApplication {
   positionTitle: string;
   company: string;
   location: string;
-  applied: string;
-  compensation: string;
   status: Status;
-  interviews: string[];
-  jobDescription: string;
   notes: string;
-  contacts: { name: string; email: string; number: string }[];
+  jobId: string;
+}
+
+export interface NewInterview {
+  applicationId: number;
+  contact: string;
+  time: Date;
+  website: string;
+  notes: string;
 }
 
 export interface NewUser {
@@ -40,4 +45,22 @@ export interface NewUser {
 export interface AuthUser {
   username: string;
   password: string;
+}
+
+export interface FileData {
+  data: number[];
+  type: string;
+}
+
+interface NewFile {
+  filename: string;
+  fileData: Buffer<ArrayBuffer>;
+}
+
+export interface NewApplicationFile extends NewFile {
+  applicationId: number;
+}
+
+export interface NewInterviewFile extends NewFile {
+  interviewId: number;
 }

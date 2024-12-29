@@ -1,0 +1,32 @@
+@import '../variables.css';
+
+.main {
+  p {
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  a {
+    font-weight: 600;
+    color: var(--accent-secondary);
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .main {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+
+    p,
+    ul {
+      flex-grow: 2;
+    }
+  }
+}

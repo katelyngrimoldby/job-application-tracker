@@ -10,7 +10,13 @@ const sort = [
   { value: 'newest', label: 'Newest' },
   { value: 'oldest', label: 'Oldest' },
 ];
-const filter = ['applied', 'interviewing', 'offered', 'rejected'];
+const filter = [
+  'applied',
+  'assessments',
+  'interviewing',
+  'offered',
+  'rejected',
+];
 
 const FiltrationMenu = ({
   handleChange,

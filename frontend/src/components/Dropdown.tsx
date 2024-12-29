@@ -4,14 +4,14 @@ import styles from '../styles/components/Dropdown.module.css';
 
 const Dropdown = ({
   values,
-  id,
   startValue,
   handleChange,
+  labelledBy,
 }: {
   values: { label: string; value: string }[];
-  id: string;
   startValue?: { label: string; value: string };
   handleChange: (value: string) => void;
+  labelledBy?: string;
 }) => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(
@@ -27,31 +27,39 @@ const Dropdown = ({
   return (
     <div className={styles.wrapper}>
       <button
-        id={id}
         onClick={() => setOpen(!open)}
         className={styles.selectHead}
-        aria-label={'Select Status'}
+        aria-label='Select'
         type='button'
+        data-testid={labelledBy}
       >
         {selected}
         <ArrowIcon />
       </button>
-      <div className={open ? styles.optionsOpen : styles.options}>
+      <ul
+        className={open ? styles.optionsOpen : styles.options}
+        role='listbox'
+        aria-labelledby={labelledBy}
+      >
         {values.map((e) => (
-          <button
+          <li
+            role='option'
             key={e.value}
-            id={e.value}
-            onClick={handleSelection}
-            className={
-              e.label === selected ? styles.activeOption : styles.option
-            }
-            type='button'
-            data-testid={e.value}
           >
-            {e.label}
-          </button>
+            <button
+              id={e.value}
+              onClick={handleSelection}
+              className={
+                e.label === selected ? styles.activeOption : styles.option
+              }
+              type='button'
+              data-testid={e.value}
+            >
+              {e.label}
+            </button>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 };

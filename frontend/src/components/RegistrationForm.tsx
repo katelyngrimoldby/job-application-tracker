@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import useInput from '../hooks/useInput';
 import styles from '../styles/components/RegistrationForm.module.css';
 
 const RegistrationForm = ({
@@ -10,18 +10,18 @@ const RegistrationForm = ({
     password: string;
   }) => void;
 }) => {
-  const [username, setUsername] = useState('');
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPass, setConfirmPass] = useState('');
+  const username = useInput('text');
+  const name = useInput('text');
+  const password = useInput('password');
+  const confirmPass = useInput('password');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const newUser = {
-      username,
-      name,
-      password,
+      username: username.value,
+      name: name.value,
+      password: password.value,
     };
 
     handleRegistration(newUser);
@@ -34,44 +34,40 @@ const RegistrationForm = ({
     >
       <div className={styles.inputs}>
         <input
-          type='text'
+          id='username'
           placeholder='Username'
           required
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
+          {...username}
         />
         <input
-          type='text'
+          id='name'
           placeholder='Name'
           required
-          value={name}
-          onChange={(event) => setName(event.target.value)}
+          {...name}
         />
       </div>
       <div className={styles.inputs}>
         <input
-          type='password'
+          id='password'
           placeholder='Password'
           required
           min={3}
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
+          {...password}
         />
         <input
-          type='password'
+          id='confirmPass'
           placeholder='Confirm Password'
           required
-          value={confirmPass}
-          onChange={(event) => setConfirmPass(event.target.value)}
+          {...confirmPass}
         />
       </div>
       <button
         disabled={
-          !username ||
-          !name ||
-          password.length < 3 ||
-          !confirmPass ||
-          password !== confirmPass
+          !username.value ||
+          !name.value ||
+          password.value.length < 5 ||
+          !confirmPass.value ||
+          password.value !== confirmPass.value
         }
         className='primary'
       >

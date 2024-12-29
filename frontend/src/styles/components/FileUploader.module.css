@@ -1,0 +1,56 @@
+@import '../variables.css';
+
+.input {
+  height: 0.1px;
+  width: 0.1px;
+  position: absolute;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.input:focus + .labelBtn,
+.input + .labelBtn:hover {
+  border-radius: 5px;
+  outline: none;
+  border-color: var(--accent-main);
+}
+
+.labelBtn {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid transparent;
+  border-bottom: 1px solid var(--accent-tertiary);
+  color: var(---text-main);
+  font-size: 1rem;
+  transition:
+    border-color 200ms ease-in-out,
+    border-radius 200ms ease-in-out;
+  cursor: pointer;
+  background-color: var(--background-main);
+  text-overflow: ellipsis;
+  font-weight: 400 !important;
+  font-size: 1rem !important;
+  margin-bottom: 0.25rem;
+
+  &:hover {
+    border-radius: 5px;
+    outline: none;
+    border-color: var(--accent-main);
+  }
+  &:focus {
+    border-radius: 5px;
+    outline: none;
+    border-color: var(--accent-main);
+  }
+}
+
+.fileList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  li {
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+}
