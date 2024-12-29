@@ -121,8 +121,6 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           working-directory: ./
-          wait-on: http://0.0.0.0:5173
-
   deploy:
     needs: [frontend-predeploy, backend-predeploy, e2e]
     runs-on: ubuntu-20.04
