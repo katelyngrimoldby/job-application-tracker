@@ -23,7 +23,6 @@ const sequelize = new Sequelize({
   user: POSTGRES_USER,
   password: POSTGRES_PASS,
   host: POSTGRES_HOST,
-  ssl: false,
   define: {
     underscored: true,
   },
