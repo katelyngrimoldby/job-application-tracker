@@ -5,8 +5,8 @@ let POSTGRES_USER: string | undefined;
 let POSTGRES_PASS: string | undefined;
 let POSTGRES_DB: string | undefined;
 
-if (process.env.DATABASE_URL) {
-  const url = process.env.DATABASE_URL.replace('postgresql://', '');
+if (process.env.POSTGRES_URL) {
+  const url = process.env.POSTGRES_URL.replace('postgresql://', '');
 
   POSTGRES_USER = url.substring(0, url.indexOf(':'));
   POSTGRES_PASS = url.substring(url.indexOf(':') + 1, url.indexOf('@'));
