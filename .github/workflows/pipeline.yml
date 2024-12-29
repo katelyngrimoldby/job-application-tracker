@@ -64,7 +64,9 @@ jobs:
         run: npm test
         working-directory: ./backend
         env:
-          POSTGRES_URL: postgresql://localUser:localPassword@localhost:5432/test
+          POSTGRES_USER: localUser
+          POSTGRES_PASSWORD: localPassword
+          POSTGRES_DB: test
           REDIS_URL: redis://localhost:6379
           SECRET: ${{ secrets.SECRET }}
 
@@ -102,6 +104,12 @@ jobs:
         working-directory: ./backend
       - name: Start backend
         run: npm run start:test
+        env:
+          POSTGRES_USER: localUser
+          POSTGRES_PASSWORD: localPassword
+          POSTGRES_DB: test
+          REDIS_URL: redis://localhost:6379
+          SECRET: ${{ secrets.SECRET }}
         working-directory: ./backend
       - name: Install deps (frontend)
         run: npm ci
