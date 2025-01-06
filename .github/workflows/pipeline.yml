@@ -126,7 +126,7 @@ jobs:
     runs-on: ubuntu-20.04
     if: |
       github.event_name == 'push' &&
-      !contains(join(toJson(github.event.commits.*.message), ' '), '#skip')
+      contains(join(toJson(github.event.commits.*.message), ' '), '#deploy')
     env:
       FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
     steps:
@@ -142,11 +142,9 @@ jobs:
         working-directory: ./backend
 
   tag-release:
-    needs: [deploy]
+    needs: [frontend-predeploy, backend-predeploy, e2e]
     runs-on: ubuntu-20.04
-    if: |
-      github.event_name == 'push' &&
-      !contains(join(toJson(github.event.commits.*.message), ' '), '#skip')
+    if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v4
       - name: Bump version and push tag
