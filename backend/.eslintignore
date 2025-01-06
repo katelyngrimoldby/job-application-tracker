@@ -1,5 +1,0 @@
-build
-build/dist
-pg_data
-redis_data
-node_modules
