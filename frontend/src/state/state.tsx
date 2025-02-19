@@ -23,7 +23,7 @@ const initialState: State = {
   applicationFiles: [],
   interviewFiles: [],
   user: null,
-  theme: window.matchMedia('(prefers-color-scheme: dark') ? 'dark' : 'light',
+  theme: window.matchMedia('(prefers-color-scheme: dark').matches ? 'dark' : 'light',
 };
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([
