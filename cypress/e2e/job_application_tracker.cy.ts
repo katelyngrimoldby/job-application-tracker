@@ -7,9 +7,9 @@ describe('Job Application Tracker', () => {
   });
 
   it('Updates theme on button click', () => {
-    cy.get('#root').hasAttr('data-theme', 'dark');
-    cy.get('#toggleTheme').click();
     cy.get('#root').hasAttr('data-theme', 'light');
+    cy.get('#toggleTheme').click();
+    cy.get('#root').hasAttr('data-theme', 'dark');
   });
 
   describe('Registration', () => {
